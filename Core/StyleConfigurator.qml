@@ -33,7 +33,7 @@ pragma Singleton
 
 import QtQuick 2.0
 import "./Meta/"
-import "./Meta/Type.js" as Type
+import "./Meta/Type.js" as Meta
 import "../Controls/Styles"
 
 Class {
@@ -66,19 +66,19 @@ Class {
 
     function getStyle( style,control ) {
 
-        var path = pathStyle + style + "/" + d.themeCurrent + "/" +Type.of( control ) + "Style.qml";
+        var path = pathStyle + style + "/" + d.themeCurrent + "/" +Meta.self.typeof( control ) + "Style.qml";
         return d.getStyle( path );
     }
 
     function getStyleDefault( control ) {
 
-        var path = pathStyle + styleDefault + "/" + d.themeCurrent + "/"  + Type.of( control ) + "Style.qml";
+        var path = pathStyle + styleDefault + "/" + d.themeCurrent + "/"  + Meta.self.typeof( control ) + "Style.qml";
         return d.getStyle( path );
     }
 
     function getStyleCurrent( control ) {
 
-        var path = pathStyle + d.styleCurrent + "/" + d.themeCurrent + "/"  + Type.of( control ) + "Style.qml";
+        var path = pathStyle + d.styleCurrent + "/" + d.themeCurrent + "/"  + Meta.self.typeof( control ) + "Style.qml";
         return d.getStyle( path );
     }
 

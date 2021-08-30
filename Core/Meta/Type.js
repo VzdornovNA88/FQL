@@ -33,12 +33,19 @@
 
 /** @fn string(type of qml object) function Of( ANY QML COMPONENT object )
 */
-function of(object) {
-    var rawType = object.toString();
-    var start = 0;
-    var end = rawType.indexOf("_",start);
-    if( end === -1 )
-        return undefined;
-    else
-        return rawType.slice( start,end );
+var self = {
+    typeof : function (object) {
+        var rawType = object.toString();
+        var start = 0;
+        var end = rawType.indexOf("_",start);
+        if( end === -1 ) {
+            end = rawType.indexOf("(",start);
+            if( end === -1 )
+                return undefined;
+            else
+                return rawType.slice( start,end );
+        }
+        else
+            return rawType.slice( start,end );
+    }
 }
