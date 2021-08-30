@@ -34,31 +34,11 @@ import QtQuick.Window 2.0
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.4
 
-import "../Core"
-import "../Resources/Colors"
+import "../../Core"
+import "../../Controls" as FQL
 
-Button {
-    id: btn
+FQL.Button {
 
-    style: StyleConfigurator.getStyleCurrent( btn )
-
-    property var  color
-    property var  color_text
-    property bool borderFocus : true
-    property var  textPointSize
-
-    activeFocusOnPress: true
-
-    Keys.onPressed: {
-        if ((event.key === Qt.Key_Enter || event.key === Qt.Key_Return) && !event.isAutoRepeat && !__behavior.pressed)
-            __behavior.keyPressed = true;
-    }
-
-    Keys.onReleased: {
-        if ((event.key === Qt.Key_Enter || event.key === Qt.Key_Return) && !event.isAutoRepeat && __behavior.keyPressed) {
-            __behavior.keyPressed = false;
-            __action.trigger(btn)
-            __behavior.toggle()
-        }
-    }
+    property UnitMeasurement unit
+    property var colorTextUnitOfMeasurement
 }

@@ -35,30 +35,10 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.4
 
 import "../Core"
-import "../Resources/Colors"
+import "../Controls/Private" as PrivateFQL
 
-Button {
+PrivateFQL.BaseValueButton {
     id: btn
 
     style: StyleConfigurator.getStyleCurrent( btn )
-
-    property var  color
-    property var  color_text
-    property bool borderFocus : true
-    property var  textPointSize
-
-    activeFocusOnPress: true
-
-    Keys.onPressed: {
-        if ((event.key === Qt.Key_Enter || event.key === Qt.Key_Return) && !event.isAutoRepeat && !__behavior.pressed)
-            __behavior.keyPressed = true;
-    }
-
-    Keys.onReleased: {
-        if ((event.key === Qt.Key_Enter || event.key === Qt.Key_Return) && !event.isAutoRepeat && __behavior.keyPressed) {
-            __behavior.keyPressed = false;
-            __action.trigger(btn)
-            __behavior.toggle()
-        }
-    }
 }

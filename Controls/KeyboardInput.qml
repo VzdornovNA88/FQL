@@ -1,6 +1,6 @@
   /**
   ******************************************************************************
-  * @file             Button.qml
+  * @file             KeyboardInput.qml
   * @brief            
   * @authors          Nik A. Vzdornov
   * @date             10.09.19
