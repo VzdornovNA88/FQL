@@ -41,6 +41,9 @@ FocusScope {
         id: privateScoupe
 
         function modelToViewBind() {
+            if( ( root.model === null || root.model === undefined ) ||
+                ( root.view === null  || root.view === undefined )  ) return;
+
             var name;
             for ( var i in root.modelToViewBindings ) {
                 name = root.modelToViewBindings[ i ];
@@ -51,6 +54,9 @@ FocusScope {
         }
 
         function viewToModelBind() {
+            if( ( root.model === null || root.model === undefined ) ||
+                ( root.view === null  || root.view === undefined )  ) return;
+
             var name;
             for ( var j in root.viewToModelBindings ) {
                 name = root.viewToModelBindings[ j ];
@@ -72,7 +78,7 @@ FocusScope {
     /// set these properties to really objects to use the automatic binding mechanism between them or use
     /// properties ( pathView, pathModel )
     property Item     view  : Factory.create( pathView ,root )
-    property QtObject model : Factory.create( pathModel,root )
+    property var      model : Factory.create( pathModel,root )
 
     /// set these arrays of properties to really name properties of objects to use the automatic binding mechanism between them
     property var modelToViewBindings: []
@@ -81,6 +87,9 @@ FocusScope {
     /// Auto binding mechanism
     onModelChanged: privateScoupe.modelToViewBind()
     onViewChanged:  privateScoupe.viewToModelBind()
+
+    onPathModelChanged: privateScoupe.modelToViewBind()
+    onPathViewChanged:  privateScoupe.viewToModelBind()
 
     Component.onCompleted: {
 

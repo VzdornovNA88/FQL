@@ -52,7 +52,7 @@ function create( url,parent ) {
     }
     else
     {
-        console.log( "URL is not valid : " + url );
+//        console.log( "URL is not valid : " + url );
         return null;
     }
 }
