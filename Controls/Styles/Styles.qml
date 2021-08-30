@@ -37,4 +37,5 @@ QtObject {
     id: styles
 
     readonly property string system:  "System"
+    readonly property string flat:    "Flat"
 }
