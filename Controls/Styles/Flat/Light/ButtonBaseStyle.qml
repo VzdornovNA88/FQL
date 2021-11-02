@@ -44,6 +44,7 @@ Style {
     property var colorBorderActiveFocus  : MaterialColors.grey900
     property var colorPressed            : ColorHelpers.addAlpha( 0.2,MaterialColors.grey900 )
     property var colorEnabled            : MaterialColors.pink700
+    property var colorCheked             : colorPressed
 
     property var widthOfBorder                : 1
 
@@ -57,18 +58,22 @@ Style {
     property Control   control                : __control
 
     readonly
-    property bool      down                   : control.pressed ||
-                                                (control.checkable && control.checked)
+    property bool      down                   : control.pressed
+
+    readonly
+    property bool      checked__              : (control.checkable && control.checked)
     readonly
     property var       color__                : undefined === control.color ?
                                                     buttonstyle.colorEnabled : control.color
 
     readonly
-    property var colorForeground__            : buttonstyle.control.enabled ?
-                                                    ( buttonstyle.down ?
-                                                         buttonstyle.colorPressed :
-                                                         MaterialColors.transparent ) :
-                                                    buttonstyle.colorDisabled
+    property var colorForeground__            : buttonstyle.control.enabled     ?
+                                                 ( buttonstyle.down             ?
+                                                    buttonstyle.colorPressed    :
+                                                 ( buttonstyle.checked__        ?
+                                                    buttonstyle.colorCheked     :
+                                                 MaterialColors.transparent ) ) :
+                                                buttonstyle.colorDisabled
 
     property Component panel: Rectangle {
         id : focusable
@@ -95,11 +100,16 @@ Style {
             anchors.centerIn: parent
 
             color           : control.borderFocus ?
-                                  buttonstyle.color__ :
+                                  ( buttonstyle.checked__        ?
+                                     MaterialColors.transparent     :
+                                  buttonstyle.color__ )   :
                                   buttonstyle.down ?
                                       buttonstyle.color__ :
                                       ( control.activeFocus ?
-                                           buttonstyle.colorActiveFocus : buttonstyle.color__ )
+                                           buttonstyle.colorActiveFocus :
+                                           ( buttonstyle.checked__        ?
+                                              MaterialColors.transparent     :
+                                           buttonstyle.color__ ))
 
             FocusScope {
                 id: contentID
