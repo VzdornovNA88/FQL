@@ -38,13 +38,19 @@ Control {
 
     property var  color
     property bool borderFocus : true
+    property bool contentUnder: true
+    property bool propagateEvents: true
 
     property Component content__        : null
     property QtObject  contentItem__    : null
     signal contentLoaded__(QtObject item_)
+    property alias contentLoader__ : contentLoader
 
     property bool clickable : true
     signal clicked
+
+    property var contentAvailableWidth : contentLoader.width
+    property var contentAvailableHeight : contentLoader.height
 
     readonly property alias pressed: button.__effectivePressed
 
@@ -117,6 +123,31 @@ Control {
         }
     }
 
+    Loader {
+        id: contentLoader
+
+        z: !contentUnder ? 1 : 0
+
+        // костыль, привязку к визуальному отображению данного компонента
+        // необходимо делать в стиле, так как именно стиль знает как
+        // располагаются все визуальные элементы друг относительно друга
+        // в том числе и эти
+
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        width:  button.width  - 6
+        height: button.height - 6
+
+        sourceComponent  : content__
+
+        onLoaded: {
+
+            contentItem__ = item
+            contentLoaded__( contentItem__,contentLoader );
+        }
+    }
+
     MouseArea {
         id: behavior
         property bool keyPressed: false
@@ -177,26 +208,4 @@ Control {
             }
         }
     ]
-
-    Loader {
-        id: contentLoader
-
-        z: 1
-
-        // костыль, привязку к визуальному отображению данного компонента
-        // необходимо делать в стиле, так как именно стиль знает как
-        // располагаются все визуальные элементы друг относительно друга
-        // в том числе и эти
-        anchors.left : behavior.left
-        anchors.leftMargin: 10
-        anchors.verticalCenter: parent.verticalCenter
-
-        sourceComponent  : content__
-
-        onLoaded: {
-
-            contentItem__ = item
-            contentLoaded__( contentItem__ );
-        }
-    }
 }

@@ -82,6 +82,12 @@ Class {
         return d.getStyle( path );
     }
 
+    function getStyleCurrentByNameControl( nameControl ) {
+
+        var path = pathStyle + d.styleCurrent + "/" + d.themeCurrent + "/"  + nameControl + "Style.qml";
+        return d.getStyle( path );
+    }
+
     function switchToStyle( style ) {
         d.styleCurrent = style;
     }

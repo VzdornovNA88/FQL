@@ -51,6 +51,10 @@ Style {
     property Component content                : null
     property QtObject  contentItem__          : null
 
+    property var widthAvailable  : control.width - 6
+    property var heightAvailable : control.height - 6
+
+
     signal contentLoaded__(QtObject item_)
 
 
@@ -94,8 +98,8 @@ Style {
 
             id:bg
 
-            width           : focusable.width- 6
-            height          : focusable.height - 6
+            width           : widthAvailable
+            height          : heightAvailable
 
             anchors.centerIn: parent
 
@@ -108,7 +112,7 @@ Style {
                                       ( control.activeFocus ?
                                            buttonstyle.colorActiveFocus :
                                            ( buttonstyle.checked__        ?
-                                              MaterialColors.transparent     :
+                                              buttonstyle.colorActiveFocus     :
                                            buttonstyle.color__ ))
 
             FocusScope {

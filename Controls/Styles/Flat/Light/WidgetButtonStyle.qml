@@ -57,6 +57,14 @@ ButtonBaseStyle {
                 if( child_.checked !== undefined && type_ !== "Button" )
                     type_ = "Checkable";
 
+                for(var i = 0; i < child_.children.length; ++i) {
+
+                    activities_ += forEach_( child_.children[i] );
+
+                    if( activities_ === 0 )
+                        child_.children[i].visible = false;
+                }
+
                 switch( type_ ) {
 
                 case "QQuickText" :
@@ -74,7 +82,6 @@ ButtonBaseStyle {
 
                     activities_++;
                     componentLoaded( type_ );
-
                     break;
 
                 case "Button" :
@@ -83,6 +90,7 @@ ButtonBaseStyle {
 
                     child_.activeFocusOnPress = false;
 
+                    if(  control.propagateEvents === true ) {
                     child_.clicked.connect(function(){
                         child_.checkable = false;
                         child_.checked = false;
@@ -101,63 +109,71 @@ ButtonBaseStyle {
                         child_.__action.trigger(child_)
                         child_.__behavior.toggle()
                     });
+                    }
 
                     activities_++;
                     componentLoaded( type_ );
-
                     break;
 
                 case "Checkable" :
 
+                    if( control.propagateEvents === true ) {
                     control.clicked.connect(function(){
 
                         child_.checked = !child_.checked;
                     });
+                    }
+                    activities_++;
+                    componentLoaded( type_ );
+                    break;
+
+                case "QQuickListView" :
+
+                    activities_++;
+                    componentLoaded( type_ );
+                    break;
+
+                case "QQuickImage" :
+                    // TODO: incorrect handling for size bindings of image !!!
+                    activities_++;
+                    componentLoaded( type_ );
+                    break;
+
+                case "QQuickRectangle" :
 
                     activities_++;
                     componentLoaded( type_ );
 
                     break;
 
-                default:
+                case "QQuickLoader" :
 
-                    if( child_.children.length === 0 && type_ !== "QQuickImage" ) {
-                        child_.visible = false;
-                        break;
-                    }
-
-                    for(var i = 0; i < child_.children.length; ++i) {
-
-                        activities_ += forEach_( child_.children[i] );
-
-                        if( activities_ === 0 )
-                            child_.children[i].visible = false;
-                    }
-
-                    if( activities_ === 0 && type_ !== "QQuickImage" )
-                        child_.visible = false;
-
+                    activities_++;
                     componentLoaded( type_ );
+                    break;
+
+//                default:
+//                    if( child_.children.length === 0 ) {
+//                        child_.visible = false;
+//                        break;
+//                    }
+//                    componentLoaded( type_ );
                 }
+
+//                if( activities_ === 0 )
+//                    child_.visible = false;
 
                 return activities_;
-            }
-        }
-
-        function applyStyleToContent( item ) {
-
-            if( item !== null ) {
-
-                for(var i = 0; i < item.children.length; ++i) {
-                    forEach_( item.children[i] );
-                }
             }
         }
     }
 
     Component.onCompleted: {
 
-        d.applyStyleToContent( control.contentItem__ );
-        control.contentLoaded__.connect( d.applyStyleToContent );
+        widthAvailable  = Qt.binding(function(){return control.contentLoader__.width});
+        heightAvailable = Qt.binding(function(){return control.contentLoader__.height});
+
+        d.forEach_( control.contentItem__ );
+        control.contentLoaded__.connect( d.forEach_ );
     }
 }
