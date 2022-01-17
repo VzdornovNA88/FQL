@@ -53,10 +53,9 @@ ContentItem {
     property var          colorText            : MaterialColors.grey900
     property var          text                 : ""
     property bool         closeButtonVisible   : false
-    property bool         backButtonVisible    : false
 
-    property var          imageBackButtonURI   : ""
     property var          imageCloseButtonURI  : ""
+    property var          imageForTextURI      : ""
 
     // Unfortunatly, we need to force manual load the style for that component as 'WidgetButton'
     // because while we adding a new itself property, we actualy disable the qml engine optimization for objects.
@@ -65,7 +64,6 @@ ContentItem {
     // we do that we want to avoid cost of memory and process loading each new style
     style: StyleConfigurator.getStyleCurrentByNameControl( "WidgetButton" )
 
-    signal back()
     signal close()
 
     Item  {
@@ -74,37 +72,23 @@ ContentItem {
         width:  view.contentAvailableWidth
         height: view.contentAvailableHeight
 
-        FQL.Button {
-            id:back
+        Image {
+            id: imgtext
 
-            width:  row.height
-            height: row.height
+            width:  row.height*0.5
+            height: row.height*0.5
             anchors.left: row.left
             anchors.verticalCenter: row.verticalCenter
+            anchors.leftMargin: 10
 
-            color: MaterialColors.transparent
-            focus: true
-
-            visible: backButtonVisible
+            source                 : imageForTextURI
 
             Component.onCompleted: {
-                if( imageBackButtonURI !== undefined &&
-                        imageBackButtonURI !== null && imageBackButtonURI !== "" )
+                if( imageForTextURI !== undefined &&
+                        imageForTextURI !== null && imageForTextURI !== "" )
                     visible = true;
             }
-
-            Image {
-                id: imgback
-
-                width                    : back.width*0.6
-                height                   : back.height*0.6
-                source                   : imageBackButtonURI
-                anchors.verticalCenter   : back.verticalCenter
-                anchors.horizontalCenter : back.horizontalCenter
-            }
-
-            onClicked: view.back()
-        }
+        }        
 
         Text {
             id: textID
@@ -118,8 +102,9 @@ ContentItem {
             font.pixelSize: 480
 
             anchors.verticalCenter: row.verticalCenter
-            anchors.right: close.left
-            anchors.left: back.right
+            anchors.left: imgtext.right
+            anchors.right: close.left 
+//            anchors.leftMargin: close.visible ? width*0.3 : width*0.3
             anchors.leftMargin: 35
 
 
@@ -130,7 +115,7 @@ ContentItem {
         FQL.Button {
             id: close
 
-            width:  row.height
+            width:  visible ? row.height : 10
             height: row.height
             anchors.right: row.right
             anchors.verticalCenter: row.verticalCenter
