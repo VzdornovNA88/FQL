@@ -6,7 +6,7 @@ FlatLigt.TextFieldStyle {
 
     colorActiveFocus        : RSM_Colors.red_activated
     colorDisabled           : RSM_Colors.white50
-    colorBorderActiveFocus  : RSM_Colors.black_tertiary
+    colorBorderActiveFocus  : RSM_Colors.red_brand
     colorPressed            : RSM_Colors.transparent
     colorEnabled            : RSM_Colors.red_brand
 }
