@@ -56,15 +56,6 @@ ButtonBaseStyle {
 
                 if( child_.checked !== undefined && type_ !== "Button" )
                     type_ = "Checkable";
-
-                for(var i = 0; i < child_.children.length; ++i) {
-
-                    activities_ += forEach_( child_.children[i] );
-
-                    if( activities_ === 0 )
-                        child_.children[i].visible = false;
-                }
-
                 switch( type_ ) {
 
                 case "QQuickText" :
@@ -86,33 +77,34 @@ ButtonBaseStyle {
 
                 case "Button" :
 
-                    if( !control.clickable ) break;
+                    if( control.clickable ) {
 
-                    child_.activeFocusOnPress = false;
+                        child_.activeFocusOnPress = false;
 
-                    if(  control.propagateEvents === true ) {
-                    child_.clicked.connect(function(){
-                        child_.checkable = false;
-                        child_.checked = false;
-                    });
+                        if(  control.propagateEvents === true ) {
+                            child_.clicked.connect(function(){
+                                child_.checkable = false;
+                                child_.checked = false;
+                            });
 
-                    control.__behavior.entered.connect(function(event){
-                        child_.checkable = true;
-                        child_.checked = !child_.checked;
-                        child_.__behavior.keyPressed = true;
-                    });
+                            control.__behavior.entered.connect(function(event){
+                                child_.checkable = true;
+                                child_.checked = !child_.checked;
+                                child_.__behavior.keyPressed = true;
+                            });
 
-                    control.__behavior.released.connect(function(event){
-                        child_.checkable = true;
-                        child_.checked = !child_.checked;
-                        child_.__behavior.keyPressed = false;
-                        child_.__action.trigger(child_)
-                        child_.__behavior.toggle()
-                    });
+                            control.__behavior.released.connect(function(event){
+                                child_.checkable = true;
+                                child_.checked = !child_.checked;
+                                child_.__behavior.keyPressed = false;
+                                child_.__action.trigger(child_)
+                                child_.__behavior.toggle()
+                            });
+                        }
                     }
-
                     activities_++;
                     componentLoaded( type_ );
+
                     break;
 
                 case "Checkable" :
@@ -127,7 +119,7 @@ ButtonBaseStyle {
                     componentLoaded( type_ );
                     break;
 
-                case "QQuickListView" :
+                case "QQuickTextEdit" :
 
                     activities_++;
                     componentLoaded( type_ );
@@ -139,29 +131,26 @@ ButtonBaseStyle {
                     componentLoaded( type_ );
                     break;
 
-                case "QQuickRectangle" :
+//                case "QQuickRectangle" :
 
-                    activities_++;
-                    componentLoaded( type_ );
-
-                    break;
-
-                case "QQuickLoader" :
-
-                    activities_++;
-                    componentLoaded( type_ );
-                    break;
-
-//                default:
-//                    if( child_.children.length === 0 ) {
-//                        child_.visible = false;
-//                        break;
-//                    }
+//                    activities_++;
 //                    componentLoaded( type_ );
+
+//                    break;
+
+                default:
+                    for(var i = 0; i < child_.children.length; ++i) {
+
+                        activities_ += forEach_( child_.children[i] );
+                    }
+                    if( child_.children.length === 0 )
+                        child_.visible = false;
+                    componentLoaded( type_ );
+                    break;
                 }
 
-//                if( activities_ === 0 )
-//                    child_.visible = false;
+                if( activities_ === 0 )
+                    child_.visible = false;
 
                 return activities_;
             }
