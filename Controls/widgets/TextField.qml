@@ -44,4 +44,6 @@ ContentItem {
     style       : StyleConfigurator.getStyleCurrent( textField )
     activatable : true
     borderFocus : true
+    contentUnder: false
+    propagateEvents: false
 }
