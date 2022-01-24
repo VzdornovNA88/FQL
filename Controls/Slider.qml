@@ -38,4 +38,6 @@ import "../Core"
 Slider {
     id: slider
     style: StyleConfigurator.getStyleCurrent( slider )
+
+    activeFocusOnPress: true
 }

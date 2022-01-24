@@ -33,46 +33,17 @@ import QtQuick 2.2
 import QtQuick.Controls 1.2
 import QtQuick.Controls.Private 1.0
 
-/*!
-    \qmltype SliderStyle
-    \inqmlmodule QtQuick.Controls.Styles
-    \since 5.1
-    \ingroup controlsstyling
-    \brief Provides custom styling for Slider
+import "../../../../Resources/Colors"
+import "../../../../Core/ColorHelpers.js" as ColorHelpers
 
-    The slider style allows you to create a custom appearance for
-    a \l Slider control.
-
-    The implicit size of the slider is calculated based on the
-    maximum implicit size of the \c background and \c handle
-    delegates combined.
-
-    Example:
-    \qml
-    Slider {
-        anchors.centerIn: parent
-        style: SliderStyle {
-            groove: Rectangle {
-                implicitWidth: 200
-                implicitHeight: 8
-                color: "gray"
-                radius: 8
-            }
-            handle: Rectangle {
-                anchors.centerIn: parent
-                color: control.pressed ? "white" : "lightgray"
-                border.color: "gray"
-                border.width: 2
-                implicitWidth: 34
-                implicitHeight: 34
-                radius: 12
-            }
-        }
-    }
-    \endqml
-*/
 Style {
     id: styleitem
+
+    property var backgroundColor     : MaterialColors.grey100
+    property var fillColor           : MaterialColors.pink700
+    property var borderHandleColor   : MaterialColors.grey100
+    property var handleColor         : fillColor
+    property var tickmarksColor      : MaterialColors.grey400
 
     /*! The \l Slider this style is attached to. */
     readonly property Slider control: __control
@@ -82,74 +53,51 @@ Style {
     /*! This property holds the item for the slider handle.
         You can access the slider through the \c control property
     */
-    property Component handle: Item{
-            implicitWidth:  implicitHeight
-            implicitHeight: TextSingleton.implicitHeight * 1.2
+    property Component handle: Rectangle{
+            id: backHandle
+            width:  height
+            height: control.height * 4
 
-            FastGlow {
-                source: handle
-                anchors.fill: parent
-                anchors.bottomMargin: -1
-                anchors.topMargin: 1
-                smooth: true
-                color: "#11000000"
-                spread: 0.8
-                transparentBorder: true
-                blur: 0.1
+            radius: width/2
 
-            }
+            color: MaterialColors.transparent
+            border.width: 1
+            border.color: control.activeFocus ? styleitem.borderHandleColor : MaterialColors.transparent
+
             Rectangle {
                 id: handle
-                anchors.fill: parent
+                width: backHandle.width - 6
+                height: backHandle.height - 6
+                anchors.verticalCenter: backHandle.verticalCenter
+                anchors.horizontalCenter: backHandle.horizontalCenter
 
                 radius: width/2
-                gradient: Gradient {
-                    GradientStop { color: control.pressed ? "#e0e0e0" : "#fff" ; position: 1 }
-                    GradientStop { color: "#eee" ; position: 0 }
-                }
-                Rectangle {
-                    anchors.fill: parent
-                    anchors.margins: 1
-                    radius: width/2
-                    border.color: "#99ffffff"
-                    color: control.activeFocus ? "#224f7fbf" : "transparent"
-                }
-                border.color: control.activeFocus ? "#47b" : "#777"
-            }
+                color: handleColor
 
+            }
     }
     /*! This property holds the background groove of the slider.
 
         You can access the handle position through the \c styleData.handlePosition property.
     */
-    property Component groove: Item {
-        property color fillColor: "#49d"
+    property Component groove: Rectangle {
+
         anchors.verticalCenter: parent.verticalCenter
-        implicitWidth: Math.round(TextSingleton.implicitHeight * 4.5)
-        implicitHeight: Math.max(6, Math.round(TextSingleton.implicitHeight * 0.3))
-        Rectangle {
-            radius: height/2
-            anchors.fill: parent
-            border.width: 1
-            border.color: "#888"
-            gradient: Gradient {
-                GradientStop { color: "#bbb" ; position: 0 }
-                GradientStop { color: "#ccc" ; position: 0.6 }
-                GradientStop { color: "#ccc" ; position: 1 }
-            }
-        }
+//        implicitWidth: Math.round(TextSingleton.implicitHeight * 4.5)
+//        implicitHeight: Math.max(6, Math.round(TextSingleton.implicitHeight * 0.3))
+        width:  control.width
+        height: control.height
+
+        color: backgroundColor
+
         Item {
             clip: true
             width: styleData.handlePosition
             height: parent.height
+
             Rectangle {
                 anchors.fill: parent
-                border.color: Qt.darker(fillColor, 1.2)
-                radius: height/2
-                gradient: Gradient {
-                    GradientStop {color: Qt.lighter(fillColor, 1.3)  ; position: 0}
-                    GradientStop {color: fillColor ; position: 1.4}
-                }
+                color: fillColor
             }
         }
     }
@@ -163,7 +111,7 @@ Style {
         id: repeater
         model: control.stepSize > 0 ? 1 + (control.maximumValue - control.minimumValue) / control.stepSize : 0
         Rectangle {
-            color: "#777"
+            color: tickmarksColor
             width: 1 ; height: 3
             y: repeater.height
             x: styleData.handleWidth / 2 + index * ((repeater.width - styleData.handleWidth) / (repeater.count-1))
