@@ -43,8 +43,4 @@ WidgetButtonStyle {
     colorBorderActiveFocus : MaterialColors.pink700
 
     widthOfBorder          : 2
-
-    onComponentLoaded : {
-        console.log( "onComponentLoaded - ",arguments[0],arguments.length );
-    }
 }
