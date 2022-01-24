@@ -110,6 +110,11 @@ Control {
     }
 
     onFocusChanged:{
+        if( activatable ) {
+            behavior.activated__ = !behavior.activated__;
+            if( !behavior.activated__ )
+                button.focus = false;
+        }
         if( !activatable ) focus = false;
         if (!focus) behavior.keyPressed = false
     }
@@ -160,11 +165,11 @@ Control {
 
         function toggle() {
             if( !clickable ) return;
-            if( activatable ) {
-                activated__ = !activated__;
-                if( !activated__ )
-                    button.focus = false;
-            }
+//            if( activatable ) {
+//                activated__ = !activated__;
+//                if( !activated__ )
+//                    button.focus = false;
+//            }
 
             if (button.checkable && !button.action && !(button.checked && button.exclusiveGroup))
                 button.checked = !button.checked
