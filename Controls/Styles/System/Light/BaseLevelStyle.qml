@@ -314,7 +314,7 @@ Style {
 
             Rectangle {
                 id: rectFilledCanvas
-                color: MaterialColors.green
+                color: MaterialColors.green500
                 height: verticalOrientation ? 0 : parent.height
                 width:  verticalOrientation ? parent.width : 0
                 anchors.bottom: parent.bottom
@@ -324,7 +324,7 @@ Style {
             }
             Rectangle {
                 id: rectEmptyCanvas
-                color: MaterialColors.gray_light
+                color: MaterialColors.gray300
                 height: verticalOrientation ? 0 : parent.height
                 width: verticalOrientation ? parent.width : 0
                 anchors.top: parent.top
