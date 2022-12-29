@@ -7,7 +7,7 @@ import "../Core"
 RadioButton {
     id: radioButton
 
-    style: StyleConfigurator.getStyleCurrent( radioButton )
+    style: StyleConfigurator.getStyleCurrentByNameControl( "RadioButton" )
 
     property var  colorOn
     property var  colorOff

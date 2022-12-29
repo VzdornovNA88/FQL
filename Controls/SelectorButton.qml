@@ -7,5 +7,5 @@ import "../Controls/Private" as PrivateFQL
 
 PrivateFQL.BaseSelectorButton {
     id: selectorButton
-    style: StyleConfigurator.getStyleCurrent( selectorButton )
+    style: StyleConfigurator.getStyleCurrentByNameControl( "BaseSelectorButton" )
 }

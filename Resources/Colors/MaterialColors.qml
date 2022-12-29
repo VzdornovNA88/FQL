@@ -36,6 +36,10 @@ import QtQuick 2.0
 QtObject {
     id: materialColors
 	
+    function ref() {
+        return materialColors;
+    }
+
     readonly property var transparent:          "#00000000"
 
     readonly property color red50:     "#ffebee"

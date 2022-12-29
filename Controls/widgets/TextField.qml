@@ -36,12 +36,12 @@ import "../../Core/Meta"
 ContentItem {
     id: textField
 
-    // We need to aspecial defined proprety in this QML type
-    // for deoptimization and force creation,
-    // we should remove this property when we will have added a new useful proprety
-    property var deoptimizeForCreatingUniqTypeTextField
+//    // We need to aspecial defined proprety in this QML type
+//    // for deoptimization and force creation,
+//    // we should remove this property when we will have added a new useful proprety
+//    property var deoptimizeForCreatingUniqTypeTextField
 
-    style       : StyleConfigurator.getStyleCurrent( textField )
+    style       : StyleConfigurator.getStyleCurrentByNameControl( "TextField" )
     activatable : true
     borderFocus : true
     contentUnder: false

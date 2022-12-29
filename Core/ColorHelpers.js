@@ -150,7 +150,7 @@ function getColorsFrom ( obj ) {
     }
 
     function array2color (item,index,array) {
-        console.log(array2color,item)
+
         return { itemColor : { name : item , color : item } };
     }
 

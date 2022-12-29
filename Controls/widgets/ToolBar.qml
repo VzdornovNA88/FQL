@@ -55,7 +55,7 @@ Control {
     property var   colorTabItems
     property var   colorBackground
 
-    style: StyleConfigurator.getStyleCurrent( toolBar )
+    style: StyleConfigurator.getStyleCurrentByNameControl( "ToolBar" )
 
     property Component horizontalLayout : Component {
 //        id : horizontalLayout
@@ -142,7 +142,7 @@ Control {
                             width                    : itemdelegate.width*0.8
                             height                   : itemdelegate.width*0.8
 
-                            source                   : model.imguri
+                            source                   : modelData
 
                             anchors.verticalCenter   : itemdelegate.verticalCenter
                             anchors.horizontalCenter : itemdelegate.horizontalCenter
@@ -273,7 +273,7 @@ Control {
                             width                    : itemdelegate.width*0.8
                             height                   : itemdelegate.width*0.8
 
-                            source                   : model.imguri
+                            source                   : modelData
 
                             anchors.verticalCenter   : itemdelegate.verticalCenter
                             anchors.horizontalCenter : itemdelegate.horizontalCenter

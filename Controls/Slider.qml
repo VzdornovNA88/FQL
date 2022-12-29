@@ -37,7 +37,7 @@ import "../Core"
 
 Slider {
     id: slider
-    style: StyleConfigurator.getStyleCurrent( slider )
+    style: StyleConfigurator.getStyleCurrentByNameControl( "Slider" )
 
     activeFocusOnPress: true
 }
