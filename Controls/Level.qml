@@ -6,6 +6,6 @@ import "../Core"
 
 PrivateFQL.BaseLevel {
     id: level
-    style: StyleConfigurator.getStyleCurrent( level )
+    style: StyleConfigurator.getStyleCurrentByNameControl( "BaseLevel" )
 }
 

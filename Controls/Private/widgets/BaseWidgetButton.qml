@@ -138,8 +138,8 @@ Control {
         // располагаются все визуальные элементы друг относительно друга
         // в том числе и эти
 
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: button.verticalCenter
+        anchors.horizontalCenter: button.horizontalCenter
 
         width:  button.width  - 6
         height: button.height - 6

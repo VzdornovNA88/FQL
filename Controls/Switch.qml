@@ -7,7 +7,7 @@ import "../Core"
 Switch {
     id: switch_
 
-    style: StyleConfigurator.getStyleCurrent( switch_ )
+    style: StyleConfigurator.getStyleCurrentByNameControl( "Switch" )
 
     property var  colorOn
     property var  colorOff

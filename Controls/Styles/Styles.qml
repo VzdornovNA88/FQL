@@ -38,4 +38,5 @@ QtObject {
 
     readonly property string system:  "System"
     readonly property string flat:    "Flat"
+    readonly property string rsmflat: "RSMFlat"
 }

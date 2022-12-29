@@ -37,5 +37,5 @@ import "../Core"
 
 CircularGauge {
     id: circularGauge
-    style: StyleConfigurator.getStyleCurrent( circularGauge )
+    style: StyleConfigurator.getStyleCurrentByNameControl( "CircularGauge" )
 }

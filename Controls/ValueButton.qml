@@ -40,5 +40,5 @@ import "../Controls/Private" as PrivateFQL
 PrivateFQL.BaseValueButton {
     id: btn
 
-    style: StyleConfigurator.getStyleCurrent( btn )
+    style: StyleConfigurator.getStyleCurrentByNameControl( "BaseValueButton" )
 }

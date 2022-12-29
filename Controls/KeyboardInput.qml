@@ -40,7 +40,7 @@ import "../Resources/Colors"
 Button {
     id: btn
 
-    style: StyleConfigurator.getStyleCurrent( btn )
+    style: StyleConfigurator.getStyleCurrentByNameControl( "KeyboardInput" )
 
     property var  color
     property var  color_text

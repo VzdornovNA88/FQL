@@ -35,7 +35,7 @@ import "../../Core"
 BaseWidgetButton {
     id: widgetButton
 
-    style: StyleConfigurator.getStyleCurrent( widgetButton )
+    style: StyleConfigurator.getStyleCurrentByNameControl( "WidgetButton" )
 
     borderFocus: false
 

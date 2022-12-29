@@ -44,5 +44,5 @@ ContentItem {
     propagateEvents     : false
     checkable           : true
 
-    style               : StyleConfigurator.getStyleCurrent( tabItem )
+    style               : StyleConfigurator.getStyleCurrentByNameControl( "TabItem" )
 }
