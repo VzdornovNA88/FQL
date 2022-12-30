@@ -56,7 +56,7 @@ Style {
     property Component handle: Rectangle{
             id: backHandle
             width:  height
-            height: control.height * 4
+            height: control.height
 
             radius: width/2
 
@@ -86,7 +86,7 @@ Style {
 //        implicitWidth: Math.round(TextSingleton.implicitHeight * 4.5)
 //        implicitHeight: Math.max(6, Math.round(TextSingleton.implicitHeight * 0.3))
         width:  control.width
-        height: control.height
+        height: control.height*0.25
 
         color: backgroundColor
 
