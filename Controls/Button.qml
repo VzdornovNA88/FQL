@@ -47,6 +47,8 @@ Button {
     property bool borderFocus : true
     property var  textPointSize
 
+    property bool showPressedState : true
+
     activeFocusOnPress: true
 
     Keys.onPressed: {

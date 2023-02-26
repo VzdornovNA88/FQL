@@ -37,6 +37,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.2
 import QtQuick.Controls.Private 1.0
+import "../../../Private"
 
 /*!
     \qmltype SliderStyle
@@ -80,7 +81,7 @@ Style {
     id: styleitem
 
     /*! The \l Slider this style is attached to. */
-    readonly property Slider control: __control
+    readonly property BaseSlider control: __control
 
     padding { top: 0 ; left: 0 ; right: 0 ; bottom: 0 }
 

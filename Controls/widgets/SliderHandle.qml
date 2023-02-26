@@ -1,6 +1,6 @@
 /**
 ******************************************************************************
-* @file             Level.qml
+* @file             SliderHandle.qml
 * @brief
 * @authors          Nik A. Vzdornov
 * @date             10.09.19
@@ -30,29 +30,24 @@
 */
 
 import QtQuick 2.0
-import QtQuick.Controls.Private 1.0
-import "../"
+
+import "../../Controls/Private/widgets"
 import "../../Core"
+import "../../Core/Meta"
+import "../../Resources/Colors"
 
-Control {
-    id: root
-    property var levelPattern             : []
-    property var maskLevelPattern         : []
-    property real min                     : 10
-    property real max                     : 200
-    property real value                   : 95
-    property real valueCurrent            : 15
-    property real step                    : 1
-//    property int orientation : Qt.Horizontal
-    property bool enabled                 : true
-    property var colorLevel
-    property var colorDisplay
-    property var colorText
-    property UnitMeasurement unit
-    property bool hintVisible             : true
-    property bool displayVisible          : true
-    property string  headerText           : ""
-    readonly property int fixedPrecision  : Math.abs( step ) > 1 ? 0 : Math.abs(parseInt(step.toExponential().split('e')[1]))
-    property bool tickmarksEnabled        : false
+ContentItem {
+    id: sliderHandle
+
+    property bool vertical : false
+    property bool frontDirection : true
+//    signal click(var event);
+
+    showPressedState    : false
+    borderFocus         : false
+    propagateEvents     : false
+
+    color: MaterialColors.transparent
+
+//    Component.onCompleted: click.connect(sliderHandle.clicked)
 }
-

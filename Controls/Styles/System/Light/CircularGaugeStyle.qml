@@ -1,38 +1,33 @@
-/****************************************************************************
-**
-** Copyright (C) 2015 The Qt Company Ltd.
-** Contact: http://www.qt.io/licensing/
-**
-** This file is part of the Qt Quick Extras module of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:LGPL3$
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see http://www.qt.io/terms-conditions. For further
-** information use the contact form at http://www.qt.io/contact-us.
-**
-** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 3 as published by the Free Software
-** Foundation and appearing in the file LICENSE.LGPLv3 included in the
-** packaging of this file. Please review the following information to
-** ensure the GNU Lesser General Public License version 3 requirements
-** will be met: https://www.gnu.org/licenses/lgpl.html.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 2.0 or later as published by the Free
-** Software Foundation and appearing in the file LICENSE.GPL included in
-** the packaging of this file. Please review the following information to
-** ensure the GNU General Public License version 2.0 requirements will be
-** met: http://www.gnu.org/licenses/gpl-2.0.html.
-**
-** $QT_END_LICENSE$
-**
-****************************************************************************/
+/**
+******************************************************************************
+* @file             CircularGaugeStyle.qml
+* @brief
+* @authors          Nik A. Vzdornov
+* @date             10.09.19
+* @copyright
+*
+* Copyright (c) 2019 VzdornovNA88
+*
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+*
+* The above copyright notice and this permission notice shall be included in all
+* copies or substantial portions of the Software.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+* SOFTWARE.
+*
+******************************************************************************
+*/
 
 import QtQuick 2.2
 import QtGraphicalEffects 1.0
@@ -41,56 +36,6 @@ import QtQuick.Controls.Styles 1.4
 import QtQuick.Controls.Private 1.0
 import QtQuick.Extras 1.4
 import QtQuick.Extras.Private 1.0
-
-/*!
-    \qmltype CircularGaugeStyle
-    \inqmlmodule QtQuick.Controls.Styles
-    \since 5.5
-    \ingroup controlsstyling
-    \brief Provides custom styling for CircularGauge.
-
-    You can create a custom circular gauge by replacing the following delegates:
-    \list
-        \li \l background
-        \li \l tickmark
-        \li \l minorTickmark
-        \li \l tickmarkLabel
-        \li \l needle
-        \li \l foreground
-    \endlist
-
-    Below is an example that changes the needle to a basic orange \l Rectangle:
-    \code
-    CircularGauge {
-        style: CircularGaugeStyle {
-            needle: Rectangle {
-                y: outerRadius * 0.15
-                implicitWidth: outerRadius * 0.03
-                implicitHeight: outerRadius * 0.9
-                antialiasing: true
-                color: Qt.rgba(0.66, 0.3, 0, 1)
-            }
-        }
-    }
-    \endcode
-
-    The result:
-    \image circulargauge-needle-example-2.png CircularGaugeStyle example
-
-    \section2 Direction
-
-    \l minimumValueAngle and \l maximumValueAngle determine not only the
-    position of the tickmarks, labels and needle, but the direction in which
-    they are displayed around the gauge. For example, if \l minimumValueAngle
-    is greater than \l maximumValueAngle, the gauge will be anti-clockwise.
-    Below, there are two gauges: the top gauge has a \l minimumValueAngle of
-    \c -90 degrees and a \l maximumValueAngle of \c 90 degrees, and the bottom
-    gauge has the opposite.
-
-    \image circulargauge-reversed.png Reversed CircularGauge
-
-    \sa {Styling CircularGauge}
-*/
 
 Style {
     id: circularGaugeStyle

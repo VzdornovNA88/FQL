@@ -53,12 +53,12 @@ Class {
         function getStyle(path) {
 
             if( path in cache ) {
-                console.log("getStyle - path in cache ")
+//                console.log("getStyle - path in cache ")
                 return cache[path];
             }
             else {
                 cache[path] = Qt.createComponent( path, configurator );
-                console.log("getStyle - path create - ",path,cache[path])
+//                console.log("getStyle - path create - ",path,cache[path])
                 return cache[path];
             }
         }

@@ -5,9 +5,7 @@ import QtQuick 2.0
 QtObject {
     id: colors
 
-    function ref() {
-        return colors;
-    }
+    function ref(){ return colors; }
 
     // common
     readonly property var black_primary:        "#202020"

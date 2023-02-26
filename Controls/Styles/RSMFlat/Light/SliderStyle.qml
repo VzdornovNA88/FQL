@@ -8,8 +8,11 @@ import "../../../../Core/ColorHelpers.js" as ColorHelpers
 
 
 FlatLigt.SliderStyle {
-    property var backgroundColor     : RSM_Colors.background
-    property var fillColor           : RSM_Colors.red_brand
-    property var borderHandleColor   : RSM_Colors.black_tertiary
-    property var tickmarksColor      : RSM_Colors.black
+    backgroundColor     : RSM_Colors.background
+    fillColor           : RSM_Colors.red_brand
+    borderHandleColor   : RSM_Colors.black_tertiary
+    tickmarksColor      : RSM_Colors.black_primary
+    colorDisabled       : RSM_Colors.white50
+
+    valueLevelPatternFillColor: [control.color ? control.color : fillColor,RSM_Colors.orange,RSM_Colors.red_error]
 }

@@ -38,6 +38,7 @@ Control {
 
     property var  color
     property bool borderFocus : true
+    property var contentBorderColor
     property bool contentUnder: true
     property bool propagateEvents: true
 
@@ -64,6 +65,8 @@ Control {
 
     property bool activatable: false
     readonly property bool activated: behavior.activated__
+
+    property bool showPressedState : true
 
     onActivatableChanged: if(!activatable) behavior.activated__ = false;
 
@@ -96,10 +99,7 @@ Control {
         enabled: button.enabled
     }
 
-    Connections {
-        target: __action
-        onTriggered: button.clicked()
-    }
+    Component.onCompleted: __action.triggered.connect(button.clicked)
 
     activeFocusOnTab: false
 

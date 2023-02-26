@@ -81,6 +81,7 @@ Class {
 
     readonly property UnitMeasurement hz                   : UnitMeasurement { readonly property string name : "Гц"      }
     readonly property UnitMeasurement kHz                  : UnitMeasurement { readonly property string name : "кГц"     }
+    readonly property UnitMeasurement megaHz               : UnitMeasurement { readonly property string name : "МГц"     }
     readonly property UnitMeasurement rpm                  : UnitMeasurement { readonly property string name : "об/мин"  }
 
     readonly property UnitMeasurement celsius              : UnitMeasurement { readonly property string name : "°C"      }

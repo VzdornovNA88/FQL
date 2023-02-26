@@ -1,6 +1,6 @@
   /**
   ******************************************************************************
-  * @file             Ыдшвук.qml
+  * @file             Slider.qml
   * @brief            
   * @authors          Nik A. Vzdornov
   * @date             10.09.19
@@ -29,13 +29,10 @@
   ******************************************************************************
   */
 
-import QtQuick 2.2
-import QtQuick.Controls 1.2
-import QtQuick.Controls.Private 1.0
-
 import "../Core"
+import "../Controls/Private"
 
-Slider {
+BaseSlider {
     id: slider
     style: StyleConfigurator.getStyleCurrentByNameControl( "Slider" )
 

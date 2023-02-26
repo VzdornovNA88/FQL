@@ -1,6 +1,6 @@
 /**
 ******************************************************************************
-* @file             Level.qml
+* @file             CircularGaugeStyle.qml
 * @brief
 * @authors          Nik A. Vzdornov
 * @date             10.09.19
@@ -29,30 +29,23 @@
 ******************************************************************************
 */
 
-import QtQuick 2.0
+import QtQuick 2.2
+import QtQuick.Controls 1.2
 import QtQuick.Controls.Private 1.0
-import "../"
-import "../../Core"
+import "../../Flat/Light" as FlatLigt
 
-Control {
-    id: root
-    property var levelPattern             : []
-    property var maskLevelPattern         : []
-    property real min                     : 10
-    property real max                     : 200
-    property real value                   : 95
-    property real valueCurrent            : 15
-    property real step                    : 1
-//    property int orientation : Qt.Horizontal
-    property bool enabled                 : true
-    property var colorLevel
-    property var colorDisplay
-    property var colorText
-    property UnitMeasurement unit
-    property bool hintVisible             : true
-    property bool displayVisible          : true
-    property string  headerText           : ""
-    readonly property int fixedPrecision  : Math.abs( step ) > 1 ? 0 : Math.abs(parseInt(step.toExponential().split('e')[1]))
-    property bool tickmarksEnabled        : false
+import "../../../../Resources/Colors"
+import "../../../../Core/ColorHelpers.js" as ColorHelpers
+
+
+FlatLigt.CircularSliderStyle {
+    backgroundColor       : Qt.tint( RSM_Colors.background,RSM_Colors.white80 )
+    backgroundFillerColor : RSM_Colors.background
+    fillColor             : RSM_Colors.green
+    colorDisabled         : RSM_Colors.white50
+    colorDisabledContent  : RSM_Colors.background
+    tickmarksColor        : RSM_Colors.white_primary
+    tickmarkFontColor     : RSM_Colors.text_secondary
+
+//    valueLevelPatternFillColor: [control.color ? control.color : fillColor,RSM_Colors.orange,RSM_Colors.red_error]
 }
-

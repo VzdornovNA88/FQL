@@ -45,6 +45,7 @@ Style {
     property var colorPressed            : ColorHelpers.addAlpha( 0.2,MaterialColors.grey900 )
     property var colorEnabled            : MaterialColors.pink700
     property var colorCheked             : colorPressed
+    property var contentBorderColor      : MaterialColors.transparent
 
     property var widthOfBorder                : 1
 
@@ -73,7 +74,9 @@ Style {
     readonly
     property var colorForeground__            : buttonstyle.control.enabled     ?
                                                  ( buttonstyle.down             ?
-                                                    buttonstyle.colorPressed    :
+                                                    (buttonstyle.control.showPressedState ?
+                                                         buttonstyle.colorPressed :
+                                                         MaterialColors.transparent) :
                                                  ( buttonstyle.checked__        ?
                                                     buttonstyle.colorCheked     :
                                                  MaterialColors.transparent ) ) :
@@ -142,6 +145,9 @@ Style {
                 width       : bg.width
                 height      : bg.height
                 color       : buttonstyle.colorForeground__
+
+                border.width: 2
+                border.color: control.contentBorderColor ? control.contentBorderColor : buttonstyle.contentBorderColor
             }
         }
     }

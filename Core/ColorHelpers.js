@@ -39,7 +39,7 @@ function convert ( color ) {
     var _ = {
         toARGB : function() {
             var res = null;
-
+//console.error("convert ---> toARGB ---> ",color,strColor)
             if( color !== undefined && color !== null && strColor.indexOf("#", 0) === 0 ) {
 
                 res = [];
@@ -54,7 +54,7 @@ function convert ( color ) {
                 }
             }
             else if(strColor.indexOf("#", 0) !== 0 ) {
-                console.log("Invalid color format - ",strColor);
+//                console.log("Invalid color format - ",strColor);
                 res = null;
             }
 
@@ -130,7 +130,8 @@ function getColorsFrom ( obj ) {
         return  isPropertyHandler                     &&
                 propertyName !== "objectName"         &&
                 propertyName !== "objectNameChanged"  &&
-                propertyName !== "id";
+                propertyName !== "id"                 &&
+                propertyName !== "ref";
     };
 
 //    function isValidColor (item,index,array) {
@@ -263,7 +264,7 @@ function addAlpha( alpha,color ) {
                        if( index === 0 )
                            color_ = (Math.round(item*alpha));
 
-                       console.log("function addAlpha( alpha,color ) map - ",index,item,color_.toString(16))
+//                       console.log("function addAlpha( alpha,color ) map - ",index,item,color_.toString(16))
 
                        return color_.toString(16);
                    })
@@ -272,7 +273,7 @@ function addAlpha( alpha,color ) {
                        return color + item;
                    },"#" );
 
-    console.log("function addAlpha( alpha,color ) - ",color_)
+//    console.log("function addAlpha( alpha,color ) - ",color_)
 
     return color_
 }

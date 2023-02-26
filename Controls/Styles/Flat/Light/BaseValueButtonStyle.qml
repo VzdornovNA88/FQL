@@ -83,7 +83,7 @@ ButtonBaseStyle {
             anchors.bottomMargin: 5
 
             font.pointSize         : row.pointSize__/2
-            text                   : control.unit.name
+            text                   : qsTr(control.unit ? control.unit.name : "")
             color                  : undefined === control.colorTextUnitOfMeasurement ?
                                          text.color : control.colorTextUnitOfMeasurement
         }

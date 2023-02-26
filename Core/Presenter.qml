@@ -41,15 +41,19 @@ FocusScope {
         id: privateScoupe
 
         function modelToViewBind() {
+//            console.log("PRESENTER - modelToViewBind - ",root.model,root.view)
             if( ( root.model === null || root.model === undefined ) ||
                 ( root.view === null  || root.view === undefined )  ) return;
 
             var name;
             for ( var i in root.modelToViewBindings ) {
                 name = root.modelToViewBindings[ i ];
-                dynamicBinding.createObject( root, {
+
+                var o_ = dynamicBinding.createObject( root, {
                     target: root.view, property: name, source: root.model, sourceProperty: name
                 } );
+
+//                console.log("PRESENTER - modelToViewBind - property - ",o_,name,root.model,root.view)
             }
         }
 

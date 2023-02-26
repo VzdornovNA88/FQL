@@ -1,96 +1,262 @@
-import QtQuick 2.0
-import QtQuick.Controls 1.4
+/**
+******************************************************************************
+* @file             BaseLevelStyle.qml
+* @brief
+* @authors          Nik A. Vzdornov
+* @date             10.09.19
+* @copyright
+*
+* Copyright (c) 2019 VzdornovNA88
+*
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+*
+* The above copyright notice and this permission notice shall be included in all
+* copies or substantial portions of the Software.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+* SOFTWARE.
+*
+******************************************************************************
+*/
+
+import QtQuick 2.2
+import QtQuick.Controls 1.2
 import QtQuick.Controls.Private 1.0
 
-Item {
-    id: root
+import "../../../../Resources/Colors"
+import "../../../../Core/ColorHelpers.js" as ColorHelpers
+import "../../../Private"
+import "../../../" as FQL
+import "../../../widgets" as Widgets
 
-    property alias rectCanvasSolid: rectCanvasSolid
-    property alias rectFilledCanvas: rectFilledCanvas
-    property alias rectEmptyCanvas: rectEmptyCanvas
-    property alias handle:imgHandle
-    property alias mouseArea: mouseArea
-    property alias value: txtValue
-    property alias txtMinValue: txtMinValue
-    property alias txtMaxValue: txtMaxValue
+Style {
+    id: styleitem
+
+    property var colorLevel                   : MaterialColors.green200
+    property var colorDisplay                 : MaterialColors.grey100
+    property var colorText                    : MaterialColors.grey900
+    property var colorDisabled                : ColorHelpers.addAlpha( 0.5,MaterialColors.grey50  )
+    property var borderColor                  : MaterialColors.grey600
+
+    readonly property BaseLevel control       : __control
+    readonly property int fixedPrecision      : control.fixedPrecision
+
+    property Component horizontalLayout : Component {
+
+        Item {
+            id: horizontalLayoutItem
+
+            width: control.width
+            height: control.height
+
+            function getIdxOfMaskedValueFor(vaulePattern_,currentValue) {
+                if( vaulePattern_.length !== undefined && vaulePattern_.length > 0 )
+                    for(var i_ = 0; i_ < vaulePattern_.length; i_++) {
+                        if( Math.abs(vaulePattern_[i_] - currentValue) <= 1e-6 ){
+                            idxOfMaskedValue__ = i_;
+                            return idxOfMaskedValue__;
+                        }
+                    }
+                return idxOfMaskedValue__;
+            }
+
+            property int idxOfMaskedValue__ : 0
+
+            Column {
+                id: layout
+
+                width: horizontalLayoutItem.width
+                height: horizontalLayoutItem.height
+
+                spacing: 0
+
+                Item{
+                    id: header
+
+                    width: layout.width
+                    height: layout.height/3
+
+                    Text {
+                        id: headerText
+
+                        anchors.top: header.top
+                        anchors.horizontalCenter: header.horizontalCenter
+                        text: qsTr(control.headerText) + ", " + qsTr(control.unit ? control.unit.name : "")
+
+                        wrapMode : Text.WrapAtWordBoundaryOrAnywhere
+                        minimumPixelSize: 1
+                        font.pixelSize: Math.min(header.width,header.height*2)*0.2
+
+                        color: control.colorText ? control.colorText : colorText
+                    }
+
+                    Text {
+                        id: curValText
+
+                        anchors.bottom: header.bottom
+                        x : slider.__style.handlePosition
+                        text:    qsTr( (control.maskLevelPattern.length && control.maskLevelPattern.length > 0) ?
+                                            control.maskLevelPattern[horizontalLayoutItem.getIdxOfMaskedValueFor(control.levelPattern,slider.value)] :
+                                          slider.value.toFixed(fixedPrecision))
+
+                        wrapMode : Text.WrapAtWordBoundaryOrAnywhere
+                        minimumPixelSize: 1
+                        font.bold: true
+                        font.pixelSize: Math.min(header.width,header.height*2.0)*0.2
+
+                        color: control.colorText ? control.colorText : colorText
+
+//                        visible: control.hintVisible
+                    }
+                }
 
 
-    Component.onCompleted: {
-        rectFilledCanvas.width = imgHandle.x + imgHandle.width/2 - rectCanvasSolid.x
-        rectEmptyCanvas.width = rectCanvasSolid.x + rectCanvasSolid.width - imgHandle.x
+
+                FQL.Slider {
+                    id: slider
+
+                    width: layout.width
+                    height: layout.height/6
+
+                    color: control.colorLevel ? control.colorLevel : colorLevel
+                    clip: true
+                    fullSizeOfControlArea: true
+                    tickmarksEnabled: control.tickmarksEnabled
+                    borderWidth: 0
+                    minimumValue: control.min
+                    maximumValue: control.max
+                    stepSize: control.step
+                    enabled: control.enabled
+                    value: control.value
+
+                    handle: Image {
+                        source: "qrc:/Vector1lb.svg"
+
+                        width:  height
+                        height: slider.height*1.2
+
+                        y: height*0.003
+                        rotation: 90
+                    }
+
+                    onValueChanged: {
+                        control.value = Qt.binding(function(){
+                            return slider.value.toFixed(fixedPrecision);
+                        });
+                    }
+                }
+
+                Item {
+                    id: itemSlider
+                    width: layout.width
+                    height: layout.height/6
+
+                    visible: control.hintVisible
+
+                    Text {
+                        id: minVal
+
+                        anchors.left: itemSlider.left
+                        text: qsTr((control.maskLevelPattern &&
+                                     control.maskLevelPattern.length &&
+                                     control.maskLevelPattern.length > 0 &&
+                                     control.maskLevelPattern[control.maskLevelPattern.length - 1]) ?
+                                       control.maskLevelPattern[0] :
+                                       control.min.toString())
+
+                        wrapMode : Text.WrapAtWordBoundaryOrAnywhere
+                        minimumPixelSize: 1
+                        font.pixelSize: Math.min(itemSlider.width/2,itemSlider.height)*0.7
+
+                        color: control.colorText ? control.colorText : colorText
+                    }
+
+                    Text {
+                        id: maxVal
+
+                        anchors.right: itemSlider.right
+                        text: qsTr((control.maskLevelPattern &&
+                                    control.maskLevelPattern.length &&
+                                    control.maskLevelPattern.length > 0 &&
+                                    control.maskLevelPattern[control.maskLevelPattern.length - 1]) ?
+                                       control.maskLevelPattern[control.maskLevelPattern.length - 1] :
+                                       control.max.toString())
+
+                        wrapMode : Text.WrapAtWordBoundaryOrAnywhere
+                        minimumPixelSize: 1
+                        font.pixelSize: Math.min(itemSlider.width/2,itemSlider.height)*0.7
+
+                        color: control.colorText ? control.colorText : colorText
+                    }
+                }
+
+                Rectangle {
+                    id: display
+
+                    width: layout.width
+                    height: layout.height/3
+
+                    border.color: borderColor
+                    border.width: 1
+                    color: control.colorDisplay ? control.colorDisplay : colorDisplay
+
+                    Text {
+                        id: curValDisplay
+                        anchors.left: display.left
+                        anchors.leftMargin: + display.width*0.05
+                        anchors.verticalCenter: targetValDisplay.verticalCenter
+                        text: qsTr(control.valueCurrent.toString()/*.toFixed(fixedPrecision)*/)
+
+                        wrapMode : Text.WrapAtWordBoundaryOrAnywhere
+                        minimumPixelSize: 1
+                        font.pixelSize: Math.min(display.width/2,display.height/2)*0.7
+
+                        color: control.colorText ? control.colorText : colorText
+                    }
+
+                    Text {
+                        id: targetValDisplay
+                        anchors.horizontalCenter: display.horizontalCenter
+                        anchors.verticalCenter: display.verticalCenter
+                        anchors.verticalCenterOffset: - display.height/8
+                        text: qsTr( (control.maskLevelPattern.length && control.maskLevelPattern.length > 0) ?
+                                       control.maskLevelPattern[horizontalLayoutItem.getIdxOfMaskedValueFor(control.levelPattern,slider.value)] :
+                                     slider.value.toFixed(fixedPrecision)) + " " + qsTr(control.unit ? control.unit.name : "")
+
+                        wrapMode : Text.WrapAtWordBoundaryOrAnywhere
+                        minimumPixelSize: 1
+                        font.bold: true
+                        font.pixelSize: Math.min(display.width,display.height*2.0)*0.2
+
+                        color: control.colorText ? control.colorText : colorText
+                    }
+                    visible: control.displayVisible
+                }
+            }
+
+            Rectangle {
+                id: disabler
+
+                width: horizontalLayoutItem.width
+                height: horizontalLayoutItem.height
+
+                color: control.enabled ? MaterialColors.transparent : colorDisabled
+            }
+        }
     }
 
-    Rectangle {
-        id: rectCanvasSolid
-        height: root.height
-        width: root.width
-
-        Text {
-            id: txtMin
-            text: qsTr("мин")
-            font.pixelSize: 28
-            anchors.left: parent.left
-            anchors.bottom: parent.top
-            anchors.bottomMargin: 5
-        }
-        Text {
-            id: txtMinValue
-            text: "0"
-            font.pixelSize: 28
-            anchors.left: txtMin.left
-            anchors.bottom: txtMin.top
-        }
-        Text {
-            id: txtMax
-            text: qsTr("макс")
-            font.pixelSize: 28
-            anchors.right: parent.right
-            anchors.bottom: parent.top
-            anchors.bottomMargin: 5
-        }
-        Text {
-            id: txtMaxValue
-            text: "100"
-            font.pixelSize: 28
-            anchors.right: txtMax.right
-            anchors.bottom: txtMax.top
-            anchors.bottomMargin: 5
-        }
-        Rectangle {
-            id: rectFilledCanvas
-            color: "green"
-            height: parent.height
-            x: parent.x
-            y: parent.y
-        }
-        Rectangle {
-            id: rectEmptyCanvas
-            color: "lightgray"
-            height: parent.height
-            x: imgHandle.x + imgHandle.width/2
-            y: imgHandle.y
-        }
-        Image {
-            id: imgHandle
-            source: "qrc:/Vector.svg"
-            sourceSize.height: 34
-            sourceSize.width: 30
-        }
-        Text {
-            id: txtValue
-            anchors.horizontalCenter: rectCanvasSolid.horizontalCenter
-            font.pixelSize: 36
-            font.bold: true
-            y: -3.5 * root.height/2
-            Component.onCompleted: text = "0"
-        }
-
-        MouseArea {
-            id: mouseArea
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            height: parent.height
-            width:  parent.width + 2*imgHandle.width
-        }
+    property Component panel: Loader {
+        id: loaderOfLayouts
+        sourceComponent: horizontalLayout
     }
 }

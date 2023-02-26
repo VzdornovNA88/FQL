@@ -35,6 +35,7 @@ import QtQuick.Controls.Private 1.0
 
 import "../../../../Resources/Colors"
 import "../../../../Core/ColorHelpers.js" as ColorHelpers
+import "../../../Private"
 
 Style {
     id: styleitem
@@ -44,95 +45,150 @@ Style {
     property var borderHandleColor   : MaterialColors.grey100
     property var handleColor         : fillColor
     property var tickmarksColor      : MaterialColors.grey400
+    property var borderColor         : MaterialColors.transparent
+    property var colorDisabled       : ColorHelpers.addAlpha( 0.5,MaterialColors.grey50  )
 
-    /*! The \l Slider this style is attached to. */
-    readonly property Slider control: __control
+    property var handlePosition
+
+    property var valueLevelPatternFillColor : [control.color ? control.color : fillColor]
+
+    readonly property BaseSlider control: __control
+    property double handleWidth : 0
 
     padding { top: 0 ; left: 0 ; right: 0 ; bottom: 0 }
 
-    /*! This property holds the item for the slider handle.
-        You can access the slider through the \c control property
-    */
-    property Component handle: Rectangle{
-            id: backHandle
-            width:  height
-            height: control.height
+    property Component handle: Rectangle {
+        id: backHandle
+        width:  height
+        height: ((control.orientation === Qt.Horizontal) ? control.height : control.width)
+
+        radius: width/2
+
+        color: MaterialColors.transparent
+        border.width: control.borderWidth
+        border.color: control.activeFocus ? styleitem.borderHandleColor : MaterialColors.transparent
+
+        Rectangle {
+            id: handle
+            width: backHandle.width - 6
+            height: backHandle.height - 6
+            anchors.verticalCenter: backHandle.verticalCenter
+            anchors.horizontalCenter: backHandle.horizontalCenter
 
             radius: width/2
+            color: control.color ? control.color : handleColor
 
-            color: MaterialColors.transparent
-            border.width: 1
-            border.color: control.activeFocus ? styleitem.borderHandleColor : MaterialColors.transparent
-
-            Rectangle {
-                id: handle
-                width: backHandle.width - 6
-                height: backHandle.height - 6
-                anchors.verticalCenter: backHandle.verticalCenter
-                anchors.horizontalCenter: backHandle.horizontalCenter
-
-                radius: width/2
-                color: handleColor
-
-            }
-    }
-    /*! This property holds the background groove of the slider.
-
-        You can access the handle position through the \c styleData.handlePosition property.
-    */
-    property Component groove: Rectangle {
-
-        anchors.verticalCenter: parent.verticalCenter
-//        implicitWidth: Math.round(TextSingleton.implicitHeight * 4.5)
-//        implicitHeight: Math.max(6, Math.round(TextSingleton.implicitHeight * 0.3))
-        width:  control.width
-        height: control.height*0.25
-
-        color: backgroundColor
-
-        Item {
-            clip: true
-            width: styleData.handlePosition
-            height: parent.height
-
-            Rectangle {
-                anchors.fill: parent
-                color: fillColor
-            }
         }
-    }
 
-    /*! This property holds the tick mark labels
-        \since QtQuick.Controls.Styles 1.1
-
-        You can access the handle width through the \c styleData.handleWidth property.
-    */
-    property Component tickmarks: Repeater {
-        id: repeater
-        model: control.stepSize > 0 ? 1 + (control.maximumValue - control.minimumValue) / control.stepSize : 0
         Rectangle {
-            color: tickmarksColor
-            width: 1 ; height: 3
-            y: repeater.height
-            x: styleData.handleWidth / 2 + index * ((repeater.width - styleData.handleWidth) / (repeater.count-1))
+            id: disablerHandle
+
+            anchors.centerIn: handle
+
+            width: handle.width
+            height: handle.height
+
+            color : control.enabled ? MaterialColors.transparent : colorDisabled
         }
     }
 
-    /*! This property holds the slider style panel.
+    property Component groove: Rectangle {
+        id: border
 
-        Note that it is generally not recommended to override this.
-    */
+        function getIdxOfColorFor(vaulePattern_,currentValue) {
+            if( vaulePattern_.length !== undefined && vaulePattern_.length > 0 )
+                for(var i_ = 0; i_ < vaulePattern_.length; i_++) {
+                    var i__ = i_ + 1;
+                    if((i__ < vaulePattern_.length && vaulePattern_[i_] <= currentValue && currentValue < vaulePattern_[i__]) ||
+                      (i__ === vaulePattern_.length) && currentValue >= vaulePattern_[i_] ){
+                        return i_;
+                    }
+                    console.log("getIdxOfColorFor ---> ",currentValue,i_,vaulePattern_[i_],styleitem.valueLevelPatternFillColor[i_]);
+                }
+
+            return 0;
+        }
+
+        property double __k : !control.fullSizeOfControlArea ? 0.4 : 1
+        width: (control.orientation === Qt.Horizontal) ? control.width : control.height
+        height: (control.orientation === Qt.Horizontal) ? (control.height)*__k : (control.width)*__k
+
+        border.color: control.borderColor ? control.borderColor : borderColor
+        border.width: control.borderWidth
+        color : MaterialColors.transparent
+
+        Rectangle {
+            id: background
+
+            anchors.centerIn: border
+            width: border.width - control.borderWidth*2
+            height: border.height - control.borderWidth*2
+
+            color: control.backgroundColor ? control.backgroundColor : backgroundColor
+
+            Item {
+                clip: true
+                width: styleData.handlePosition
+                height: parent.height
+
+                Rectangle {
+                    id: filler
+                    anchors.fill: parent
+                    color: (control.colorPattern ?
+                                control.colorPattern :
+                                styleitem.valueLevelPatternFillColor)[border.getIdxOfColorFor(control.valuePattern,control.feedbackValue)]
+                }
+            }
+
+            Repeater {
+                id: repeater
+                y: 0
+                model: control.stepSize > 0 && control.tickmarksEnabled ? ((control.maximumValue - control.minimumValue) / control.stepSize +1) : 0
+                Rectangle {
+                    color: tickmarksColor
+                    width: 2 ; height: background.height/2
+                    y: control.tickmarksFrontSidePosition ? background.height - height : 0
+                    x: index*background.width*(1 + control.stepSize/(control.maximumValue - control.minimumValue))/repeater.count - 2
+                    visible: control.tickmarksEnabled && (0 < index && index < repeater.count-1)
+                }
+            }
+
+            Repeater {
+                id: repeater2
+                y: 0
+                model: control.valuePattern && control.valuePattern.length !== undefined && control.valuePattern.length > 0 ? control.valuePattern.length : 0
+                Rectangle {
+                    color: tickmarksColor
+                    width: 1 ; height: background.height
+                    y: 0
+                    x: background.width*(control.valuePattern[index]/(control.maximumValue - control.minimumValue))
+                }
+            }
+        }
+
+        Rectangle {
+            id: disabler
+
+            anchors.centerIn: border
+
+            width: border.width - control.borderWidth*2
+            height: border.height - control.borderWidth*2
+
+            color : control.enabled ? MaterialColors.transparent : colorDisabled
+        }
+    }
+
     property Component panel: Item {
         id: root
         property int handleWidth: handleLoader.width
         property int handleHeight: handleLoader.height
 
         property bool horizontal : control.orientation === Qt.Horizontal
-        property int horizontalSize: grooveLoader.implicitWidth + padding.left + padding.right
-        property int verticalSize: Math.max(handleLoader.implicitHeight, grooveLoader.implicitHeight) + padding.top + padding.bottom
+        //        property int horizontalSize: grooveLoader.implicitWidth + padding.left + padding.right
+        //        property int verticalSize: Math.max(handleLoader.implicitHeight, grooveLoader.implicitHeight) + padding.top + padding.bottom
 
-        implicitWidth: horizontal ? horizontalSize : verticalSize
-        implicitHeight: horizontal ? verticalSize : horizontalSize
+        //        implicitWidth: horizontal ? horizontalSize : verticalSize
+        //        implicitHeight: horizontal ? verticalSize : horizontalSize
 
         y: horizontal ? 0 : height
         rotation: horizontal ? 0 : -90
@@ -145,24 +201,33 @@ Style {
             Loader {
                 id: grooveLoader
                 property QtObject styleData: QtObject {
-                    readonly property int handlePosition: handleLoader.x + handleLoader.width/2
+                    property int __value : Math.round((control.feedbackValue - control.minimumValue) /
+                                                      (control.maximumValue - control.minimumValue) *
+                                                      ((root.horizontal ? root.width : root.height) )) -
+                                           control.borderWidth*2
+                    readonly property int handlePosition: __value < 0 ? 0 : __value
                 }
                 x: padding.left
                 sourceComponent: groove
-                width: (horizontal ? parent.width : parent.height) - padding.left - padding.right
-                y:  Math.round(padding.top + (Math.round(horizontal ? parent.height : parent.width - padding.top - padding.bottom) - grooveLoader.item.height)/2)
-            }
-            Loader {
-                id: tickMarkLoader
-                anchors.fill: parent
-                sourceComponent: control.tickmarksEnabled ? tickmarks : null
-                property QtObject styleData: QtObject { readonly property int handleWidth: control.__panel.handleWidth }
+                width: (root.horizontal ? parent.width : parent.height) - padding.left - padding.right
+                y:  Math.round(padding.top + (Math.round(root.horizontal ? parent.height : parent.width - padding.top - padding.bottom) - grooveLoader.item.height)/2)
             }
             Loader {
                 id: handleLoader
-                sourceComponent: handle
-                anchors.verticalCenter: grooveLoader.verticalCenter
-                x: Math.round((control.__handlePos - control.minimumValue) / (control.maximumValue - control.minimumValue) * ((horizontal ? root.width : root.height) - item.width))
+                sourceComponent: control.handleVisible ? (control.handle != null ? control.handle : handle) : null
+
+                property double handlePosition: Math.round((control.__handlePos - control.minimumValue) /
+                                                        (control.maximumValue - control.minimumValue) *
+                                                        ((root.horizontal ? root.width : root.height) ))
+                property double __value : handlePosition - handleLoader.width/2 -1
+                x: __value < -handleLoader.width/2 + control.borderWidth ? -handleLoader.width/2 + control.borderWidth : __value
+
+                onWidthChanged: styleitem.handleWidth = handleLoader.width
+
+                onLoaded: {
+                    control.__onHandleLoaded(item);
+                    styleitem.handlePosition = Qt.binding(function(){ return handleLoader.x;});
+                }
             }
         }
     }
