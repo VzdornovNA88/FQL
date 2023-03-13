@@ -55,7 +55,7 @@ Item {
         id                   : quadrant2_
 
         activeQuadrant       : 1
-        diameter             : (dial.width*0.4)
+        diameter             : (dial.width)
 
         value                : dial.value
         minValue             : dial.maxValue*0.25
@@ -67,7 +67,7 @@ Item {
         anchors.left         : quadrant2_.right
 
         activeQuadrant       : 0
-        diameter             : (dial.width*0.4)
+        diameter             : (dial.width)
 
         value                : dial.value
         minValue             : dial.maxValue*0.5
@@ -83,7 +83,7 @@ Item {
         invert               : true
         activeQuadrant       : 2
         koeff                : 0.45
-        diameter             : (dial.width*0.4)
+        diameter             : (dial.width)
 
         value                : dial.value
         minValue             : dial.minValue
@@ -97,7 +97,7 @@ Item {
 
         activeQuadrant       : 3
         koeff                : 0.45
-        diameter             : (dial.width*0.4)
+        diameter             : (dial.width)
 
         value                : dial.value
         minValue             : dial.maxValue*0.75

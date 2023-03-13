@@ -45,7 +45,7 @@ Button {
     property var  color
     property var  color_text
     property bool borderFocus : true
-    property var  textPointSize
+    property double  textKoeffPointSize : 1.0
 
     property bool showPressedState : true
 

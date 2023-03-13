@@ -47,7 +47,7 @@ ContentItem {
     property var valueColor                : MaterialColors.grey900
     property var unitMessureColor          : MaterialColors.grey900
 
-    property var iconSource
+    property string iconSource
     property double koefFontValuePixelSize : 1
     property int fixedPrecision            : 0
 
@@ -67,8 +67,8 @@ ContentItem {
             Image {
                 id: img1
 
-                anchors.top: itemHorizontalLayoutWithImage.top
-                anchors.topMargin: itemHorizontalLayoutWithImage.height*0.1
+                anchors.bottom: itemHorizontalLayoutWithImage.verticalCenter
+//                anchors.topMargin: itemHorizontalLayoutWithImage.height*0.1
                 anchors.right: itemHorizontalLayoutWithImage.horizontalCenter
                 anchors.rightMargin: itemHorizontalLayoutWithImage.width*0.05
 
@@ -98,7 +98,7 @@ ContentItem {
 
                 height                 : itemHorizontalLayoutWithImage.height*0.14
 
-                anchors.verticalCenter: itemHorizontalLayoutWithImage.verticalCenter
+                anchors.top: itemHorizontalLayoutWithImage.verticalCenter
                 anchors.horizontalCenter: itemHorizontalLayoutWithImage.horizontalCenter
 
                 text: qsTr(valueWidget.unit ? valueWidget.unit.name : "")
@@ -162,11 +162,11 @@ ContentItem {
                 id: img2
 
                 anchors.top: itemVerticalLayout.top
-                anchors.topMargin: itemVerticalLayout.height*0.1
+//                anchors.topMargin: itemVerticalLayout.height*0.1
                 anchors.horizontalCenter: itemVerticalLayout.horizontalCenter
 
-                width                  : itemVerticalLayout.width*0.35
-                height                 : itemVerticalLayout.height*0.35
+                width                  : itemVerticalLayout.width*0.3
+                height                 : itemVerticalLayout.height*0.4
                 source                 : valueWidget.iconSource ? valueWidget.iconSource : ""
             }
             Text {
@@ -175,6 +175,7 @@ ContentItem {
                 height                 : itemVerticalLayout.height*0.25
 
                 anchors.verticalCenter: itemVerticalLayout.verticalCenter
+                anchors.verticalCenterOffset: valueWidget.iconSource !== "" ? height*0.7 : 0
                 anchors.horizontalCenter: itemVerticalLayout.horizontalCenter
 
                 wrapMode : Text.WrapAtWordBoundaryOrAnywhere
@@ -198,7 +199,7 @@ ContentItem {
 
                 wrapMode : Text.WrapAtWordBoundaryOrAnywhere
                 minimumPixelSize: 1
-                font.pixelSize: Math.min(itemVerticalLayout.width,itemVerticalLayout.height)*0.25*valueWidget.koefFontValuePixelSize
+                font.pixelSize: Math.min(itemVerticalLayout.width*0.7,itemVerticalLayout.height*0.7)*0.25*valueWidget.koefFontValuePixelSize
 
                 color: valueWidget.unitMessureColor ? valueWidget.unitMessureColor : MaterialColors.grey900
             }

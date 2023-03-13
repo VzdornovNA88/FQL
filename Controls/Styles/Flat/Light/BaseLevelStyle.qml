@@ -140,7 +140,7 @@ Style {
                     value: control.value
 
                     handle: Image {
-                        source: "qrc:/Vector1lb.svg"
+                        source: "qrc:/FQL/Resources/Icons/Ui/Vector1lb.svg"
 
                         width:  height
                         height: slider.height*1.2

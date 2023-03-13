@@ -43,7 +43,7 @@ import "../../Core"
 Control {
     id: mediaPlayerWidget
 
-    signal           slast
+    signal           last
     signal           play(bool state)
     signal           next
 
@@ -64,8 +64,7 @@ Control {
     property int     currentTrack               : 0
     property double  positionInTrack            : 0
 
-    property var     colorBackgroundMinimized
-    property var     colorBackgroundMaximized
+    property var     colorBackground
 
     property double  minNumberOfRadioStation    : 87.5
     property double  maxNumberOfRadioStation    : 108.0

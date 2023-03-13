@@ -40,7 +40,7 @@ Class {
     id: configurator
 
     property string pathStyle:  "../Controls/Styles/"
-    property string styleDefault:  Styles.system
+    property string styleDefault:  Styles.rsmflat
     property string themeDefault:  Themes.light
 
     Private {

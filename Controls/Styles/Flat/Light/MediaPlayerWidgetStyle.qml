@@ -44,8 +44,7 @@ import "../../../" as FQL
 Style {
     id: mediaPlayerWidgetStyle
 
-    property var colorBackgroundMinimized     : MaterialColors.grey50
-    property var colorBackgroundMaximized     : MaterialColors.grey500
+    property var colorBackground              : MaterialColors.grey500
     property var colorText                    : MaterialColors.grey50
     property var colorVolumeSlider            : MaterialColors.red500
     property var colorPosTrackSlider          : MaterialColors.grey50
@@ -63,10 +62,9 @@ Style {
         width               : control.width
         height              : control.height
 
-        property var colorMax_ : control.colorBackgroundMaximized ? control.colorBackgroundMaximized : mediaPlayerWidgetStyle.colorBackgroundMaximized
-        property var colorMin_ : control.colorBackgroundMinimized ? control.colorBackgroundMinimized : mediaPlayerWidgetStyle.colorBackgroundMinimized
+        property bool extended : false
 
-        color: control.maximizedMode ? colorMax_ : colorMin_
+        color: control.colorBackground ? control.colorBackground : mediaPlayerWidgetStyle.colorBackground
 
         Rectangle {
             id : expandedBg
@@ -74,7 +72,7 @@ Style {
             anchors.bottom: bg.top
             anchors.right: bg.right
 
-            color: mediaPlayerWidgetStyle.colorBackgroundMaximized
+            color: bg.color
             visible: control.maximizedMode
 
             states:
@@ -82,12 +80,13 @@ Style {
                 when: control.maximizedMode
                 PropertyChanges { target: expandedBg; width: control.expandedWidth }
                 PropertyChanges { target: expandedBg; height: control.expandedHeight }
+                onCompleted: bg.extended = true;
             }
 
 
             transitions:
                 Transition {
-                PropertyAnimation { properties: "width,height"; easing.type: Easing.InOutCubic;duration: 1000 }
+                PropertyAnimation { properties: "width,height"; easing.type: Easing.InOutCubic;duration: 500 }
             }
 
             Item{
@@ -98,18 +97,21 @@ Style {
                 width: expandedBg.width
                 height: expandedBg.height*0.13
 
+                visible: bg.extended
+
                 FQL.Button {
                     id : fmMode
 
                     anchors.left: topButtons.left
                     anchors.top: topButtons.top
 
-                    width: topButtons.width*0.3
+                    width: topButtons.width*0.35
                     height: topButtons.height*0.9
 
                     color: MaterialColors.transparent
                     color_text: mediaPlayerWidgetStyle.colorText
                     text: "FM"
+                    textKoeffPointSize : 0.9
 
                     checkable: true
 
@@ -137,12 +139,13 @@ Style {
                     anchors.left: fmMode.right
                     anchors.top: topButtons.top
 
-                    width: topButtons.width*0.3
+                    width: topButtons.width*0.35
                     height: topButtons.height*0.9
 
                     color: MaterialColors.transparent
                     color_text: mediaPlayerWidgetStyle.colorText
                     text: "Player"
+                    textKoeffPointSize : 0.9
 
                     checkable: true
                     property bool allowed : true
@@ -167,13 +170,16 @@ Style {
                     anchors.right: topButtons.right
                     anchors.verticalCenter: audioMode.verticalCenter
 
-                    width: topButtons.width*0.15
+                    width: topButtons.width*0.25
                     height: topButtons.height*0.6
 
                     color: MaterialColors.transparent
-                    iconSource: "qrc:/arrow_down_inverse.svg"
+                    iconSource: "qrc:/FQL/Resources/Icons/Ui/arrow_down_inverse.svg"
 
-                    onClicked: control.maximizedMode = false;
+                    onClicked: {
+                        control.maximizedMode = false;
+                        bg.extended = false;
+                    }
                 }
 
 
@@ -187,7 +193,7 @@ Style {
                 width: expandedBg.width
                 height: expandedBg.height*0.9
 
-                visible : !control.audioPlayerMode
+                visible : !control.audioPlayerMode && bg.extended
 
                 Item{
                     id: chart
@@ -203,7 +209,7 @@ Style {
 
                         anchors.fill: chart
 
-                        source: "qrc:/radio_signal.svg"
+                        source: "qrc:/FQL/Resources/Icons/Ui/radio_signal.svg"
                     }
                 }
                 Item{
@@ -260,12 +266,12 @@ Style {
 
                         anchors.fill: settingWheel
 
-                        source: "qrc:/media_player_wheel.svg"
+                        source: "qrc:/FQL/Resources/Icons/Ui/media_player_wheel.svg"
                     }
 
                     SequentialAnimation on x {
                         id: scroolAnimation
-                        PropertyAnimation { to: settingWheel.width*0.1 }
+                        PropertyAnimation { to: settingWheel.width*0.15 }
                         PropertyAnimation { to: 0 }
                     }
 
@@ -346,7 +352,7 @@ Style {
 
                         wrapMode : Text.WrapAtWordBoundaryOrAnywhere
                         minimumPixelSize: 1
-                        font.pixelSize: Math.min(bottomButtons.width*0.2,bottomButtons.height)*0.4
+                        font.pixelSize: Math.min(bottomButtons.width*0.2,bottomButtons.height)*0.3
 
                         color: mediaPlayerWidgetStyle.colorText
                     }
@@ -356,7 +362,7 @@ Style {
 
                         anchors.horizontalCenter: bottomButtons.horizontalCenter
                         anchors.verticalCenter: lastStationText.verticalCenter
-                        anchors.verticalCenterOffset: -bottomButtons.height*0.1
+                        anchors.verticalCenterOffset: -bottomButtons.height*0.15
 
                         width: bottomButtons.width*0.38
                         height: bottomButtons.height*0.85
@@ -365,6 +371,7 @@ Style {
                         color_text: mediaPlayerWidgetStyle.colorText
 
                         text: control.currentNumStation.toFixed(2).toString()
+                        textKoeffPointSize : 0.85
 
                         onClicked: control.appliedCurrentNumStation = control.currentNumStation;
                     }
@@ -383,7 +390,7 @@ Style {
 
                         wrapMode : Text.WrapAtWordBoundaryOrAnywhere
                         minimumPixelSize: 1
-                        font.pixelSize: Math.min(bottomButtons.width*0.2,bottomButtons.height)*0.4
+                        font.pixelSize: Math.min(bottomButtons.width*0.2,bottomButtons.height)*0.3
 
                         color: mediaPlayerWidgetStyle.colorText
                     }
@@ -398,7 +405,7 @@ Style {
                 width: expandedBg.width
                 height: expandedBg.height*0.9
 
-                visible : control.audioPlayerMode
+                visible : control.audioPlayerMode && bg.extended
 
                 ListView {
                     id : tracks
@@ -414,7 +421,22 @@ Style {
                     spacing: 10
 
                     model: control.tracks
-                    currentIndex : control.currentTrack
+//                    currentIndex : control.currentTrack
+
+                    signal changeCurrentIndex( int direction );
+                    property bool connected_ : false
+                    property double contentX_ : 0
+
+
+                    onDragStarted: {
+                        contentX_ = contentX;
+                    }
+
+                    onDragEnded:  {
+
+                        var diff = Math.abs(contentX - contentX_) > tracks.width*0.15 ? 1 : 0;
+                        changeCurrentIndex(( contentX < contentX_ ? -1 : 1) * diff);
+                    }
 
                     delegate: Rectangle {
                         id: delegateTrack
@@ -423,6 +445,25 @@ Style {
                         height: tracks.height
 
                         radius: 10
+
+                        Component.onCompleted: {
+
+                            if( !tracks.connected_ ) {
+
+                                control.currentTrack = control.tracks.length - 1;
+                                tracks.changeCurrentIndex.connect(function(direction){
+                                    if( !tracks ) return;
+                                    if( direction === 1 && control.currentTrack < control.tracks.length - 1)
+                                        control.currentTrack++;
+                                    else
+                                        if( direction === -1 && control.currentTrack > 0 )
+                                            control.currentTrack--;
+
+                                    tracks.positionViewAtIndex(control.currentTrack,ListView.Center);
+                                });
+                                tracks.connected_ = true;
+                            }
+                        }
 
                         color: mediaPlayerWidgetStyle.colorTrackPanel
 
@@ -485,8 +526,8 @@ Style {
                     height: audioItem.height*0.07
 
                     minimumValue: 0
-                    maximumValue: (( tracks.currentIndex <= control.tracks.length - 1 || tracks.currentIndex >= 0 ) ?
-                                       control.tracks[tracks.currentIndex].duration : 0)
+                    maximumValue: (( control.currentTrack <= control.tracks.length - 1 || control.currentTrack >= 0 ) ?
+                                       control.tracks[control.currentTrack].duration : 0)
 
                     color: mediaPlayerWidgetStyle.colorVolumeSlider
 
@@ -570,8 +611,8 @@ Style {
                         minimumPixelSize: 1
 
                         font.pixelSize: Math.min(itemTrackDurationTexts.width,itemTrackDurationTexts.height)*0.27
-                        text                   : (( tracks.currentIndex <= control.tracks.length - 1 || tracks.currentIndex >= 0 ) ?
-                                                      control.tracks[tracks.currentIndex].duration : 0).toFixed(2).toString()
+                        text                   : (( control.currentTrack <= control.tracks.length - 1 || control.currentTrack >= 0 ) ?
+                                                      control.tracks[control.currentTrack].duration : 0).toFixed(2).toString()
                         color: mediaPlayerWidgetStyle.colorText
                     }
                 }
@@ -585,23 +626,27 @@ Style {
         Item {
             id: itemBg
 
-            width : bg.width*0.85
+            width : bg.width
             height: bg.height
 
-            anchors.horizontalCenter: bg.horizontalCenter
+            anchors.right: bg.right
 
-            Row {
-                id: rowBg
-                spacing: itemBg.width*0.05
+//            Row {
+//                id: rowBg
+////                spacing: itemBg.width*0.05
 
                 FQL.Button {
                     id : last
 
-                    width: Math.min( itemBg.height,itemBg.width*0.25 )
-                    height: width
+                    width: itemBg.width*0.15
+                    height: itemBg.height
+
+                    anchors.verticalCenter: itemBg.verticalCenter
+                    anchors.right: play.left
+                    anchors.rightMargin: itemBg.width*0.03
 
                     color: MaterialColors.transparent
-                    iconSource: !control.maximizedMode ? "qrc:/left-2.svg" : "qrc:/left_inverse.svg"
+                    iconSource: "qrc:/FQL/Resources/Icons/Ui/left_inverse.svg"
 
                     onClicked: control.last()
                 }
@@ -609,11 +654,15 @@ Style {
                 FQL.Button {
                     id : play
 
-                    width: Math.min( itemBg.height,itemBg.width*0.25 )
-                    height: width
+                    width: itemBg.width*0.15
+                    height: itemBg.height
+
+                    anchors.verticalCenter: itemBg.verticalCenter
+                    anchors.right: next.left
+                    anchors.rightMargin: itemBg.width*0.03
 
                     color: MaterialColors.transparent
-                    iconSource: !control.maximizedMode ? "qrc:/play-2.svg" : "qrc:/play_inverse.svg"
+                    iconSource: "qrc:/FQL/Resources/Icons/Ui/play_inverse.svg"
 
                     checkable: true
 
@@ -626,11 +675,15 @@ Style {
                 FQL.Button {
                     id : next
 
-                    width: Math.min( itemBg.height,itemBg.width*0.25 )
-                    height: width
+                    width: itemBg.width*0.15
+                    height: itemBg.height
+
+                    anchors.verticalCenter: itemBg.verticalCenter
+                    anchors.right: volumeBtn.left
+                    anchors.rightMargin: itemBg.width*0.03
 
                     color: MaterialColors.transparent
-                    iconSource: !control.maximizedMode ? "qrc:/right-2.svg" : "qrc:/right_inverse.svg"
+                    iconSource: "qrc:/FQL/Resources/Icons/Ui/right_inverse.svg"
 
                     onClicked: control.next()
                 }
@@ -638,11 +691,15 @@ Style {
                 FQL.Button {
                     id : volumeBtn
 
-                    width: Math.min( itemBg.height,itemBg.width*0.25 )
-                    height: width
+                    width: itemBg.width*0.15
+                    height: itemBg.height
+
+                    anchors.verticalCenter: itemBg.verticalCenter
+                    anchors.right: itemBg.right
+                    anchors.rightMargin: itemBg.width*0.03
 
                     color: MaterialColors.transparent
-                    iconSource: !control.maximizedMode ? "qrc:/volume-2.svg" : "qrc:/volume_inverse.svg"
+                    iconSource: "qrc:/FQL/Resources/Icons/Ui/volume_inverse.svg"
 
                     checkable: true
 
@@ -732,7 +789,8 @@ Style {
                             anchors.horizontalCenter: volumePanel.horizontalCenter
 
                             color: MaterialColors.transparent
-                            iconSource: !checked ? "qrc:/volume.svg" : "qrc:/volume_off.svg"
+                            iconSource: !checked ? "qrc:/FQL/Resources/Icons/Ui/volume-2.svg" :
+                                                   "qrc:/FQL/Resources/Icons/Ui/volume off.svg"
 
                             checkable: true
 
@@ -742,27 +800,25 @@ Style {
                         }
 
                     }
-                }
-
-
-
-                FQL.Button {
-                    id : expander
-
-                    width: Math.min( itemBg.height,itemBg.width*0.25 )
-                    height: width
-
-                    //                    anchors.right: bg.right
-                    color: MaterialColors.transparent
-                    iconSource: "qrc:/ChevronUp.svg"
-
-                    visible: !control.maximizedMode
-
-                    onClicked: control.maximizedMode = true;
-                }
-            }
+                }               
+//            }
         }
 
+        FQL.Button {
+            id : expanderMediaPlayer
 
+            width: control.expandedWidth*0.25
+            height: control.expandedHeight*0.13*0.6
+
+            anchors.bottom: itemBg.top
+            anchors.right: itemBg.right
+
+            color: bg.color
+            iconSource: "qrc:/FQL/Resources/Icons/Ui/up_inverse.svg"
+
+            visible: !bg.extended
+
+            onClicked: control.maximizedMode = true;
+        }
     }
 }

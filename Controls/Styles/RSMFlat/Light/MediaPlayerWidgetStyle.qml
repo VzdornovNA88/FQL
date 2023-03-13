@@ -40,8 +40,7 @@ import "../../../../Core/ColorHelpers.js" as ColorHelpers
 FlatLigt.MediaPlayerWidgetStyle {
     id: toolBarStyle
 
-    colorBackgroundMinimized     : RSM_Colors.background
-    colorBackgroundMaximized     : RSM_Colors.black_secondary
+    colorBackground              : RSM_Colors.black_secondary
     colorText                    : RSM_Colors.white_primary
     colorVolumeSlider            : RSM_Colors.red_brand
     colorPosTrackSlider          : RSM_Colors.white_primary

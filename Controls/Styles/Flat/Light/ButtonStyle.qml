@@ -70,13 +70,10 @@ ButtonBaseStyle {
 
             anchors.verticalCenter : parent.verticalCenter
 
-            font.pointSize         : undefined === control.textPointSize ?
-                                         /*(control.width*110/Screen.width)*/1 : control.textPointSize
-
             wrapMode : Text.WrapAtWordBoundaryOrAnywhere
             minimumPixelSize: 1
             font.bold: true
-            font.pixelSize: Math.min(control.width,control.height*2.0)*0.3
+            font.pixelSize: Math.min(control.width,control.height*2.0)*0.3*control.textKoeffPointSize
 
             text                   : control.text
             color                  : undefined === control.color_text ?

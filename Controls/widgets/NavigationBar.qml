@@ -33,7 +33,7 @@ import QtQuick.Layouts 1.1
 
 import QtQuick 2.0
 import QtQuick.Window 2.0
-import QtQuick.Layouts 1.1
+//import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.4
 import "../"
 import "../../Controls" as FQL
@@ -58,11 +58,6 @@ ContentItem {
     property var          imageBackButtonURI   : ""
     property var          imageCloseButtonURI  : ""
 
-    // Unfortunatly, we need to force manual load the style for that component as 'WidgetButton'
-    // because while we adding a new itself property, we actualy disable the qml engine optimization for objects.
-    // So, type that has a new itself property is a new type of controlls for qml engine and so we have to add new style for each new
-    // type of controlls but we load the style that has been loaded because the representation of that component is the same as its parent
-    // we do that we want to avoid cost of memory and process loading each new style
     style: StyleConfigurator.getStyleCurrentByNameControl( "WidgetButton" )
 
     signal back()

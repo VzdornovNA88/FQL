@@ -54,8 +54,9 @@ ButtonBaseStyle {
     content : Row {
         id: row
 
-        property var pointSize__   : undefined === control.textPointSize ?
-                                       (control.width*110/Screen.width) : control.textPointSize
+        property var pointSize__   : undefined === control.textKoeffPointSize ?
+                                       Math.min(control.width,control.height*2.0)*0.3 :
+                                         Math.min(control.width,control.height*2.0)*0.3*control.textKoeffPointSize
 
         spacing                    : 5
 
@@ -82,7 +83,7 @@ ButtonBaseStyle {
             anchors.bottom : parent.bottom
             anchors.bottomMargin: 5
 
-            font.pointSize         : row.pointSize__/2
+            font.pointSize         : row.pointSize__*0.5
             text                   : qsTr(control.unit ? control.unit.name : "")
             color                  : undefined === control.colorTextUnitOfMeasurement ?
                                          text.color : control.colorTextUnitOfMeasurement

@@ -304,7 +304,11 @@ Style {
                     width: circularGaugeStyle.control.fillerWidth
                     anchors.verticalCenter: item.verticalCenter
                     anchors.right: item.right
-                    anchors.verticalCenterOffset: index === 0 ? 3 : index === (repeater.lenVal_ - 1) ? -3 : 0
+                    anchors.verticalCenterOffset: Math.abs(circularGaugeStyle.control.tickmarkPattern[index] - circularGaugeStyle.control.minValue) < 2 ?
+                                                      externalCircle.width*0.008 :
+                                                      Math.abs(circularGaugeStyle.control.tickmarkPattern[index] - circularGaugeStyle.control.maxValue) < 2 ?
+                                                          -externalCircle.width*0.008 :
+                                                          0
 
                     color: circularGaugeStyle.control.tickmarksColor ? circularGaugeStyle.control.tickmarksColor : circularGaugeStyle.tickmarksColor
                 }
@@ -314,8 +318,11 @@ Style {
 
                     anchors.verticalCenter: item.verticalCenter
                     anchors.right: item.right
-                    anchors.rightMargin: tickmark.width*1.5
-                    anchors.verticalCenterOffset: index === 0 ? externalCircle.width*0.02 : index === (repeater.lenVal_ - 1) ? -4 : 1
+                    anchors.rightMargin: tickmark.width*1.1
+                    anchors.verticalCenterOffset: Math.abs(circularGaugeStyle.control.tickmarkPattern[index] - circularGaugeStyle.control.minValue) < 2 ?
+                                                      externalCircle.width*0.05 :
+                                                      Math.abs(circularGaugeStyle.control.tickmarkPattern[index] - circularGaugeStyle.control.maxValue) < 2 ?
+                                                          -externalCircle.width*0.05 : 1
 
 //                    font.pointSize         : 1
 
