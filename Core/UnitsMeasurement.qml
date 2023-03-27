@@ -1,6 +1,6 @@
   /**
   ******************************************************************************
-  * @file             Styles.qml
+  * @file             UnitsMeasurement.qml
   * @brief            The set of constants of styles(name) 
   * @authors          Nik A. Vzdornov
   * @date             10.09.19
@@ -31,7 +31,6 @@
 
 pragma Singleton
 
-import QtQuick 2.0
 import "../Core/Meta/"
 
 Class {

@@ -30,8 +30,6 @@
 */
 
 import QtQuick 2.2
-import QtQuick.Controls 1.2
-import QtQuick.Controls.Private 1.0
 
 import "../../../../Resources/Colors"
 import "../../../../Core/ColorHelpers.js" as ColorHelpers
@@ -52,10 +50,7 @@ Style {
 
     property var valueLevelPatternFillColor : [control.color ? control.color : fillColor]
 
-    readonly property BaseSlider control: __control
     property double handleWidth : 0
-
-    padding { top: 0 ; left: 0 ; right: 0 ; bottom: 0 }
 
     property Component handle: Rectangle {
         id: backHandle
@@ -136,7 +131,7 @@ Style {
                     anchors.fill: parent
                     color: (control.colorPattern ?
                                 control.colorPattern :
-                                styleitem.valueLevelPatternFillColor)[border.getIdxOfColorFor(control.valuePattern,control.feedbackValue)]
+                                styleitem.valueLevelPatternFillColor)[border.getIdxOfColorFor(control.valuePattern,control.valueCurrent)]
                 }
             }
 
@@ -184,11 +179,6 @@ Style {
         property int handleHeight: handleLoader.height
 
         property bool horizontal : control.orientation === Qt.Horizontal
-        //        property int horizontalSize: grooveLoader.implicitWidth + padding.left + padding.right
-        //        property int verticalSize: Math.max(handleLoader.implicitHeight, grooveLoader.implicitHeight) + padding.top + padding.bottom
-
-        //        implicitWidth: horizontal ? horizontalSize : verticalSize
-        //        implicitHeight: horizontal ? verticalSize : horizontalSize
 
         y: horizontal ? 0 : height
         rotation: horizontal ? 0 : -90
@@ -201,22 +191,22 @@ Style {
             Loader {
                 id: grooveLoader
                 property QtObject styleData: QtObject {
-                    property int __value : Math.round((control.feedbackValue - control.minimumValue) /
+                    property int __value : Math.round((control.valueCurrent - control.minimumValue) /
                                                       (control.maximumValue - control.minimumValue) *
                                                       ((root.horizontal ? root.width : root.height) )) -
                                            control.borderWidth*2
                     readonly property int handlePosition: __value < 0 ? 0 : __value
                 }
-                x: padding.left
+                x: 0
                 sourceComponent: groove
-                width: (root.horizontal ? parent.width : parent.height) - padding.left - padding.right
-                y:  Math.round(padding.top + (Math.round(root.horizontal ? parent.height : parent.width - padding.top - padding.bottom) - grooveLoader.item.height)/2)
+                width: (root.horizontal ? parent.width : parent.height)
+                y:  Math.round((Math.round(root.horizontal ? parent.height : parent.width) - grooveLoader.item.height)/2)
             }
             Loader {
                 id: handleLoader
-                sourceComponent: control.handleVisible ? (control.handle != null ? control.handle : handle) : null
+                sourceComponent: control.handleVisible ? (control.handle !== null ? control.handle : handle) : null
 
-                property double handlePosition: Math.round((control.__handlePos - control.minimumValue) /
+                property double handlePosition: Math.round((control.valueSetPoint - control.minimumValue) /
                                                         (control.maximumValue - control.minimumValue) *
                                                         ((root.horizontal ? root.width : root.height) ))
                 property double __value : handlePosition - handleLoader.width/2 -1
@@ -226,7 +216,7 @@ Style {
 
                 onLoaded: {
                     control.__onHandleLoaded(item);
-                    styleitem.handlePosition = Qt.binding(function(){ return handleLoader.x;});
+                    styleitem.handlePosition = Qt.binding(function(){return handleLoader.x;});
                 }
             }
         }

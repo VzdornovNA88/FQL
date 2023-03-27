@@ -30,11 +30,10 @@
 */
 
 import QtQuick 2.2
-import QtQuick.Controls 1.2
-import QtQuick.Controls.Private 1.0
 
 import "../../../../Resources/Colors"
 import "../../../../Core/ColorHelpers.js" as ColorHelpers
+import "../../../Private"
 
 Style {
     id: switchstyle
@@ -50,9 +49,6 @@ Style {
     property var colorChekedHandle           : MaterialColors.grey50
     property var colorUnChekedHandle         : Qt.tint(MaterialColors.grey900,ColorHelpers.addAlpha( 0.2,MaterialColors.grey50 ))
     property var colorDisabled               : ColorHelpers.addAlpha( 0.5,MaterialColors.grey50  )
-
-    readonly
-    property Switch    control      : __control
 
     property var       colorOff__   : undefined === control.colorOff ?
                                           colorOffDefault : control.colorOff
@@ -130,9 +126,6 @@ Style {
                 Rectangle {
 
                     id: handleLoader
-
-// не сработает , после чекеда свойство x обнавляется не корректно
-//                    x: control.checked ? max : min
 
                     anchors.verticalCenter : bg.verticalCenter
 

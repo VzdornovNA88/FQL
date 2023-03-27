@@ -30,14 +30,14 @@
 */
 
 import QtQuick 2.2
-import QtQuick.Controls 1.2
-import QtQuick.Controls.Private 1.0
 
 import "../../../../Core/Meta"
 import "../../../../Core/Meta/Type.js" as Meta
 import "../../../../Resources/Colors"
 import "../../../../Core/ColorHelpers.js" as ColorHelpers
 import "../../../../Controls/widgets" as Widgets
+import "../../../Private"
+import "../../../"
 
 Style {
     id: toolBarStyle
@@ -46,8 +46,7 @@ Style {
     property var colorButtonsControl : MaterialColors.grey200
     property var colorTabItems       : MaterialColors.transparent
 
-    readonly
-    property Control   toolBar       : __control
+    property alias toolBar: toolBarStyle.control
 
     property Component panel: Rectangle {
         id : focusable
@@ -58,7 +57,7 @@ Style {
         color: toolBar.colorBackground ? toolBar.colorBackground : toolBarStyle.colorBackground
 
         property Component horizontalLayout : Component {
-    //        id : horizontalLayout
+
             Row {
                 id: layout
 
@@ -197,7 +196,7 @@ Style {
         }
 
         property Component verticalLayout : Component {
-    //        id : verticalLayout
+
             Column {
                 id: layout
 

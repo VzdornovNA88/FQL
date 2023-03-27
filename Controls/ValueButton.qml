@@ -1,6 +1,6 @@
   /**
   ******************************************************************************
-  * @file             Button.qml
+  * @file             ValueButton.qml
   * @brief            
   * @authors          Nik A. Vzdornov
   * @date             10.09.19
@@ -28,11 +28,6 @@
   *
   ******************************************************************************
   */
-
-import QtQuick 2.0
-import QtQuick.Window 2.0
-import QtQuick.Layouts 1.1
-import QtQuick.Controls 1.4
 
 import "../Core"
 import "../Controls/Private" as PrivateFQL

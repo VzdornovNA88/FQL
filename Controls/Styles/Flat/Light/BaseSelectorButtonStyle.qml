@@ -30,11 +30,10 @@
 */
 
 import QtQuick 2.2
-import QtQuick.Controls 1.2
-import QtQuick.Controls.Private 1.0
 
 import "../../../../Resources/Colors"
 import "../../../../Core/ColorHelpers.js" as ColorHelpers
+import "../../../Private"
 
 Style {
     id: selectorbuttonStyle
@@ -43,9 +42,6 @@ Style {
     property var colorBG            : ColorHelpers.addAlpha( 0.5,MaterialColors.grey50  )
     property var colorActiveFocus   : ColorHelpers.addAlpha( 0.2,MaterialColors.grey900 )
     property var colorDisabled      : ColorHelpers.addAlpha( 0.5,MaterialColors.grey50  )
-
-    readonly
-    property RadioButton    control      : __control
 
     property var       color__      : undefined === control.color ?
                                           colorDefault : control.color

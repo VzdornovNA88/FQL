@@ -1,0 +1,6 @@
+module FQL.Compat.Controls
+JSArray 1.0 StackView.js
+StackView 1.0 StackView.qml
+StackViewDelegate 1.0 StackViewDelegate.qml
+StackViewSlideDelegate 1.0 StackViewSlideDelegate.qml
+StackViewTransition 1.0 StackViewTransition.qml

@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file             CircularGauge.qml
+  * @file             CircularSlider.qml
   * @brief
   * @authors          Nik A. Vzdornov
   * @date             10.09.19
@@ -29,12 +29,9 @@
   ******************************************************************************
   */
 
-import QtQuick.Controls.Private 1.0
-import QtQuick 2.2
-import QtQuick.Controls 1.2
-
 import "../Core"
 import "../Resources/Colors"
+import "../Controls/Private/"
 
 Control {
     id: circularSlider

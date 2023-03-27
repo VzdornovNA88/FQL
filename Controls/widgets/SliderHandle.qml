@@ -29,8 +29,6 @@
 ******************************************************************************
 */
 
-import QtQuick 2.0
-
 import "../../Controls/Private/widgets"
 import "../../Core"
 import "../../Core/Meta"
@@ -41,13 +39,10 @@ ContentItem {
 
     property bool vertical : false
     property bool frontDirection : true
-//    signal click(var event);
 
     showPressedState    : false
     borderFocus         : false
     propagateEvents     : false
 
     color: MaterialColors.transparent
-
-//    Component.onCompleted: click.connect(sliderHandle.clicked)
 }

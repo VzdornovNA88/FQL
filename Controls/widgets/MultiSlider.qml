@@ -29,11 +29,8 @@
 ******************************************************************************
 */
 
-import QtQuick.Layouts 1.1
+import QtQuick 2.2
 
-import QtQuick 2.0
-import QtQuick.Window 2.0
-import QtQuick.Controls 1.4
 import "../"
 import "../../Controls" as FQL
 import "../../Resources/Colors"
@@ -56,14 +53,13 @@ Item {
     property alias color                       : multiSlider.color
     property alias handleVisible               : multiSlider.handleVisible
     property alias handle                      : multiSlider.handle
-    property alias activeFocusOnTab            : multiSlider.activeFocusOnTab
     property alias enabled                     : multiSlider.enabled
     property alias tickmarksFrontSidePosition  : multiSlider.tickmarksFrontSidePosition
     property alias value                       : multiSlider.value
-    property alias feedbackValue               : multiSlider.feedbackValue
+    property alias valueCurrent                : multiSlider.valueCurrent
+    property alias valueSetPoint               : multiSlider.valueSetPoint
     property alias updateValueWhileDragging    : multiSlider.updateValueWhileDragging
     readonly property alias pressed            : multiSlider.pressed
-    readonly property alias hovered            : multiSlider.hovered
     property alias activeFocusOnPress          : multiSlider.activeFocusOnPress
     property alias tickmarksEnabled            : multiSlider.tickmarksEnabled
     default property alias handles             : multiSlider.__handles
@@ -94,7 +90,6 @@ Item {
             handleVisible           : true
 
             handle                  : null
-            onValueChanged          : if( multiSlider.handleVisible ) multiSlider.value = value;
         }
     }
 
@@ -107,12 +102,17 @@ Item {
 
         handle         : null
 
+        activeFocusOnTab: root.activeFocusOnTab
         handleVisible  : false
         activated      : false
 
         property list<Component>  __handles
         property var              __sliders         : []
         property var              __activatedSlider : null
+
+        onValueSetPointChanged: {
+            multiSlider.__activatedSlider.value = multiSlider.valueSetPoint
+        }
 
         function __activate( targetSlider_ ) {
 
@@ -121,18 +121,19 @@ Item {
                     multiSlider.handle = null;
                     multiSlider.activated = false;
                     __activatedSlider.handleVisible = true;
-                    __activatedSlider.value = multiSlider.value;
+                    __activatedSlider.value = multiSlider.valueSetPoint;
                 }
                 __activatedSlider = targetSlider_;
                 targetSlider_.handleVisible = false;
                 multiSlider.activated = true;
                 multiSlider.handle = targetSlider_.handle;
+                multiSlider.value = multiSlider.valueSetPoint;
                 multiSlider.value = targetSlider_.value;
                 multiSlider.handleVisible = true;
         }
 
         function __deactivate( dummy_ ) {
-                __activatedSlider.value = multiSlider.value;
+                __activatedSlider.value = multiSlider.valueSetPoint;
                 __activatedSlider.handleVisible = true;
                 multiSlider.handleVisible = false;
                 multiSlider.handle = null;
@@ -154,6 +155,10 @@ Item {
 
     function setValue( handle_,val ) {
         multiSlider.__sliders[handle_].value = val;
+    }
+
+    function getValueSetPoint( handle_ ) {
+        return multiSlider.__sliders[handle_].valueSetPoint;
     }
 
     function isActiveHandle( handle_ ) {

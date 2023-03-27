@@ -1,6 +1,6 @@
   /**
   ******************************************************************************
-  * @file             Styles.qml
+  * @file             UnitMeasurement.qml
   * @brief            The set of constants of styles(name) 
   * @authors          Nik A. Vzdornov
   * @date             10.09.19
@@ -29,7 +29,6 @@
   ******************************************************************************
   */
 
-import QtQuick 2.0
 import "../Core/Meta/"
 
 Class {

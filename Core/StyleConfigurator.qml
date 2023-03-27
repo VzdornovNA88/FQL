@@ -31,7 +31,6 @@
 
 pragma Singleton
 
-import QtQuick 2.0
 import "./Meta/"
 import "./Meta/Type.js" as Meta
 import "../Controls/Styles"

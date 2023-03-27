@@ -29,10 +29,11 @@
   ******************************************************************************
   */  
 
-import QtQuick 2.0
-import QtQuick.Controls 1.4
+import QtQuick 2.2
+
 import "Factory.js" as Factory
 import "../Core/Meta/"
+//import "../Controls/QtCompat"
 
 FocusScope {
     id: root
@@ -41,19 +42,15 @@ FocusScope {
         id: privateScoupe
 
         function modelToViewBind() {
-//            console.log("PRESENTER - modelToViewBind - ",root.model,root.view)
             if( ( root.model === null || root.model === undefined ) ||
                 ( root.view === null  || root.view === undefined )  ) return;
 
             var name;
             for ( var i in root.modelToViewBindings ) {
                 name = root.modelToViewBindings[ i ];
-
                 var o_ = dynamicBinding.createObject( root, {
                     target: root.view, property: name, source: root.model, sourceProperty: name
                 } );
-
-//                console.log("PRESENTER - modelToViewBind - property - ",o_,name,root.model,root.view)
             }
         }
 
@@ -71,8 +68,8 @@ FocusScope {
         }
     }
 
-    /// set the property to instance of QML StackView to control navigation your chain of Presenters
-    property StackView navigator: null
+    /// set the property to instance of QML Navigator to control navigation your chain of Presenters
+    property Navigator navigator: null
 
     /// set these properties to usual relative path in your filesystem of components
     /// to use the automatic binding mechanism between them or use properties ( view, model )
@@ -124,23 +121,19 @@ FocusScope {
     */
     function navigateTo(nextItem) {
 
-        var previousItem = null;
+        if( !navigator ) {
 
-        var predicate = function(currentItem) {
-            return currentItem.objectName === nextItem.objectName;
+            console.error( "error: FQL::Core::Presenter - Navigator instance is not exist in navigateTo function" );
+            return;
         }
 
-        if(typeof nextItem === 'undefined' || nextItem === null ) {
-            navigator.pop( {immediate: true} );
+        if( typeof navigator.navigateTo !== 'function' ) {
+
+            console.error( "error: FQL::Core::Presenter - In Navigator instance 'navigateTo' is not a function" );
+            return;
         }
-        else
-        if ((previousItem = navigator.find(predicate)) !== null && typeof previousItem !== 'undefined') {
-            navigator.pop( {item: previousItem, immediate: true} );
-        }
-        else {
-            navigator.push( {item: nextItem, immediate: true} );
-            navigator.currentItem.forceActiveFocus();
-        }
+
+        navigator.navigateTo( nextItem );
     }
 }
 

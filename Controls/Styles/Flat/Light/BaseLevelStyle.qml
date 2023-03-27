@@ -30,8 +30,6 @@
 */
 
 import QtQuick 2.2
-import QtQuick.Controls 1.2
-import QtQuick.Controls.Private 1.0
 
 import "../../../../Resources/Colors"
 import "../../../../Core/ColorHelpers.js" as ColorHelpers
@@ -48,7 +46,6 @@ Style {
     property var colorDisabled                : ColorHelpers.addAlpha( 0.5,MaterialColors.grey50  )
     property var borderColor                  : MaterialColors.grey600
 
-    readonly property BaseLevel control       : __control
     readonly property int fixedPrecision      : control.fixedPrecision
 
     property Component horizontalLayout : Component {
@@ -115,12 +112,8 @@ Style {
                         font.pixelSize: Math.min(header.width,header.height*2.0)*0.2
 
                         color: control.colorText ? control.colorText : colorText
-
-//                        visible: control.hintVisible
                     }
                 }
-
-
 
                 FQL.Slider {
                     id: slider
@@ -149,10 +142,10 @@ Style {
                         rotation: 90
                     }
 
-                    onValueChanged: {
-                        control.value = Qt.binding(function(){
-                            return slider.value.toFixed(fixedPrecision);
-                        });
+                    Component.onCompleted: {
+                        control.__valueSetPoint = Qt.binding(function(){
+                            return slider.valueSetPoint.toFixed(fixedPrecision);
+                        })
                     }
                 }
 
@@ -231,7 +224,7 @@ Style {
                         anchors.verticalCenterOffset: - display.height/8
                         text: qsTr( (control.maskLevelPattern.length && control.maskLevelPattern.length > 0) ?
                                        control.maskLevelPattern[horizontalLayoutItem.getIdxOfMaskedValueFor(control.levelPattern,slider.value)] :
-                                     slider.value.toFixed(fixedPrecision)) + " " + qsTr(control.unit ? control.unit.name : "")
+                                     control.value.toFixed(fixedPrecision)) + " " + qsTr(control.unit ? control.unit.name : "")
 
                         wrapMode : Text.WrapAtWordBoundaryOrAnywhere
                         minimumPixelSize: 1

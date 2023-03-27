@@ -1,6 +1,6 @@
   /**
   ******************************************************************************
-  * @file             Button.qml
+  * @file             BaseValueButton.qml
   * @brief            
   * @authors          Nik A. Vzdornov
   * @date             10.09.19
@@ -29,16 +29,95 @@
   ******************************************************************************
   */
 
-import QtQuick 2.0
-import QtQuick.Window 2.0
-import QtQuick.Layouts 1.1
-import QtQuick.Controls 1.4
+import QtQuick 2.2
 
+import "../../Controls"
 import "../../Core"
-import "../../Controls" as FQL
+import "../../Controls/Private" as PrivateFQL
 
-FQL.Button {
+PrivateFQL.Control {
+    id: button
 
     property UnitMeasurement unit
     property var colorTextUnitOfMeasurement
+
+    property var  color
+    property var  color_text
+    property bool borderFocus : true
+    property double  textKoeffPointSize : 1.0
+
+    property bool showPressedState : true
+
+    property var __behavior: behavior
+
+    property bool __effectivePressed: behavior.effectivePressed
+
+    signal clicked
+    readonly property alias pressed: button.__effectivePressed
+    readonly property alias hovered: behavior.containsMouse
+
+    property bool checkable: false
+
+    property bool checked: false
+
+    property ExclusiveGroup exclusiveGroup: null
+
+    property bool activeFocusOnPress: true
+
+    property string text: ""
+
+    property url iconSource: ""
+
+    property string iconName: ""
+
+    property string __position: "only"
+
+
+    onExclusiveGroupChanged: {
+        if (exclusiveGroup)
+            exclusiveGroup.bindCheckable(button)
+    }
+
+    activeFocusOnTab: true
+
+    onFocusChanged: if (!focus) behavior.keyPressed = false
+
+    Keys.onPressed: {
+        if ((event.key === Qt.Key_Enter || event.key === Qt.Key_Return) && !event.isAutoRepeat && !__behavior.pressed)
+            __behavior.keyPressed = true;
+    }
+
+    Keys.onReleased: {
+        if ((event.key === Qt.Key_Enter || event.key === Qt.Key_Return) && !event.isAutoRepeat && __behavior.keyPressed) {
+            __behavior.keyPressed = false;
+            button.clicked()
+            __behavior.toggle()
+        }
+    }
+
+    MouseArea {
+        id: behavior
+        property bool keyPressed: false
+        property bool effectivePressed: pressed && containsMouse || keyPressed
+
+        anchors.fill: parent
+        hoverEnabled: true
+        enabled: !keyPressed
+
+        function toggle() {
+            if (button.checkable || (exclusiveGroup && !checked))
+                button.checked = !button.checked
+        }
+
+        onReleased: {
+            if (containsMouse) {
+                toggle()
+                button.clicked()
+            }
+        }
+        onPressed: {
+            if (activeFocusOnPress)
+                button.forceActiveFocus()
+        }
+    }
 }

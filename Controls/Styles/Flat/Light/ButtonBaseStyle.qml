@@ -30,11 +30,10 @@
 */
 
 import QtQuick 2.2
-import QtQuick.Controls 1.2
-import QtQuick.Controls.Private 1.0
 
 import "../../../../Resources/Colors"
 import "../../../../Core/ColorHelpers.js" as ColorHelpers
+import "../../../Private"
 
 Style {
     id: buttonstyle
@@ -57,10 +56,6 @@ Style {
 
 
     signal contentLoaded__(QtObject item_)
-
-
-    readonly
-    property Control   control                : __control
 
     readonly
     property bool      down                   : control.pressed

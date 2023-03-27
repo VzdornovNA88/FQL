@@ -29,11 +29,12 @@
   ******************************************************************************
   */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Private 1.0
+import QtQuick 2.2
 
-Control {
+import "../../../Controls/Private" as PrivateFQL
+import "../../../Controls"
+
+PrivateFQL.Control {
     id: button
 
     property var  color
@@ -58,10 +59,8 @@ Control {
     readonly property alias hovered: behavior.containsMouse
 
     property bool checkable: false
-    Accessible.checkable: checkable
 
     property bool checked: false
-    Accessible.checked: checked
 
     property bool activatable: false
     readonly property bool activated: behavior.activated__
@@ -72,34 +71,14 @@ Control {
 
     property ExclusiveGroup exclusiveGroup: null
 
-    property Action action: null
-
     property bool activeFocusOnPress: activatable
 
-    property string tooltip: action ? (action.tooltip) : ""
-
     property string __position: "only"
-
-    property Action __action: action || ownAction
 
     onExclusiveGroupChanged: {
         if (exclusiveGroup)
             exclusiveGroup.bindCheckable(button)
     }
-
-    Accessible.role: Accessible.Button
-    Accessible.description: tooltip
-
-    function accessiblePressAction() {
-        __action.trigger(button)
-    }
-
-    Action {
-        id: ownAction
-        enabled: button.enabled
-    }
-
-    Component.onCompleted: __action.triggered.connect(button.clicked)
 
     activeFocusOnTab: false
 
@@ -123,7 +102,7 @@ Control {
         if( !clickable ) return;
         if (event.key === Qt.Key_Space && !event.isAutoRepeat && behavior.keyPressed) {
             behavior.keyPressed = false;
-            __action.trigger(button)
+            button.clicked()
             behavior.toggle()
         }
     }
@@ -149,7 +128,7 @@ Control {
         onLoaded: {
 
             contentItem__ = item
-            contentLoaded__( contentItem__,contentLoader );
+            contentLoaded__( contentItem__ );
         }
     }
 
@@ -165,13 +144,8 @@ Control {
 
         function toggle() {
             if( !clickable ) return;
-//            if( activatable ) {
-//                activated__ = !activated__;
-//                if( !activated__ )
-//                    button.focus = false;
-//            }
 
-            if (button.checkable && !button.action && !(button.checked && button.exclusiveGroup))
+            if (button.checkable || (exclusiveGroup && !checked))
                 button.checked = !button.checked
         }
 
@@ -179,38 +153,17 @@ Control {
             if( !clickable ) return;
             if (containsMouse) {
                 toggle()
-                __action.trigger(button)
+                button.clicked()
             }
         }
-        onExited: Tooltip.hideText()
-        onCanceled: Tooltip.hideText()
         onPressed: {
             if( !clickable ) return;
             if (activeFocusOnPress)
                 button.forceActiveFocus()
-        }
-
-        Timer {
-            interval: 1000
-            running: behavior.containsMouse && !pressed && tooltip.length
-            onTriggered: Tooltip.showText(behavior, Qt.point(behavior.mouseX, behavior.mouseY), tooltip)
         }
     }
 
 
     property var __behavior: behavior
     property bool __effectivePressed: behavior.effectivePressed
-
-    states: [
-        State {
-            name: "boundAction"
-            when: action !== null
-            PropertyChanges {
-                target: button
-                enabled: action.enabled
-                checkable: action.checkable
-                checked: action.checked
-            }
-        }
-    ]
 }

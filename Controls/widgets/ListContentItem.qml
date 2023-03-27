@@ -29,10 +29,7 @@
 ******************************************************************************
 */
 
-import QtQuick 2.0
-import QtQuick.Window 2.0
-import QtQuick.Layouts 1.1
-import QtQuick.Controls 1.4
+import QtQuick 2.2
 
 import "../../Core/Meta/Type.js" as Meta
 import "../../Resources/Colors"

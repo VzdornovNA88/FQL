@@ -29,7 +29,7 @@
 ******************************************************************************
 */
 
-import QtQuick 2.0
+import QtQuick 2.2
 
 import "../../Resources/Colors"
 import "../" as FQL
@@ -68,7 +68,6 @@ ContentItem {
                 id: img1
 
                 anchors.bottom: itemHorizontalLayoutWithImage.verticalCenter
-//                anchors.topMargin: itemHorizontalLayoutWithImage.height*0.1
                 anchors.right: itemHorizontalLayoutWithImage.horizontalCenter
                 anchors.rightMargin: itemHorizontalLayoutWithImage.width*0.05
 
@@ -162,7 +161,6 @@ ContentItem {
                 id: img2
 
                 anchors.top: itemVerticalLayout.top
-//                anchors.topMargin: itemVerticalLayout.height*0.1
                 anchors.horizontalCenter: itemVerticalLayout.horizontalCenter
 
                 width                  : itemVerticalLayout.width*0.3

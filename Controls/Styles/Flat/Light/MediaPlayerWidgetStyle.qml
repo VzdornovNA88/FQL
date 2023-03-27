@@ -30,8 +30,6 @@
 */
 
 import QtQuick 2.2
-import QtQuick.Controls 1.2
-import QtQuick.Controls.Private 1.0
 
 import "../../../../Core/Meta"
 import "../../../../Core/"
@@ -40,6 +38,7 @@ import "../../../../Resources/Colors"
 import "../../../../Core/ColorHelpers.js" as ColorHelpers
 import "../../../widgets"
 import "../../../" as FQL
+import "../../../Private"
 
 Style {
     id: mediaPlayerWidgetStyle
@@ -52,9 +51,6 @@ Style {
     property var colorTrackPanel              : ColorHelpers.addAlpha( 0.2,MaterialColors.grey50  )
     property var colorDisabled                : ColorHelpers.addAlpha( 0.5,MaterialColors.grey50  )
     property var colorVolumePanel             : ColorHelpers.addAlpha( 0.7,MaterialColors.grey50  )
-
-    readonly
-    property MediaPlayerWidget control       : __control
 
     property Component panel: Rectangle {
         id : bg
@@ -421,7 +417,6 @@ Style {
                     spacing: 10
 
                     model: control.tracks
-//                    currentIndex : control.currentTrack
 
                     signal changeCurrentIndex( int direction );
                     property bool connected_ : false
@@ -494,25 +489,6 @@ Style {
                             color: mediaPlayerWidgetStyle.colorText
                         }
                     }
-
-                    //                     keyNavigationWraps:true
-
-                    //                                            MouseArea {
-                    //                                                width: audioItem.width
-                    //                                                height: audioItem.height
-
-                    //                                                property double x_ : -mouseX
-                    //                                                onPressed: {
-                    //                                                    console.log("onPositionChanged --------------> ",mouseX,tracks.x)
-                    //                                                    if( mouseX > tracks.width ) {
-                    //                                                        tracks.incrementCurrentIndex();
-                    //                                                    }
-                    //                                                    else if( mouseX < -tracks.width ) {
-                    //                                                        tracks.decrementCurrentIndex();
-                    //                                                    }
-
-                    //                                                }
-                    //                                            }
                 }
 
                 FQL.Slider {

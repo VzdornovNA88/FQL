@@ -29,18 +29,13 @@
   ******************************************************************************
   */
 
-import QtQuick 2.0
-import QtQuick.Window 2.0
-import QtQuick.Layouts 1.1
-import QtQuick.Controls 1.4
+import QtQuick 2.2
 
 import "../Core"
-import "../Resources/Colors"
+import "../Controls/Private" as PrivateFQL
 
-Button {
-    id: btn
-
-    style: StyleConfigurator.getStyleCurrentByNameControl( "Button" )
+PrivateFQL.Control {
+    id: button
 
     property var  color
     property var  color_text
@@ -49,7 +44,39 @@ Button {
 
     property bool showPressedState : true
 
-    activeFocusOnPress: true
+    property var __behavior: behavior
+
+    property bool __effectivePressed: behavior.effectivePressed
+
+    signal clicked
+    readonly property alias pressed: button.__effectivePressed
+    readonly property alias hovered: behavior.containsMouse
+
+    property bool checkable: false
+
+    property bool checked: false
+
+    property ExclusiveGroup exclusiveGroup: null
+
+    property bool activeFocusOnPress: true
+
+    property string text: ""
+
+    property url iconSource: ""
+
+    property string iconName: ""
+
+    property string __position: "only"
+
+
+    onExclusiveGroupChanged: {
+        if (exclusiveGroup)
+            exclusiveGroup.bindCheckable(button)
+    }
+
+    activeFocusOnTab: true
+
+    onFocusChanged: if (!focus) behavior.keyPressed = false
 
     Keys.onPressed: {
         if ((event.key === Qt.Key_Enter || event.key === Qt.Key_Return) && !event.isAutoRepeat && !__behavior.pressed)
@@ -59,8 +86,37 @@ Button {
     Keys.onReleased: {
         if ((event.key === Qt.Key_Enter || event.key === Qt.Key_Return) && !event.isAutoRepeat && __behavior.keyPressed) {
             __behavior.keyPressed = false;
-            __action.trigger(btn)
+            button.clicked()
             __behavior.toggle()
         }
     }
+
+    MouseArea {
+        id: behavior
+        property bool keyPressed: false
+        property bool effectivePressed: pressed && containsMouse || keyPressed
+
+        anchors.fill: parent
+        hoverEnabled: true
+        enabled: !keyPressed
+
+        function toggle() {
+            if (button.checkable || (exclusiveGroup && !checked))
+                button.checked = !button.checked
+        }
+
+        onReleased: {
+            if (containsMouse) {
+                toggle()
+                button.clicked()
+            }
+        }
+
+        onPressed: {
+            if (activeFocusOnPress)
+                button.forceActiveFocus()
+        }
+    }
+
+    style: StyleConfigurator.getStyleCurrentByNameControl( "Button" )
 }

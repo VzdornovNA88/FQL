@@ -29,18 +29,13 @@
 ******************************************************************************
 */
 
-import QtQuick.Layouts 1.1
-
-import QtQuick 2.2
-import QtQuick.Controls 1.2
-import QtQuick.Controls.Private 1.0
-
 import "../"
 import "../../Controls" as FQL
 import "../../Resources/Colors"
 import "../../Core"
+import "../../Controls/Private" as PrivateFQL
 
-Control {
+PrivateFQL.Control {
     id: mediaPlayerWidget
 
     signal           last

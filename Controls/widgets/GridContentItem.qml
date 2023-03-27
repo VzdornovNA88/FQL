@@ -29,10 +29,7 @@
 ******************************************************************************
 */
 
-import QtQuick 2.0
-import QtQuick.Window 2.0
-import QtQuick.Layouts 1.1
-import QtQuick.Controls 1.4
+import QtQuick 2.2
 
 import "../../Core/Meta/Type.js" as Meta
 import "../../Resources/Colors"
@@ -62,8 +59,6 @@ Item {
         checkable: listContentItem.checkable
 
         Grid {
-//            width: listContentItem.width
-//            height: listContentItem.height
             columns: 1
             spacing: 1
             Repeater{

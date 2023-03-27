@@ -29,15 +29,14 @@
 ******************************************************************************
 */
 
-import QtQuick 2.0
-import QtGraphicalEffects 1.0
-import QtQuick.Controls 1.2
-import QtQuick.Controls.Private 1.0
+import QtQuick 2.2
 
 import "../../../../Resources/Colors"
 import "../../../../Core/ColorHelpers.js" as ColorHelpers
 import "../../../Private"
 import "../../../"
+
+import FQL.Compat.Effects.OpacityMask 1.0
 
 Style {
     id: circularGaugeStyle
@@ -75,9 +74,6 @@ Style {
         return (val_-minValue_)/(maxValue_-minValue_)*maxOut;
     }
 
-    readonly property CircularSlider control: __control
-
-    /*! \internal */
     property Component panel: Item {
         id: rootItem
 
@@ -324,11 +320,8 @@ Style {
                                                       Math.abs(circularGaugeStyle.control.tickmarkPattern[index] - circularGaugeStyle.control.maxValue) < 2 ?
                                                           -externalCircle.width*0.05 : 1
 
-//                    font.pointSize         : 1
-
                     wrapMode : Text.WrapAtWordBoundaryOrAnywhere
                     minimumPixelSize: 1
-//                    font.bold: true
                     font.pixelSize: externalCircle.width*0.05*circularGaugeStyle.control.koefFontPixelSizeTickmark
 
                     text                   : circularGaugeStyle.control.tickmarkLabelPattern[index]
@@ -343,12 +336,7 @@ Style {
 
         Item {
             id: parentShortener
-            anchors.fill: /*circularGaugeStyle.control.scaleWidth ? internalCircle : */externalCircle
-
-//            layer.enabled: circularGaugeStyle.control.scaleWidth >= 0
-//            layer.effect: OpacityMask {
-//                maskSource: circularGaugeStyle.control.scaleWidth ? internalCircle : externalCircle
-//            }
+            anchors.fill: externalCircle
 
             z: Math.min(circularGaugeStyle.control.valuePattern.length,circularGaugeStyle.control.colorPattern.length) + 1
 
@@ -372,8 +360,6 @@ Style {
 
                 color: circularGaugeStyle.control.backgroundColor ? circularGaugeStyle.control.backgroundColor : circularGaugeStyle.backgroundColor
             }
-
-//            visible: false
         }
     }
 }

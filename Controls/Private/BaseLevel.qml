@@ -29,9 +29,6 @@
 ******************************************************************************
 */
 
-import QtQuick 2.0
-import QtQuick.Controls.Private 1.0
-import "../"
 import "../../Core"
 
 Control {
@@ -40,8 +37,9 @@ Control {
     property var maskLevelPattern         : []
     property real min                     : 10
     property real max                     : 200
-    property real value                   : 95
-    property real valueCurrent            : 15
+    property real value                   : valueSetPoint
+    property real valueCurrent            : valueSetPoint
+    readonly property real valueSetPoint  : __valueSetPoint
     property real step                    : 1
 //    property int orientation : Qt.Horizontal
     property bool enabled                 : true
@@ -54,5 +52,8 @@ Control {
     property string  headerText           : ""
     readonly property int fixedPrecision  : Math.abs( step ) > 1 ? 0 : Math.abs(parseInt(step.toExponential().split('e')[1]))
     property bool tickmarksEnabled        : false
+
+
+    property real __valueSetPoint  : 0
 }
 

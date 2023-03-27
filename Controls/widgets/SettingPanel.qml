@@ -30,8 +30,6 @@
 */
 
 import QtQuick 2.2
-//import QtQuick.Controls 1.2
-//import QtQuick.Controls.Private 1.0
 
 import "../../Controls" as FQL
 import "../../Resources/Colors"
@@ -123,6 +121,10 @@ Item {
                 }
             }
 
+            onValueSetPointChanged: {
+                settingPanel.valueSetPoint = level.valueSetPoint;
+            }
+
             onDisplayVisibleChanged: {
                 rowBtns.y = !level.displayVisible ? level.height/3 + level.height/6 + columnID.spacing + (level.hintVisible ? level.height/6 : 0) : level.height + columnID.spacing
             }
@@ -134,7 +136,6 @@ Item {
             width: settingPanel.width
             height: settingPanel.height*0.2
 
-//            y: !level.displayVisible ? level.height/3 + level.height/6 + columnID.spacing : level.height + columnID.spacing
             onYChanged: {
                 y = !level.displayVisible ? level.height/3 + level.height/6 + columnID.spacing + (level.hintVisible ? level.height/6 : 0) : level.height + columnID.spacing
             }

@@ -79,26 +79,6 @@ WidgetButtonStyle {
                                               tabItemStyle.colorActiveFocus     :
                                            tabItemStyle.color__ ))
 
-//            FocusScope {
-//                id: contentID
-
-//                clip        : true
-//                anchors.fill: parent
-
-//                Loader {
-//                    id: backgroundLoader
-
-//                    anchors.centerIn : parent
-//                    sourceComponent  : content
-
-//                    onLoaded: {
-
-//                        contentItem__ = item
-//                        contentLoaded__( contentItem__ );
-//                    }
-//                }
-//            }
-
             Rectangle {
                     id : activatableLeft
 
