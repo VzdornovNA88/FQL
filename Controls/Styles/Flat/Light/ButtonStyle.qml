@@ -56,8 +56,8 @@ ButtonBaseStyle {
         Image {
             id: img
 
-            width                  : img.sourceSize.width > 0 ? control.width*0.5 : 0
-            height                 : img.sourceSize.height > 0 ? control.height*0.5 :0
+            width                  : img.sourceSize.width > 0 ? Math.min(control.width,control.height)*0.5 : 0
+            height                 : img.sourceSize.height > 0 ? width :0
             source                 : control.iconSource
             anchors.verticalCenter : parent.verticalCenter
         }
@@ -69,7 +69,7 @@ ButtonBaseStyle {
             wrapMode : Text.WrapAtWordBoundaryOrAnywhere
             minimumPixelSize: 1
             font.bold: true
-            font.pixelSize: Math.min(control.width,control.height*2.0)*0.3*control.textKoeffPointSize
+            font.pixelSize: Math.min(control.width*0.5,control.height*2.0)*0.2*control.textKoeffPointSize
 
             text                   : control.text
             color                  : undefined === control.color_text ?

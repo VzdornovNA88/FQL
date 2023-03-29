@@ -98,7 +98,6 @@ Style {
                       (i__ === vaulePattern_.length) && currentValue >= vaulePattern_[i_] ){
                         return i_;
                     }
-                    console.log("getIdxOfColorFor ---> ",currentValue,i_,vaulePattern_[i_],styleitem.valueLevelPatternFillColor[i_]);
                 }
 
             return 0;

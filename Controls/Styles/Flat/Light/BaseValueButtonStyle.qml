@@ -70,7 +70,7 @@ ButtonBaseStyle {
 
             anchors.bottom : parent.bottom
 
-            font.pointSize         : row.pointSize__
+            font.pixelSize         : row.pointSize__
             text                   : control.text
             color                  : undefined === control.color_text ?
                                      buttonstyle.colorDefaultText : control.color_text
@@ -81,7 +81,7 @@ ButtonBaseStyle {
             anchors.bottom : parent.bottom
             anchors.bottomMargin: 5
 
-            font.pointSize         : row.pointSize__*0.5
+            font.pixelSize         : row.pointSize__*0.5
             text                   : qsTr(control.unit ? control.unit.name : "")
             color                  : undefined === control.colorTextUnitOfMeasurement ?
                                          text.color : control.colorTextUnitOfMeasurement

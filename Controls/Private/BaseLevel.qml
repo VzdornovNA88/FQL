@@ -53,7 +53,7 @@ Control {
     readonly property int fixedPrecision  : Math.abs( step ) > 1 ? 0 : Math.abs(parseInt(step.toExponential().split('e')[1]))
     property bool tickmarksEnabled        : false
 
-
+    // TODO : remove
     property real __valueSetPoint  : 0
 }
 

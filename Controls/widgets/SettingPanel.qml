@@ -154,6 +154,7 @@ Item {
                 color: MaterialColors.grey300
 
                 focus: true
+                textKoeffPointSize: 3.0
 
                 enabled: valueSetPoint < max
 
@@ -199,6 +200,7 @@ Item {
                 anchors.verticalCenter: rowBtns.verticalCenter
 
                 color: MaterialColors.grey300
+                textKoeffPointSize: 3.0
 
                 onClicked: {
                     clickedOnFunctionButton();
@@ -217,6 +219,7 @@ Item {
                 anchors.verticalCenter: rowBtns.verticalCenter
 
                 color: MaterialColors.grey300
+                textKoeffPointSize: 3.0
 
                 enabled: valueSetPoint > min
 

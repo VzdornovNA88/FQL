@@ -44,6 +44,13 @@ Class {
     property real positionAtMaximum : 0.0
     property bool inverted : d.inverted
 
+    onInvertedChanged: setValue( value )
+    onMaximumValueChanged: setValue( value )
+    onMinimumValueChanged: setValue( value )
+//    onPositionAtMaximumChanged: setValue( value )
+//    onPositionAtMinimumChanged: setValue( value )
+    onStepSizeChanged: setValue( value )
+
 
     Private {
         id: d
@@ -63,16 +70,6 @@ Class {
         {
             return (Math.abs(p1 - p2) * 100000.0 <= Math.min(Math.abs(p1), Math.abs(p2)));
         }
-
-//        function qRound2Step(val) {
-//            var N = Math.floor((val-minimum)/stepSize);
-//            var left = stepSize*N + minimum;
-//            var right = stepSize*(N+1) + minimum;
-
-//            if( val < (left + right)/2 )
-//                return left;
-//            return right
-//        }
 
         function effectivePosAtMin() {
             return inverted ? posatmax : posatmin;
@@ -130,8 +127,6 @@ Class {
                 rightEdge = Math.max(rightEdge, max);
             }
 
-            console.log("publicPosition - ",leftEdge, rightEdge,position);
-
             if (Math.abs(leftEdge - position) <= Math.abs(rightEdge - position))
                 return leftEdge;
             return rightEdge;
@@ -152,7 +147,6 @@ Class {
             var rightEdge = Math.min(maximum, ((stepSizeMultiplier + 1) * stepSize) + minimum);
             var middle = (leftEdge + rightEdge) / 2;
 
-            console.log("publicValue - ",this,leftEdge , rightEdge,value);
             return (value <= middle) ? leftEdge : rightEdge;
         }
 
@@ -160,8 +154,6 @@ Class {
 
             var newValue = d.publicValue(d.value);
             var newPosition = d.publicPosition(d.pos);
-
-            console.log("emitValueAndPositionIfChanged - ",newValue , d.value);
 
             if (!qFuzzyCompare(newPosition, oldPosition)) {
                 renageModel.position = newPosition;
@@ -175,75 +167,75 @@ Class {
     }
 
 
-    function setPositionRange(min,max)
-    {
-        var emitPosAtMinChanged = !d.qFuzzyCompare(min, d.posatmin);
-        var emitPosAtMaxChanged = !d.qFuzzyCompare(max, d.posatmax);
+//    function setPositionRange(min,max)
+//    {
+//        var emitPosAtMinChanged = !d.qFuzzyCompare(min, d.posatmin);
+//        var emitPosAtMaxChanged = !d.qFuzzyCompare(max, d.posatmax);
 
-        if (!(emitPosAtMinChanged || emitPosAtMaxChanged))
-            return;
+//        if (!(emitPosAtMinChanged || emitPosAtMaxChanged))
+//            return;
 
-        var oldPosition = d.publicPosition(d.pos);
-        d.posatmin = min;
-        d.posatmax = max;
+//        var oldPosition = d.publicPosition(d.pos);
+//        d.posatmin = min;
+//        d.posatmax = max;
 
-        d.pos = d.equivalentPosition(d.value);
+//        d.pos = d.equivalentPosition(d.value);
 
-        if (emitPosAtMinChanged)
-            positionAtMinimum = d.posatmin;
-        if (emitPosAtMaxChanged)
-            positionAtMaximum = d.posatmax;
+//        if (emitPosAtMinChanged)
+//            positionAtMinimum = d.posatmin;
+//        if (emitPosAtMaxChanged)
+//            positionAtMaximum = d.posatmax;
 
-        d.emitValueAndPositionIfChanged(d.publicValue(d.value), oldPosition);
-    }
+//        d.emitValueAndPositionIfChanged(d.publicValue(d.value), oldPosition);
+//    }
 
-    function setRange(min,max)
-    {
-        var emitMinimumChanged = !d.qFuzzyCompare(min, d.minimum);
-        var emitMaximumChanged = !d.qFuzzyCompare(max, d.maximum);
+//    function setRange(min,max)
+//    {
+//        var emitMinimumChanged = !d.qFuzzyCompare(min, d.minimum);
+//        var emitMaximumChanged = !d.qFuzzyCompare(max, d.maximum);
 
-        if (!(emitMinimumChanged || emitMaximumChanged))
-            return;
+//        if (!(emitMinimumChanged || emitMaximumChanged))
+//            return;
 
-        var oldValue = d.publicValue(d.value);
-        var oldPosition = d.publicPosition(d.pos);
+//        var oldValue = d.publicValue(d.value);
+//        var oldPosition = d.publicPosition(d.pos);
 
-        d.minimum = min;
-        d.maximum = Math.max(min, max);
+//        d.minimum = min;
+//        d.maximum = Math.max(min, max);
 
-        d.pos = d.equivalentPosition(d.value);
+//        d.pos = d.equivalentPosition(d.value);
 
-        if (emitMinimumChanged)
-            minimumValue = d.minimum;
-        if (emitMaximumChanged)
-            maximumValue = d.maximum;
+//        if (emitMinimumChanged)
+//            minimumValue = d.minimum;
+//        if (emitMaximumChanged)
+//            maximumValue = d.maximum;
 
-        d.emitValueAndPositionIfChanged(oldValue, oldPosition);
-    }
+//        d.emitValueAndPositionIfChanged(oldValue, oldPosition);
+//    }
 
-    function setMinimum(min)
-    {
-        setRange(min, d.maximum);
-    }
+//    function setMinimum(min)
+//    {
+//        setRange(min, d.maximum);
+//    }
 
-    function setMaximum(max)
-    {
-        setRange(Math.min(d.minimum, max), max);
-    }
+//    function setMaximum(max)
+//    {
+//        setRange(Math.min(d.minimum, max), max);
+//    }
 
-    function setStepSize(stepSize)
-    {
-        stepSize = Math.max(0.0, stepSize);
-        if (d.qFuzzyCompare(stepSize, d.stepSize))
-            return;
+//    function setStepSize(stepSize)
+//    {
+//        stepSize = Math.max(0.0, stepSize);
+//        if (d.qFuzzyCompare(stepSize, d.stepSize))
+//            return;
 
-        var oldValue = d.publicValue(d.value);
-        var oldPosition = d.publicPosition(d.pos);
-        d.stepSize = stepSize;
+//        var oldValue = d.publicValue(d.value);
+//        var oldPosition = d.publicPosition(d.pos);
+//        d.stepSize = stepSize;
 
-        renageModel.stepSize = d.stepSize;
-        d.emitValueAndPositionIfChanged(oldValue, oldPosition);
-    }
+//        renageModel.stepSize = d.stepSize;
+//        d.emitValueAndPositionIfChanged(oldValue, oldPosition);
+//    }
 
     function positionForValue(value)
     {
@@ -253,10 +245,8 @@ Class {
 
     function setPosition(newPosition)
     {
-        if (d.qFuzzyCompare(newPosition, d.pos))
+        if (d.qFuzzyCompare(newPosition, d.pos) || !d.maximum || !d.stepSize || !d.posatmax)
             return;
-
-        console.log("setPosition - ",newPosition , d.pos);
 
         var oldPosition = d.publicPosition(d.pos);
         var oldValue = d.publicValue(d.value);
@@ -266,15 +256,15 @@ Class {
         d.emitValueAndPositionIfChanged(oldValue, oldPosition,false);
     }
 
-    function setPositionAtMinimum(min)
-    {
-        setPositionRange(min, d.posatmax);
-    }
+//    function setPositionAtMinimum(min)
+//    {
+//        setPositionRange(min, d.posatmax);
+//    }
 
-    function setPositionAtMaximum(max)
-    {
-        setPositionRange(d.posatmin, max);
-    }
+//    function setPositionAtMaximum(max)
+//    {
+//        setPositionRange(d.posatmin, max);
+//    }
 
     function valueForPosition(position)
     {
@@ -284,9 +274,10 @@ Class {
 
     function setValue(newValue)
     {
-        if (d.qFuzzyCompare(newValue, d.value))
+        if (d.qFuzzyCompare(newValue, d.value) || !d.maximum || !d.stepSize || !d.posatmax) {
+            renageModel.value = newValue;
             return;
-
+        }
         var oldValue = d.publicValue(d.value);
         var oldPosition = d.publicPosition(d.pos);
 
@@ -295,26 +286,26 @@ Class {
         d.emitValueAndPositionIfChanged(oldValue, oldPosition,true);
     }
 
-    function setInverted(inverted)
-    {
-        if (inverted === d.inverted)
-            return;
+//    function setInverted(inverted)
+//    {
+//        if (inverted === d.inverted)
+//            return;
 
-        d.inverted = inverted;
-        renageModel.inverted = d.inverted;
+//        d.inverted = inverted;
+//        renageModel.inverted = d.inverted;
 
-        setPosition(d.equivalentPosition(d.value));
-    }
+//        setPosition(d.equivalentPosition(d.value));
+//    }
 
-    function toMinimum()
-    {
-        setValue(d.minimum);
-    }
+//    function toMinimum()
+//    {
+//        setValue(d.minimum);
+//    }
 
-    function toMaximum()
-    {
-        setValue(d.maximum);
-    }
+//    function toMaximum()
+//    {
+//        setValue(d.maximum);
+//    }
 
     function increaseSingleStep()
     {

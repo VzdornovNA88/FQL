@@ -33,5 +33,13 @@ import "../../../../Resources/Colors"
 import "../../Flat/Light" as FlatLigt
 
 FlatLigt.TabItemStyle {
-    colorHandle : RSM_Colors.red_brand
+
+    colorActiveFocus        : RSM_Colors.transparent
+    colorDisabled           : RSM_Colors.white50
+    colorBorderActiveFocus  : RSM_Colors.black_tertiary
+    colorPressed            : RSM_Colors.black_pressed20
+    colorEnabled            : RSM_Colors.transparent
+    colorCheked             : RSM_Colors.black_pressed20
+
+    colorHandle             : RSM_Colors.red_brand
 }

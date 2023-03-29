@@ -38,13 +38,22 @@ import "../../../Private"
 Style {
     id: selectorbuttonStyle
 
+    property var colorOffDefault    : Qt.tint(MaterialColors.grey900,ColorHelpers.addAlpha( 0.2,MaterialColors.grey50 ))
+    property var colorOnDefault     : MaterialColors.pink700
     property var colorDefault       : MaterialColors.grey400
     property var colorBG            : ColorHelpers.addAlpha( 0.5,MaterialColors.grey50  )
     property var colorActiveFocus   : ColorHelpers.addAlpha( 0.2,MaterialColors.grey900 )
     property var colorDisabled      : ColorHelpers.addAlpha( 0.5,MaterialColors.grey50  )
 
-    property var       color__      : undefined === control.color ?
-                                          colorDefault : control.color
+    property var       color__      : control.checked ?
+                                          colorOn__ : colorOff__
+
+    property var       colorOff__   : undefined === control.colorOff ?
+                                          colorOffDefault : control.colorOff
+
+    property var       colorOn__    : undefined === control.colorOn ?
+                                          colorOnDefault : control.colorOn
+
 
     property var       colorBG__    : Qt.tint(color__, colorBG)
 

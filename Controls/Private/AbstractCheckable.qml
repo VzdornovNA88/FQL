@@ -48,12 +48,16 @@ PrivateFQL.Control {
     property string text
     property var __cycleStatesHandler: cycleRadioButtonStates
 
+    property alias internal: mouseArea
+
     activeFocusOnTab: true
 
     MouseArea {
         id: mouseArea
+
         focus: true
         anchors.fill: parent
+
         hoverEnabled: true
         enabled: !keyPressed
 
@@ -65,7 +69,7 @@ PrivateFQL.Control {
         onPressed: if (activeFocusOnPress) forceActiveFocus();
 
         onReleased: {
-            if (containsMouse || (exclusiveGroup && !checked))
+            if (!exclusiveGroup || !checked)
                 __cycleStatesHandler();
         }
     }

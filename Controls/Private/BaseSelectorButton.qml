@@ -38,6 +38,8 @@ AbstractCheckable {
 
     __cycleStatesHandler: function() { checked = !checked; }
 
-    property var  color
+    property var  colorOn
+    property var  colorOff
+
     height: width
 }

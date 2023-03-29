@@ -54,7 +54,7 @@ PrivateFQL.Control {
 
 
     readonly property real valueSetPoint       : range.value // from handle's set point
-    property real value                        : range.value // from external set point
+    property real value                        : minimumValue // from external set point
     property real valueCurrent                 : range.value // current value to broken link between in and out of slider
 
 
@@ -118,7 +118,7 @@ PrivateFQL.Control {
         height: __panel.handleHeight
 
         function updatePos() {
-            if (updateValueWhileDragging && !mouseArea.drag.active) {
+            if (updateValueWhileDragging && mouseArea.containsMouse) {
                 range.setPosition( __horizontal ? x : y );
             }
         }
@@ -160,27 +160,29 @@ PrivateFQL.Control {
             }
         }
 
-        onPositionChanged: {
-            if (pressed)
-                updateHandlePosition(mouse, !true/*!Settings.hasTouchScreen*/ || preventStealing);
-        }
+        Component.onCompleted: {
+            onPositionChanged.connect(function(mouse){
+                if (pressed)
+                    updateHandlePosition(mouse, !true/*!Settings.hasTouchScreen*/ || preventStealing);
+            });
 
-        onPressed: {
-            if (slider.activeFocusOnPress)
-                slider.forceActiveFocus();
+            onPressed.connect(function(mouse){
+                if (slider.activeFocusOnPress)
+                    slider.forceActiveFocus();
 
-            pressX = mouse.x;
-            pressY = mouse.y;
+                pressX = mouse.x;
+                pressY = mouse.y;
 
-            updateHandlePosition(mouse, !true/*!Settings.hasTouchScreen*/);
-        }
+                updateHandlePosition(mouse, !true/*!Settings.hasTouchScreen*/);
+            });
 
-        onReleased: {
-            updateHandlePosition(mouse, true/*Settings.hasTouchScreen*/);
-            if (!slider.updateValueWhileDragging) {
-                range.setPosition( __horizontal ? fakeHandle.x : fakeHandle.y );
-            }
-            preventStealing = false;
+            onReleased.connect(function(mouse){
+                updateHandlePosition(mouse, true/*Settings.hasTouchScreen*/);
+                if (!slider.updateValueWhileDragging) {
+                    range.setPosition( __horizontal ? fakeHandle.x : fakeHandle.y );
+                }
+                preventStealing = false;
+            } );
         }
 
         onDoubleClicked: {
@@ -189,7 +191,6 @@ PrivateFQL.Control {
     }
 
     onValueChanged: {
-        console.log("BaseSlider::onValueChanged ---> ",value)
         range.setValue( value );
     }
 }

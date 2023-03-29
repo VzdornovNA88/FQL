@@ -35,7 +35,7 @@ import "../Core"
 import "../Controls/Private" as PrivateFQL
 import "../Controls"
 
-PrivateFQL.Control {
+PrivateFQL.AbstractCheckable {
     id: root
 
     // Механика и форма отображения свитча требуют конкретных пропорцией для корректного отображения и управления
@@ -46,61 +46,24 @@ PrivateFQL.Control {
     property var  colorOn
     property var  colorOff
 
-    readonly property bool checkable : true
-    property bool checked: false
+    internal.drag.threshold: 0
+    internal.drag.target: __panel.__handle
+    internal.drag.axis: Drag.XAxis
+    internal.drag.minimumX: __panel.min
+    internal.drag.maximumX: __panel.max
 
-    readonly property alias pressed: internal.pressed
-
-    property bool activeFocusOnPress: false
-
-    property ExclusiveGroup exclusiveGroup: null
-
-    signal clicked
-
-    Keys.onPressed: {
-        if (event.key === Qt.Key_Space && !event.isAutoRepeat && (!exclusiveGroup || !checked))
-            checked = !checked;
-    }
-
-    onExclusiveGroupChanged: {
-        if (exclusiveGroup)
-            exclusiveGroup.bindCheckable(root)
-    }
-
-    MouseArea {
-        id: internal
-
-        property Item handle: __panel.__handle
-        property int min: __panel.min
-        property int max: __panel.max
-        focus: true
-        anchors.fill: parent
-        drag.threshold: 0
-        drag.target: handle
-        drag.axis: Drag.XAxis
-        drag.minimumX: min
-        drag.maximumX: max
-
-        onPressed: {
-            if (activeFocusOnPress)
-                root.forceActiveFocus()
-        }
-
-        onReleased: {
-            if (drag.active) {
-                checked = (handle.x < max/2) ? false : true;
-                internal.handle.x = checked ? internal.max : internal.min
-            } else {
-                checked = (handle.x === max) ? false : true
-            }
-        }
-
-        onClicked: root.clicked()
+    __cycleStatesHandler : function() {
+        if (internal.drag.active) {
+            checked = (__panel.__handle.x < __panel.max/2) ? false : true;
+            __panel.__handle.x = checked ? __panel.max : __panel.min
+        } else {
+            checked = (__panel.__handle.x === __panel.max) ? false : true
+        };
     }
 
     onCheckedChanged:  {
         if (internal.handle)
-            internal.handle.x = checked ? internal.max : internal.min
+            __panel.__handle.x = checked ? __panel.max : __panel.min
     }
 
     style: StyleConfigurator.getStyleCurrentByNameControl( "Switch" )

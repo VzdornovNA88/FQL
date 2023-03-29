@@ -55,9 +55,9 @@ Item {
     property alias handle                      : multiSlider.handle
     property alias enabled                     : multiSlider.enabled
     property alias tickmarksFrontSidePosition  : multiSlider.tickmarksFrontSidePosition
-    property alias value                       : multiSlider.value
+    property real value                        : 0
     property alias valueCurrent                : multiSlider.valueCurrent
-    property alias valueSetPoint               : multiSlider.valueSetPoint
+    readonly property alias valueSetPoint      : multiSlider.valueSetPoint
     property alias updateValueWhileDragging    : multiSlider.updateValueWhileDragging
     readonly property alias pressed            : multiSlider.pressed
     property alias activeFocusOnPress          : multiSlider.activeFocusOnPress
@@ -67,6 +67,11 @@ Item {
     property alias orientation                 : multiSlider.orientation
     property alias clip: multiSlider.clip
     property alias borderWidth                 : multiSlider.borderWidth
+
+    signal inited
+    onValueChanged: {
+        setActivatedValue( value );
+    }
 
     Component {
         id: template
@@ -145,16 +150,28 @@ Item {
             for ( var i = 0; i < multiSlider.__handles.length; i++ ) {
                 var componentHandle = multiSlider.__handles[i];
                 var slider = template.createObject( root );
-                __sliders[i] = slider;
+
+                if( typeof __sliders[i] === 'number' ) slider.value = __sliders[i];
                 slider.handle = componentHandle;
                 slider.handleClicked.connect(__activate);
+
+                __sliders[i] = slider;
             }
             multiSlider.handleClicked.connect(__deactivate);
+            root.inited();
         }
     }
 
     function setValue( handle_,val ) {
-        multiSlider.__sliders[handle_].value = val;
+        if( !multiSlider.__sliders[handle_] )
+            multiSlider.__sliders[handle_] = val;
+        else
+            multiSlider.__sliders[handle_].value = val;
+    }
+
+    function setActivatedValue( val ) {
+        if( multiSlider.__activatedSlider )
+            multiSlider.__activatedSlider.value = val;
     }
 
     function getValueSetPoint( handle_ ) {
@@ -166,7 +183,8 @@ Item {
     }
 
     function activateHandle( handle_ ) {
-        multiSlider.__activate(multiSlider.__sliders[handle_])
+        if( typeof multiSlider.__sliders[handle_] === 'object' )
+            multiSlider.__activate(multiSlider.__sliders[handle_])
     }
 
 }

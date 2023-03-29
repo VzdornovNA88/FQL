@@ -32,8 +32,16 @@
 import "../../../../Resources/Colors"
 import "../../Flat/Light" as FlatLigt
 
-FlatLigt.BaseValueButtonStyle {
+FlatLigt.ValueWidgetStyle {
     id: valueWidgetStyle
 
-    colorEnabled : MaterialColors.amber400
+    colorActiveFocus        : RSM_Colors.red_activated
+    colorDisabled           : RSM_Colors.white50
+    colorBorderActiveFocus  : RSM_Colors.black_tertiary
+    colorPressed            : RSM_Colors.black_pressed20
+    colorEnabled            : RSM_Colors.red_brand
+    colorCheked             : RSM_Colors.red_activated
+
+    valueColor              : RSM_Colors.black_tertiary
+    unitMessureColor        : RSM_Colors.black_tertiary
 }

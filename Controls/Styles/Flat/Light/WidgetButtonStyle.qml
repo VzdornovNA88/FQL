@@ -131,6 +131,16 @@ ButtonBaseStyle {
                     componentLoaded( type_ );
                     break;
 
+                case "QQuickGrid" :
+                case "QQuickRow" :
+                case "QQuickColumn" :
+                case "QQuickRowLayout" :
+                case "QQuickColumnLayout" :
+                case "QQuickGridLayout" :
+                case "QQuickListView" :
+                    activities_++;
+
+
 //                case "QQuickRectangle" :
 
 //                    activities_++;

@@ -36,7 +36,8 @@ import "../../Flat/Light" as FlatLigt
 
 FlatLigt.BaseSelectorButtonStyle {
 
-    colorDefault       : RSM_Colors.rest
+    colorOffDefault    : Qt.tint(RSM_Colors.black_primary,RSM_Colors.white20)
+    colorOnDefault     : RSM_Colors.red_brand
     colorBG            : RSM_Colors.white50
     colorActiveFocus   : RSM_Colors.black_pressed20
     colorDisabled      : RSM_Colors.white50

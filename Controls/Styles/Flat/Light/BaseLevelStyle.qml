@@ -131,6 +131,7 @@ Style {
                     stepSize: control.step
                     enabled: control.enabled
                     value: control.value
+                    valueCurrent: control.valueCurrent
 
                     handle: Image {
                         source: "qrc:/FQL/Resources/Icons/Ui/Vector1lb.svg"
@@ -229,7 +230,7 @@ Style {
                         wrapMode : Text.WrapAtWordBoundaryOrAnywhere
                         minimumPixelSize: 1
                         font.bold: true
-                        font.pixelSize: Math.min(display.width,display.height*2.0)*0.2
+                        font.pixelSize: Math.min(display.width,display.height*2.0)*0.225
 
                         color: control.colorText ? control.colorText : colorText
                     }

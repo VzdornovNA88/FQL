@@ -95,68 +95,44 @@ Style {
 
                 visible: bg.extended
 
-                FQL.Button {
-                    id : fmMode
+                FQL.ExclusiveGroup {
+                    FQL.Button {
+                        id : fmMode
 
-                    anchors.left: topButtons.left
-                    anchors.top: topButtons.top
+                        anchors.left: topButtons.left
+                        anchors.top: topButtons.top
 
-                    width: topButtons.width*0.35
-                    height: topButtons.height*0.9
+                        width: topButtons.width*0.35
+                        height: topButtons.height*0.9
 
-                    color: MaterialColors.transparent
-                    color_text: mediaPlayerWidgetStyle.colorText
-                    text: "FM"
-                    textKoeffPointSize : 0.9
+                        color: MaterialColors.transparent
+                        color_text: mediaPlayerWidgetStyle.colorText
+                        text: "FM"
+                        textKoeffPointSize: 2.5
 
-                    checkable: true
+                        checkable: true
+                        checked: true
 
-                    checked: true
-                    property bool allowed : true
-
-                    onCheckedChanged: {
-                        if( !allowed ) {
-                            checked = true;
-                            return;
+                        onCheckedChanged: {
+                            control.audioPlayerMode = !checked;
                         }
-
-                        if( checked ) {
-                            audioMode.allowed = true;
-                            audioMode.checked = false;
-                        }
-                        control.audioPlayerMode = !checked;
-                        allowed = !checked;
                     }
-                }
 
-                FQL.Button {
-                    id : audioMode
+                    FQL.Button {
+                        id : audioMode
 
-                    anchors.left: fmMode.right
-                    anchors.top: topButtons.top
+                        anchors.left: fmMode.right
+                        anchors.top: topButtons.top
 
-                    width: topButtons.width*0.35
-                    height: topButtons.height*0.9
+                        width: topButtons.width*0.35
+                        height: topButtons.height*0.9
 
-                    color: MaterialColors.transparent
-                    color_text: mediaPlayerWidgetStyle.colorText
-                    text: "Player"
-                    textKoeffPointSize : 0.9
+                        color: MaterialColors.transparent
+                        color_text: mediaPlayerWidgetStyle.colorText
+                        text: "Player"
+                        textKoeffPointSize: 2.5
 
-                    checkable: true
-                    property bool allowed : true
-
-                    onCheckedChanged: {
-                        if( !allowed ) {
-                            checked = true;
-                            return;
-                        }
-
-                        if( checked ) {
-                            fmMode.allowed = true;
-                            fmMode.checked = false;
-                        }
-                        allowed = !checked;
+                        checkable: true
                     }
                 }
 
@@ -367,7 +343,7 @@ Style {
                         color_text: mediaPlayerWidgetStyle.colorText
 
                         text: control.currentNumStation.toFixed(2).toString()
-                        textKoeffPointSize : 0.85
+                        textKoeffPointSize: 3.0
 
                         onClicked: control.appliedCurrentNumStation = control.currentNumStation;
                     }
@@ -501,6 +477,7 @@ Style {
                     width: audioItem.width*0.8
                     height: audioItem.height*0.07
 
+                    stepSize: 0.01
                     minimumValue: 0
                     maximumValue: (( control.currentTrack <= control.tracks.length - 1 || control.currentTrack >= 0 ) ?
                                        control.tracks[control.currentTrack].duration : 0)
@@ -544,8 +521,7 @@ Style {
                     }
 
                     value: control.positionInTrack
-
-                    onValueChanged: control.positionInTrack = value;
+                    onValueSetPointChanged: control.positionInTrack = valueSetPoint;
                 }
 
                 Item {
@@ -607,177 +583,179 @@ Style {
 
             anchors.right: bg.right
 
-//            Row {
-//                id: rowBg
-////                spacing: itemBg.width*0.05
+            //            Row {
+            //                id: rowBg
+            ////                spacing: itemBg.width*0.05
 
-                FQL.Button {
-                    id : last
+            FQL.Button {
+                id : last
 
-                    width: itemBg.width*0.15
-                    height: itemBg.height
+                width: itemBg.width*0.15
+                height: itemBg.height
 
-                    anchors.verticalCenter: itemBg.verticalCenter
-                    anchors.right: play.left
-                    anchors.rightMargin: itemBg.width*0.03
+                anchors.verticalCenter: itemBg.verticalCenter
+                anchors.right: play.left
+                anchors.rightMargin: itemBg.width*0.03
 
-                    color: MaterialColors.transparent
-                    iconSource: "qrc:/FQL/Resources/Icons/Ui/left_inverse.svg"
+                color: MaterialColors.transparent
+                iconSource: "qrc:/FQL/Resources/Icons/Ui/left_inverse.svg"
 
-                    onClicked: control.last()
+                onClicked: control.last()
+            }
+
+            FQL.Button {
+                id : play
+
+                width: itemBg.width*0.15
+                height: itemBg.height
+
+                anchors.verticalCenter: itemBg.verticalCenter
+                anchors.right: next.left
+                anchors.rightMargin: itemBg.width*0.03
+
+                color: MaterialColors.transparent
+                iconSource: "qrc:/FQL/Resources/Icons/Ui/play_inverse.svg"
+
+                checkable: true
+
+                onCheckedChanged: {
+                    control.playing = checked;
+                    control.play( control.playing );
                 }
+            }
 
-                FQL.Button {
-                    id : play
+            FQL.Button {
+                id : next
 
-                    width: itemBg.width*0.15
-                    height: itemBg.height
+                width: itemBg.width*0.15
+                height: itemBg.height
 
-                    anchors.verticalCenter: itemBg.verticalCenter
-                    anchors.right: next.left
-                    anchors.rightMargin: itemBg.width*0.03
+                anchors.verticalCenter: itemBg.verticalCenter
+                anchors.right: volumeBtn.left
+                anchors.rightMargin: itemBg.width*0.03
 
-                    color: MaterialColors.transparent
-                    iconSource: "qrc:/FQL/Resources/Icons/Ui/play_inverse.svg"
+                color: MaterialColors.transparent
+                iconSource: "qrc:/FQL/Resources/Icons/Ui/right_inverse.svg"
 
-                    checkable: true
+                onClicked: control.next()
+            }
 
-                    onCheckedChanged: {
-                        control.playing = checked;
-                        control.play( control.playing );
-                    }
-                }
+            FQL.Button {
+                id : volumeBtn
 
-                FQL.Button {
-                    id : next
+                width: itemBg.width*0.15
+                height: itemBg.height
 
-                    width: itemBg.width*0.15
-                    height: itemBg.height
+                anchors.verticalCenter: itemBg.verticalCenter
+                anchors.right: itemBg.right
+                anchors.rightMargin: itemBg.width*0.03
 
-                    anchors.verticalCenter: itemBg.verticalCenter
-                    anchors.right: volumeBtn.left
-                    anchors.rightMargin: itemBg.width*0.03
+                color: MaterialColors.transparent
+                iconSource: "qrc:/FQL/Resources/Icons/Ui/volume_inverse.svg"
 
-                    color: MaterialColors.transparent
-                    iconSource: "qrc:/FQL/Resources/Icons/Ui/right_inverse.svg"
+                checkable: true
 
-                    onClicked: control.next()
-                }
+                Rectangle {
+                    id: volumePanel
 
-                FQL.Button {
-                    id : volumeBtn
+                    width: volumeBtn.width*1.2
+                    height: control.expandedHeight*1.3
+                    radius: 5
 
-                    width: itemBg.width*0.15
-                    height: itemBg.height
+                    anchors.bottom: volumeBtn.top
+                    anchors.bottomMargin: volumeBtn.height*0.4
+                    anchors.horizontalCenter: volumeBtn.horizontalCenter
 
-                    anchors.verticalCenter: itemBg.verticalCenter
-                    anchors.right: itemBg.right
-                    anchors.rightMargin: itemBg.width*0.03
+                    color: mediaPlayerWidgetStyle.colorVolumePanel
 
-                    color: MaterialColors.transparent
-                    iconSource: "qrc:/FQL/Resources/Icons/Ui/volume_inverse.svg"
+                    visible: volumeBtn.checked
 
-                    checkable: true
+                    FQL.Slider {
+                        id: volumeSlider
 
-                    Rectangle {
-                        id: volumePanel
+                        anchors.horizontalCenter: volumePanel.horizontalCenter
+                        anchors.bottom: volumeDisable.top
+                        anchors.bottomMargin: volumePanel.height*0.05
 
-                        width: volumeBtn.width*1.2
-                        height: control.expandedHeight*1.3
-                        radius: 5
+                        width: volumePanel.width*0.35
+                        height: volumePanel.height*0.7
 
-                        anchors.bottom: volumeBtn.top
-                        anchors.bottomMargin: volumeBtn.height*0.4
-                        anchors.horizontalCenter: volumeBtn.horizontalCenter
+                        color: mediaPlayerWidgetStyle.colorVolumeSlider
+                        backgroundColor: MaterialColors.transparent
+                        borderWidth:2
 
-                        color: mediaPlayerWidgetStyle.colorVolumePanel
+                        maximumValue: 100
+                        stepSize: 1
+                        enabled: control.volumeEnabled
 
-                        visible: volumeBtn.checked
+                        value: control.volume
 
-                        FQL.Slider {
-                            id: volumeSlider
+                        onValueSetPointChanged: control.volume = valueSetPoint
 
-                            anchors.horizontalCenter: volumePanel.horizontalCenter
-                            anchors.bottom: volumeDisable.top
-                            anchors.bottomMargin: volumePanel.height*0.05
+                        orientation: Qt.Vertical
 
-                            width: volumePanel.width*0.35
-                            height: volumePanel.height*0.7
+                        handle: Rectangle {
+                            id: backHandle1
+                            width:  height
+                            height: volumeSlider.width*0.8
+                            y: volumeSlider.width*0.1
 
-                            color: mediaPlayerWidgetStyle.colorVolumeSlider
-                            backgroundColor: MaterialColors.transparent
-                            borderWidth:2
+                            radius: width/2
 
-                            maximumValue: 100
-                            stepSize: 1
-                            enabled: control.volumeEnabled
+                            color: MaterialColors.transparent
+                            border.width: volumeSlider.borderWidth
 
-                            onValueChanged: control.volume = value
+                            Rectangle {
+                                id: handle1
+                                width: backHandle1.width - 2
+                                height: backHandle1.height - 2
+                                anchors.verticalCenter: backHandle1.verticalCenter
+                                anchors.horizontalCenter: backHandle1.horizontalCenter
 
-                            orientation: Qt.Vertical
+                                radius: width/2
+                                color: mediaPlayerWidgetStyle.colorPosTrackSlider
 
-                            handle: Rectangle {
-                                id: backHandle1
-                                width:  height
-                                height: volumeSlider.width*0.8
-                                y: volumeSlider.width*0.1
+                            }
+
+                            Rectangle {
+                                id: disablerHandle1
+
+                                anchors.centerIn: handle1
+
+                                width: handle1.width
+                                height: handle1.height
 
                                 radius: width/2
 
-                                color: MaterialColors.transparent
-                                border.width: volumeSlider.borderWidth
-
-                                Rectangle {
-                                    id: handle1
-                                    width: backHandle1.width - 2
-                                    height: backHandle1.height - 2
-                                    anchors.verticalCenter: backHandle1.verticalCenter
-                                    anchors.horizontalCenter: backHandle1.horizontalCenter
-
-                                    radius: width/2
-                                    color: mediaPlayerWidgetStyle.colorPosTrackSlider
-
-                                }
-
-                                Rectangle {
-                                    id: disablerHandle1
-
-                                    anchors.centerIn: handle1
-
-                                    width: handle1.width
-                                    height: handle1.height
-
-                                    radius: width/2
-
-                                    color : volumeSlider.enabled ? MaterialColors.transparent : mediaPlayerWidgetStyle.colorDisabled
-                                }
+                                color : volumeSlider.enabled ? MaterialColors.transparent : mediaPlayerWidgetStyle.colorDisabled
                             }
                         }
-
-                        FQL.Button {
-                            id : volumeDisable
-
-                            width: Math.min( volumePanel.height,volumePanel.width )
-                            height: width
-
-                            anchors.bottom: volumePanel.bottom
-                            anchors.bottomMargin: volumePanel.height*0.025
-                            anchors.horizontalCenter: volumePanel.horizontalCenter
-
-                            color: MaterialColors.transparent
-                            iconSource: !checked ? "qrc:/FQL/Resources/Icons/Ui/volume-2.svg" :
-                                                   "qrc:/FQL/Resources/Icons/Ui/volume off.svg"
-
-                            checkable: true
-
-                            checked: !control.volumeEnabled
-
-                            onCheckedChanged: control.volumeEnabled = !checked
-                        }
-
                     }
-                }               
-//            }
+
+                    FQL.Button {
+                        id : volumeDisable
+
+                        width: Math.min( volumePanel.height,volumePanel.width )
+                        height: width
+
+                        anchors.bottom: volumePanel.bottom
+                        anchors.bottomMargin: volumePanel.height*0.025
+                        anchors.horizontalCenter: volumePanel.horizontalCenter
+
+                        color: MaterialColors.transparent
+                        iconSource: !checked ? "qrc:/FQL/Resources/Icons/Ui/volume-2.svg" :
+                                               "qrc:/FQL/Resources/Icons/Ui/volume off.svg"
+
+                        checkable: true
+
+                        checked: !control.volumeEnabled
+
+                        onCheckedChanged: control.volumeEnabled = !checked
+                    }
+
+                }
+            }
+            //            }
         }
 
         FQL.Button {
