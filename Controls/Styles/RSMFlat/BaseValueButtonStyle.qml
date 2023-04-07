@@ -1,6 +1,6 @@
 /**
 ******************************************************************************
-* @file             SliderHandle.qml
+* @file             BaseValueButtonStyle.qml
 * @brief
 * @authors          Nik A. Vzdornov
 * @date             10.09.19
@@ -29,20 +29,23 @@
 ******************************************************************************
 */
 
-import "../../Controls/Private/widgets"
-import "../../Core"
-import "../../Core/Meta"
-import "../../Resources/Colors"
+import "../../../Resources/Colors"
+import "../../../Core/ColorHelpers.js" as ColorHelpers
+import "../Flat" as Flat
 
-ContentItem {
-    id: sliderHandle
 
-    property bool vertical : false
-    property bool frontDirection : true
+Flat.BaseValueButtonStyle {
 
-    showPressedState    : false
-    borderFocus         : false
-    propagateEvents     : false
+    colorActiveFocus        : RSM_Colors.red_activated
+    colorDisabled           : RSM_Colors.white50
+    colorBorderActiveFocus  : RSM_Colors.black_tertiary
+    colorPressed            : RSM_Colors.black_pressed20
+    colorEnabled            : RSM_Colors.red_brand
 
-    color: StyleConfigurator.theme.transparent
+    colorDefaultText : ( ColorHelpers
+                        .suitableFor(color__)
+                        .in([ RSM_Colors.text_black,
+                             RSM_Colors.text_white,
+                             RSM_Colors.text_secondary,
+                             RSM_Colors.text_secondary_dark ])[0].itemColor.color )
 }

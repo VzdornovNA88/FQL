@@ -31,10 +31,13 @@
 
 import QtQuick 2.2
 
+import FQL.Compat.Effects.ColorOverlay 1.0
+
 import "../"
 import "../../Controls" as FQL
 import "../../Resources/Colors"
 import "../../Core"
+import "../../Core/ColorHelpers.js" as ColorHelpers
 
 ContentItem {
     id: view
@@ -46,7 +49,14 @@ ContentItem {
     contentUnder: false
 
     readonly property var textId               : view.contentItem__.children[1]
-    property var          colorText            : MaterialColors.grey900
+    property var          colorText            : ColorHelpers
+                                                 .suitableFor(view.color)
+                                                 .in([ StyleConfigurator.theme.textGeneralCollor,
+                                                       StyleConfigurator.theme.textInvertCollor])[0].itemColor.color
+    property var          colorIcon            : ColorHelpers
+                                                 .suitableFor(view.color)
+                                                 .in([ StyleConfigurator.theme.iconGeneralCollor,
+                                                       StyleConfigurator.theme.iconInvertCollor])[0].itemColor.color
     property var          text                 : ""
     property bool         closeButtonVisible   : false
     property bool         backButtonVisible    : false
@@ -73,7 +83,7 @@ ContentItem {
             anchors.left: row.left
             anchors.verticalCenter: row.verticalCenter
 
-            color: MaterialColors.transparent
+            color: StyleConfigurator.theme.transparent
             focus: true
 
             visible: backButtonVisible
@@ -92,6 +102,12 @@ ContentItem {
                 source                   : imageBackButtonURI
                 anchors.verticalCenter   : back.verticalCenter
                 anchors.horizontalCenter : back.horizontalCenter
+
+                ColorOverlay {
+                    anchors.fill: imgback
+                    source: imgback
+                    color: view.colorIcon ? view.colorIcon : StyleConfigurator.theme.iconGeneralCollor
+                }
             }
 
             onClicked: view.back()
@@ -126,7 +142,7 @@ ContentItem {
             anchors.right: row.right
             anchors.verticalCenter: row.verticalCenter
 
-            color: MaterialColors.transparent
+            color: StyleConfigurator.theme.transparent
             focus: true
 
             visible: closeButtonVisible
@@ -145,6 +161,12 @@ ContentItem {
                 source                   : imageCloseButtonURI
                 anchors.verticalCenter   : close.verticalCenter
                 anchors.horizontalCenter : close.horizontalCenter
+
+                ColorOverlay {
+                    anchors.fill: imgclose
+                    source: imgclose
+                    color: view.colorIcon ? view.colorIcon : StyleConfigurator.theme.iconGeneralCollor
+                }
             }
 
             onClicked: view.close()

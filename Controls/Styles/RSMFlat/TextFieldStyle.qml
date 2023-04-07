@@ -1,6 +1,6 @@
 /**
 ******************************************************************************
-* @file             SliderHandle.qml
+* @file             TextFieldStyle.qml
 * @brief
 * @authors          Nik A. Vzdornov
 * @date             10.09.19
@@ -29,20 +29,14 @@
 ******************************************************************************
 */
 
-import "../../Controls/Private/widgets"
-import "../../Core"
-import "../../Core/Meta"
-import "../../Resources/Colors"
+import "../../../Resources/Colors"
+import "../Flat" as Flat
 
-ContentItem {
-    id: sliderHandle
+Flat.TextFieldStyle {
 
-    property bool vertical : false
-    property bool frontDirection : true
-
-    showPressedState    : false
-    borderFocus         : false
-    propagateEvents     : false
-
-    color: StyleConfigurator.theme.transparent
+    colorActiveFocus        : RSM_Colors.red_activated
+    colorDisabled           : RSM_Colors.white50
+    colorBorderActiveFocus  : RSM_Colors.red_brand
+    colorPressed            : RSM_Colors.transparent
+    colorEnabled            : RSM_Colors.red_brand
 }

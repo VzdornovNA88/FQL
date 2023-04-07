@@ -39,7 +39,7 @@ Control {
     width: height
     height:  (__style.contentWidth)/2
 
-    property var backgroundColor
+//    property var backgroundColor           : StyleConfigurator.theme.systemGeneralNotActive2Collor
     property var valuePattern              : [ minValue   ,(maxValue-minValue)*0.1 + minValue,(maxValue-minValue)*0.7 + minValue ,maxValue             ]
     property var colorPattern              : [ MaterialColors.green200  ,MaterialColors.yellow200  ,MaterialColors.red200 ]
     property var valuePatternBorder        : valuePattern

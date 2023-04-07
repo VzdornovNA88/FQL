@@ -44,10 +44,11 @@ ContentItem {
 
     property double value
     property UnitMeasurement unit
-    property var valueColor                : MaterialColors.grey900
-    property var unitMessureColor          : MaterialColors.grey900
+    property var valueColor         /* : StyleConfigurator.theme.valueCollor*/
+    property var unitMessureColor /* : StyleConfigurator.theme.unitMessureCollor*/
 
     property string iconSource
+    property var iconColor
     property double koefFontValuePixelSize : 1
     property int fixedPrecision            : 0
 

@@ -1,6 +1,6 @@
 /**
 ******************************************************************************
-* @file             SliderHandle.qml
+* @file             CircularGaugeStyle.qml
 * @brief
 * @authors          Nik A. Vzdornov
 * @date             10.09.19
@@ -29,20 +29,19 @@
 ******************************************************************************
 */
 
-import "../../Controls/Private/widgets"
-import "../../Core"
-import "../../Core/Meta"
-import "../../Resources/Colors"
+import "../Flat" as Flat
+import "../../../Resources/Colors"
+import "../../../Core/ColorHelpers.js" as ColorHelpers
 
-ContentItem {
-    id: sliderHandle
 
-    property bool vertical : false
-    property bool frontDirection : true
+Flat.CircularSliderStyle {
+    backgroundColor       : Qt.tint( RSM_Colors.background,RSM_Colors.white80 )
+    backgroundFillerColor : MaterialColors.grey200
+    fillColor             : RSM_Colors.green
+    colorDisabled         : RSM_Colors.white50
+    colorDisabledContent  : RSM_Colors.background
+    tickmarksColor        : RSM_Colors.white_primary
+    tickmarkFontColor     : MaterialColors.grey500
 
-    showPressedState    : false
-    borderFocus         : false
-    propagateEvents     : false
-
-    color: StyleConfigurator.theme.transparent
+//    valueLevelPatternFillColor: [control.color ? control.color : fillColor,RSM_Colors.orange,RSM_Colors.red_error]
 }

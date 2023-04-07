@@ -1,6 +1,6 @@
 /**
 ******************************************************************************
-* @file             SliderHandle.qml
+* @file             ToolBarStyle.qml
 * @brief
 * @authors          Nik A. Vzdornov
 * @date             10.09.19
@@ -29,20 +29,16 @@
 ******************************************************************************
 */
 
-import "../../Controls/Private/widgets"
-import "../../Core"
-import "../../Core/Meta"
-import "../../Resources/Colors"
+import "../../../Core/Meta"
+import "../../../Core/Meta/Type.js" as Meta
+import "../../../Resources/Colors"
+import "../../../Core/ColorHelpers.js" as ColorHelpers
+import "../Flat" as Flat
 
-ContentItem {
-    id: sliderHandle
+Flat.ToolBarStyle {
+    id: toolBarStyle
 
-    property bool vertical : false
-    property bool frontDirection : true
-
-    showPressedState    : false
-    borderFocus         : false
-    propagateEvents     : false
-
-    color: StyleConfigurator.theme.transparent
+    colorBackground     : RSM_Colors.background
+    colorButtonsControl : RSM_Colors.black_pressed20
+    colorTabItems       : RSM_Colors.transparent
 }

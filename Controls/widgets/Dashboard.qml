@@ -31,6 +31,8 @@
 
 import QtQuick 2.2
 
+import FQL.Compat.Effects.ColorOverlay 1.0
+
 import "../../Core"
 import "../../Controls" as FQL
 import "../../Controls/widgets" as WidgetsFQL
@@ -100,12 +102,12 @@ Item {
 
 
 
-    property var colorText : MaterialColors.grey700
-    property var colorTextValues : MaterialColors.grey700
-    property var colorCommonCentralValueWidget : MaterialColors.blue600
-    property var colorOnCentralValueWidget : MaterialColors.green600
-    property var colorOffCentralValueWidget : MaterialColors.grey500
-    property var colorTextCentralValueWidget : MaterialColors.grey50
+    property var colorText                     : StyleConfigurator.theme.textGeneralCollor
+    property var colorTextValues               : StyleConfigurator.theme.textGeneralCollor
+    property var colorCommonCentralValueWidget : StyleConfigurator.theme.systemGeneralActive1Collor
+    property var colorOnCentralValueWidget     : StyleConfigurator.theme.systemGeneralSuccessActive1Collor
+    property var colorOffCentralValueWidget    : StyleConfigurator.theme.systemGeneralNotActive1Collor
+    property var colorTextCentralValueWidget   : StyleConfigurator.theme.textSpecialLightCollor
 
     property double pointFontKoef : 1.0
 
@@ -134,7 +136,7 @@ Item {
             scaleWidth : 0
             fillerWidth: dialleft.quadrant2.diameter*0.09
 
-            colorPattern: [MaterialColors.yellow400]
+            colorPattern: [StyleConfigurator.theme.systemGeneralSuccessActive1Collor]
             valuePattern: [minValue,maxValue]
 
             value: 25
@@ -161,7 +163,7 @@ Item {
             scaleWidth : 0
             fillerWidth: dialleft.quadrant2.diameter*0.09
 
-            colorPattern: [MaterialColors.green400]
+            colorPattern: [StyleConfigurator.theme.systemGeneralSuccessActive1Collor]
             valuePattern: [minValue,maxValue]
 
             value: 57
@@ -180,6 +182,12 @@ Item {
 
         visible: lowerLeftSliderId.visible
 
+        ColorOverlay {
+            anchors.fill: lowerLeftSliderImage
+            source: lowerLeftSliderImage
+            color: StyleConfigurator.theme.iconGeneralCollor
+        }
+
         Text {
             id: textLowerLeftSliderImage
 
@@ -192,7 +200,7 @@ Item {
             minimumPixelSize: 1
 
             font.italic: true
-            font.bold: true
+//            font.bold: true
             font.pixelSize: Math.min(lowerLeftSliderImage.width,height)*1.3*dashboard.pointFontKoef
             text                   : "/" + qsTr(dashboard.unitMessurementOfLowerLeftSlider ?
                                                   dashboard.unitMessurementOfLowerLeftSlider.name : "")
@@ -211,6 +219,12 @@ Item {
         anchors.verticalCenterOffset: -dialleft.quadrant2.diameter/2 - height
 
         visible: upperLeftSliderId.visible
+
+        ColorOverlay {
+            anchors.fill: upperLeftSliderImage
+            source: upperLeftSliderImage
+            color: StyleConfigurator.theme.iconGeneralCollor
+        }
 
         Text {
             id: textUpperLeftSliderImage
@@ -245,23 +259,26 @@ Item {
         maxValue : 300
         value    : 270
 
-        quadrant3.colorPattern: [MaterialColors.blue100]
+        quadrant3.colorPattern: [StyleConfigurator.theme.systemGeneralActive2Collor]
         quadrant3.valuePatternBorder: [quadrant3.minValue,quadrant3.maxValue]
-        quadrant3.colorPatternBorder: [MaterialColors.grey400]
-        quadrant3.colorPatternFillerBorder: [MaterialColors.blue600]
+        quadrant3.colorPatternBorder: [StyleConfigurator.theme.systemGeneralNotActive1Collor]
+        quadrant3.colorPatternFillerBorder: [StyleConfigurator.theme.systemAccentActiveCollor]
 
-        quadrant2.colorPattern: [MaterialColors.blue100]
+        quadrant2.colorPattern: [StyleConfigurator.theme.systemGeneralActive2Collor]
         quadrant2.valuePatternBorder: [quadrant2.minValue,quadrant2.maxValue]
-        quadrant2.colorPatternBorder: [MaterialColors.grey400]
-        quadrant2.colorPatternFillerBorder: [MaterialColors.blue600]
+        quadrant2.colorPatternBorder: [StyleConfigurator.theme.systemGeneralNotActive1Collor]
+        quadrant2.colorPatternFillerBorder: [StyleConfigurator.theme.systemAccentActiveCollor]
 
-        quadrant1.colorPattern: [MaterialColors.blue100,MaterialColors.red100]
+        quadrant1.colorPattern: [StyleConfigurator.theme.systemGeneralActive2Collor,
+                                 StyleConfigurator.theme.systemGeneralErrorActive2Collor]
         quadrant1.valuePattern: [quadrant1.minValue,(quadrant1.maxValue-quadrant1.minValue)*0.66 + quadrant1.minValue,quadrant1.maxValue]
-        quadrant1.colorPatternBorder: [MaterialColors.grey400,MaterialColors.red600]
-        quadrant1.colorPatternFillerBorder: [MaterialColors.blue600,MaterialColors.red600]
+        quadrant1.colorPatternBorder: [StyleConfigurator.theme.systemGeneralNotActive1Collor,
+                                       StyleConfigurator.theme.systemAccnetErrorActiveCollor]
+        quadrant1.colorPatternFillerBorder: [StyleConfigurator.theme.systemAccentActiveCollor,
+                                             StyleConfigurator.theme.systemAccnetErrorActiveCollor]
 
-        quadrant4.colorPattern: [MaterialColors.red100]
-        quadrant4.colorPatternBorder: [MaterialColors.red600]
+        quadrant4.colorPattern: [StyleConfigurator.theme.systemGeneralErrorActive2Collor]
+        quadrant4.colorPatternBorder: [StyleConfigurator.theme.systemAccnetErrorActiveCollor]
         quadrant4.valuePattern: [quadrant4.minValue,quadrant4.maxValue]
 
 
@@ -367,7 +384,7 @@ Item {
             font.italic: true
             font.pixelSize: Math.min(textLowerLeftSliderItem.width,textMesValueOfLeftDial.height)*dashboard.pointFontKoef
             text                   : dashboard.textOfFactorValueLeftDial
-            color: MaterialColors.grey500
+            color: StyleConfigurator.theme.textGeneral2Collor
         }
         Text {
             id: textMesValueOfLeftDial
@@ -449,33 +466,33 @@ Item {
             maxValue : 100
             value    : 83
 
-            quadrant3.colorPattern: [MaterialColors.green100]
+            quadrant3.colorPattern: [StyleConfigurator.theme.systemGeneralSuccessActive2Collor]
             quadrant3.valuePatternBorder: [quadrant3.minValue,quadrant3.maxValue]
-            quadrant3.colorPatternBorder: [MaterialColors.blue600]
-            quadrant3.colorPatternFillerBorder: [MaterialColors.blue600]
+            quadrant3.colorPatternBorder: [StyleConfigurator.theme.systemGeneralSuccessActive2Collor]
+            quadrant3.colorPatternFillerBorder: [StyleConfigurator.theme.systemGeneralSuccessActive2Collor]
             quadrant3.scaleWidth: quadrant3.diameter*0.1
             quadrant3.fillerWidth: quadrant3.diameter*0.15
 
             quadrant3.koeff: 0.6
 
-            quadrant2.colorPattern: [MaterialColors.green100]
+            quadrant2.colorPattern: [StyleConfigurator.theme.systemGeneralSuccessActive2Collor]
             quadrant2.valuePatternBorder: [quadrant2.minValue,quadrant2.maxValue]
-            quadrant2.colorPatternBorder: [MaterialColors.grey400]
-            quadrant2.colorPatternFillerBorder: [MaterialColors.green600]
+            quadrant2.colorPatternBorder: [StyleConfigurator.theme.systemGeneralNotActive1Collor]
+            quadrant2.colorPatternFillerBorder: [StyleConfigurator.theme.systemAccnetSuccessActiveCollor]
             quadrant2.scaleWidth: quadrant3.diameter*0.1
             quadrant2.fillerWidth: quadrant3.diameter*0.15
 
-            quadrant1.colorPattern: [MaterialColors.green100]
+            quadrant1.colorPattern: [StyleConfigurator.theme.systemGeneralSuccessActive2Collor]
             quadrant1.valuePatternBorder: [quadrant1.minValue,quadrant1.maxValue]
-            quadrant1.colorPatternBorder: [MaterialColors.grey400]
-            quadrant1.colorPatternFillerBorder: [MaterialColors.green600]
+            quadrant1.colorPatternBorder: [StyleConfigurator.theme.systemGeneralNotActive1Collor]
+            quadrant1.colorPatternFillerBorder: [StyleConfigurator.theme.systemAccnetSuccessActiveCollor]
             quadrant1.scaleWidth: quadrant3.diameter*0.1
             quadrant1.fillerWidth: quadrant3.diameter*0.15
 
-            quadrant4.colorPattern: [MaterialColors.red100]
+            quadrant4.colorPattern: [StyleConfigurator.theme.systemGeneralErrorActive2Collor]
             quadrant4.valuePatternBorder: [quadrant4.minValue,quadrant4.maxValue]
-            quadrant4.colorPatternBorder: [MaterialColors.red600]
-            quadrant4.colorPatternFillerBorder: [MaterialColors.red600]
+            quadrant4.colorPatternBorder: [StyleConfigurator.theme.systemAccnetErrorActiveCollor]
+            quadrant4.colorPatternFillerBorder: [StyleConfigurator.theme.systemAccnetErrorActiveCollor]
             quadrant4.scaleWidth: quadrant3.diameter*0.1
             quadrant4.fillerWidth: quadrant3.diameter*0.15
 
@@ -554,6 +571,12 @@ Item {
             anchors.top: textMesValueOfLeftTopMinorDial.bottom
             anchors.topMargin: height*0.2
             anchors.horizontalCenter: leftTopDial.horizontalCenter
+
+            ColorOverlay {
+                anchors.fill: imageOfLeftTopMinorDial
+                source: imageOfLeftTopMinorDial
+                color: StyleConfigurator.theme.iconGeneralCollor
+            }
         }
     }
     Item {
@@ -584,33 +607,33 @@ Item {
             maxValue : 100
             value    : 37
 
-            quadrant3.colorPattern: [MaterialColors.green100]
+            quadrant3.colorPattern: [StyleConfigurator.theme.systemGeneralSuccessActive2Collor]
             quadrant3.valuePatternBorder: [quadrant3.minValue,quadrant3.maxValue]
-            quadrant3.colorPatternBorder: [MaterialColors.blue600]
-            quadrant3.colorPatternFillerBorder: [MaterialColors.blue600]
+            quadrant3.colorPatternBorder: [StyleConfigurator.theme.systemAccentActiveCollor]
+            quadrant3.colorPatternFillerBorder: [StyleConfigurator.theme.systemAccentActiveCollor]
             quadrant3.scaleWidth: quadrant3.diameter*0.1
             quadrant3.fillerWidth: quadrant3.diameter*0.15
 
             quadrant3.koeff: 0.6
 
-            quadrant2.colorPattern: [MaterialColors.green100]
+            quadrant2.colorPattern: [StyleConfigurator.theme.systemGeneralSuccessActive2Collor]
             quadrant2.valuePatternBorder: [quadrant2.minValue,quadrant2.maxValue]
-            quadrant2.colorPatternBorder: [MaterialColors.grey400]
-            quadrant2.colorPatternFillerBorder: [MaterialColors.green600]
+            quadrant2.colorPatternBorder: [StyleConfigurator.theme.systemGeneralNotActive1Collor]
+            quadrant2.colorPatternFillerBorder: [StyleConfigurator.theme.systemAccnetSuccessActiveCollor]
             quadrant2.scaleWidth: quadrant3.diameter*0.1
             quadrant2.fillerWidth: quadrant3.diameter*0.15
 
-            quadrant1.colorPattern: [MaterialColors.green100]
+            quadrant1.colorPattern: [StyleConfigurator.theme.systemGeneralSuccessActive2Collor]
             quadrant1.valuePatternBorder: [quadrant1.minValue,quadrant1.maxValue]
-            quadrant1.colorPatternBorder: [MaterialColors.grey400]
-            quadrant1.colorPatternFillerBorder: [MaterialColors.green600]
+            quadrant1.colorPatternBorder: [StyleConfigurator.theme.systemGeneralNotActive1Collor]
+            quadrant1.colorPatternFillerBorder: [StyleConfigurator.theme.systemAccnetSuccessActiveCollor]
             quadrant1.scaleWidth: quadrant3.diameter*0.1
             quadrant1.fillerWidth: quadrant3.diameter*0.15
 
-            quadrant4.colorPattern: [MaterialColors.red100]
+            quadrant4.colorPattern: [StyleConfigurator.theme.systemGeneralErrorActive2Collor]
             quadrant4.valuePatternBorder: [quadrant4.minValue,quadrant4.maxValue]
-            quadrant4.colorPatternBorder: [MaterialColors.red600]
-            quadrant4.colorPatternFillerBorder: [MaterialColors.red600]
+            quadrant4.colorPatternBorder: [StyleConfigurator.theme.systemAccnetErrorActiveCollor]
+            quadrant4.colorPatternFillerBorder: [StyleConfigurator.theme.systemAccnetErrorActiveCollor]
             quadrant4.scaleWidth: quadrant3.diameter*0.1
             quadrant4.fillerWidth: quadrant3.diameter*0.15
 
@@ -688,6 +711,12 @@ Item {
 
             anchors.top: textMesValueOfRightTopMinorDial.bottom
             anchors.horizontalCenter: rightTopDial.horizontalCenter
+
+            ColorOverlay {
+                anchors.fill: imageOfRightTopMinorDial
+                source: imageOfRightTopMinorDial
+                color: StyleConfigurator.theme.iconGeneralCollor
+            }
         }
     }
 
@@ -715,20 +744,62 @@ Item {
             anchors.horizontalCenter: midleContentItem.horizontalCenter
 
                 property int direction: 0
-                property int gear: 0
+                property var gear : 1
 
+            Image {
+                id : r_
+
+                anchors.left: indicatorsField.left
+                anchors.leftMargin: 0
+                anchors.verticalCenter: indicatorsField.verticalCenter
+
+                source: "qrc:/FQL/Resources/Icons/Ui/R_off.svg"
+
+                visible: indicatorsField.direction !== -1
+
+                width                  : 0.6 * Math.min(indicatorsField.width/3 ,indicatorsField.height)
+                height                 : width
+
+                ColorOverlay {
+                    anchors.fill: r_
+                    source: r_
+                    color: StyleConfigurator.theme.iconGeneralDisabledCollor
+                }
+            }
                 Image {
                     id : r
 
                     anchors.left: indicatorsField.left
-                        anchors.leftMargin: indicatorsField.direction === -1 ? -r.width*0.4 : 0
+                    anchors.leftMargin: -r.width*0.4
                     anchors.verticalCenter: indicatorsField.verticalCenter
 
-                    source: indicatorsField.direction === -1 ? "qrc:/FQL/Resources/Icons/Ui/R_on.svg" :
-                                                               "qrc:/FQL/Resources/Icons/Ui/R_off.svg"
+                    source: "qrc:/FQL/Resources/Icons/Ui/R_on.svg"
 
-                    width                  : (indicatorsField.direction === -1 ? 1.2 : 0.65) * Math.min(indicatorsField.width/3 ,indicatorsField.height)
+                    visible: indicatorsField.direction === -1
+
+                    width                  : 1.3 * Math.min(indicatorsField.width/3 ,indicatorsField.height*0.7)
                     height                 : width
+                }
+
+
+                Image {
+                    id : n_
+
+                    anchors.horizontalCenter: indicatorsField.horizontalCenter
+                    anchors.verticalCenter: indicatorsField.verticalCenter
+
+                    source: "qrc:/FQL/Resources/Icons/Ui/N_off.svg"
+
+                    visible: indicatorsField.direction !== 0
+
+                    width                  : 0.6 * Math.min(indicatorsField.width/3,indicatorsField.height)
+                    height                 : width
+
+                    ColorOverlay {
+                        anchors.fill: n_
+                        source: n_
+                        color: StyleConfigurator.theme.iconGeneralDisabledCollor
+                    }
                 }
                 Image {
                     id : n
@@ -736,24 +807,87 @@ Item {
                     anchors.horizontalCenter: indicatorsField.horizontalCenter
                     anchors.verticalCenter: indicatorsField.verticalCenter
 
-                    source: indicatorsField.direction ===  0 ? "qrc:/FQL/Resources/Icons/Ui/N_on.svg" :
-                                                               "qrc:/FQL/Resources/Icons/Ui/N_off.svg"
+                    source: "qrc:/FQL/Resources/Icons/Ui/N_on.svg"
 
-                    width                  : (indicatorsField.direction === 0 ? 1.2 : 0.65) * Math.min(indicatorsField.width/3,indicatorsField.height)
+                    width                  : 1.3 * Math.min(indicatorsField.width/3,indicatorsField.height*0.7)
                     height                 : width
+
+                    visible: indicatorsField.direction === 0
+                }
+
+
+                Image {
+                    id : d_
+
+                    anchors.right: indicatorsField.right
+                    anchors.rightMargin: 0
+                    anchors.verticalCenter: indicatorsField.verticalCenter
+
+                    source: "qrc:/FQL/Resources/Icons/Ui/D_off.svg"
+
+                    visible: indicatorsField.direction !== +1
+
+                    width                  : 0.6 * Math.min(indicatorsField.width/3,indicatorsField.height)
+                    height                 : width
+
+                    ColorOverlay {
+                        anchors.fill: d_
+                        source: d_
+                        color: StyleConfigurator.theme.iconGeneralDisabledCollor
+                    }
                 }
                 Image {
                     id : d
 
                     anchors.right: indicatorsField.right
-                        anchors.rightMargin: indicatorsField.direction === +1 ? -d.width*0.4 : 0
+                    anchors.rightMargin: -d.width*0.4
                     anchors.verticalCenter: indicatorsField.verticalCenter
 
-                    source: indicatorsField.direction === +1 ? "qrc:/FQL/Resources/Icons/Ui/D_on.svg" :
-                                                               "qrc:/FQL/Resources/Icons/Ui/D_off.svg"
+                    source:  "qrc:/FQL/Resources/Icons/Ui/D_on.svg"
+                    visible: indicatorsField.direction === +1
 
-                    width                  : (indicatorsField.direction === +1 ? 1.2 : 0.65) * Math.min(indicatorsField.width/3,indicatorsField.height)
+                    width                  : 1.3 * Math.min(indicatorsField.width/3,indicatorsField.height*0.7)
                     height                 : width
+
+                    Rectangle {
+                        id: spaceOfNumberGear
+
+                        anchors.bottom: d.top
+                        anchors.bottomMargin: -spaceOfNumberGear.height*0.85
+                        anchors.left: d.right
+                        anchors.leftMargin: -spaceOfNumberGear.width*0.6
+                        width: d.width*0.5
+                        height: width
+
+                        radius: width*0.5
+
+                        border.width: 1
+                        border.color: StyleConfigurator.theme.backgroundAccentCollor
+
+                        color: StyleConfigurator.theme.backgroundSpecialLightCollor
+
+                        visible: (indicatorsField.gear &&
+                                  indicatorsField.gear !== "" )
+
+                        Text {
+                            id: textValueOfNumberGear
+
+                            height                 : spaceOfNumberGear.height
+
+//                            anchors.verticalCenter: spaceOfNumberGear.verticalCenter
+                            anchors.horizontalCenter: spaceOfNumberGear.horizontalCenter
+                            anchors.top: spaceOfNumberGear.top
+//                            anchors.topMargin: -font.pixelSize*0.27
+
+                            wrapMode : Text.WrapAtWordBoundaryOrAnywhere
+                            minimumPixelSize: 1
+
+                            font.bold: true
+                            font.pixelSize: Math.min(spaceOfNumberGear.width,spaceOfNumberGear.height)*0.8
+                            text                   : indicatorsField.gear
+                            color: StyleConfigurator.theme.textSpecialDarkCollor
+                        }
+                    }
                 }
         }
 
@@ -793,7 +927,8 @@ Item {
             clickable : true
 
             iconSource: "qrc:/FQL/Resources/Icons/ISO7000/cruise_white.svg"
-            color: MaterialColors.transparent
+            color: StyleConfigurator.theme.transparent
+            iconColor: dashboard.colorTextCentralValueWidget
             valueColor: dashboard.colorTextCentralValueWidget
             unitMessureColor: dashboard.colorTextCentralValueWidget
         }
@@ -805,7 +940,7 @@ Item {
                 height: width
 
                 radius: dialleft.quadrant1.diameter/2
-                color: dialleft.quadrant1.backgroundColor
+                color: dialleft.quadrant1.__style.backgroundColor
 
                 anchors.verticalCenter: midleContentItem.verticalCenter
                 anchors.horizontalCenter: midleContentItem.left
@@ -819,7 +954,7 @@ Item {
                 height: width
 
                 radius: dialRight.quadrant1.diameter/2
-                color: dialleft.quadrant1.backgroundColor
+                color: dialleft.quadrant1.__style.backgroundColor
 
                 anchors.verticalCenter: midleContentItem.verticalCenter
                 anchors.horizontalCenter: midleContentItem.right
@@ -856,33 +991,33 @@ Item {
             maxValue : 120
             value    : 115
 
-            quadrant3.colorPattern: [MaterialColors.green100]
+            quadrant3.colorPattern: [StyleConfigurator.theme.systemGeneralSuccessActive2Collor]
             quadrant3.valuePatternBorder: [quadrant3.minValue,quadrant3.maxValue]
-            quadrant3.colorPatternBorder: [MaterialColors.blue600]
-            quadrant3.colorPatternFillerBorder: [MaterialColors.blue600]
+            quadrant3.colorPatternBorder: [StyleConfigurator.theme.systemAccentActiveCollor]
+            quadrant3.colorPatternFillerBorder: [StyleConfigurator.theme.systemAccentActiveCollor]
             quadrant3.scaleWidth: quadrant3.diameter*0.1
             quadrant3.fillerWidth: quadrant3.diameter*0.15
 
             quadrant3.koeff: 0.6
 
-            quadrant2.colorPattern: [MaterialColors.green100]
+            quadrant2.colorPattern: [StyleConfigurator.theme.systemGeneralSuccessActive2Collor]
             quadrant2.valuePatternBorder: [quadrant2.minValue,quadrant2.maxValue]
-            quadrant2.colorPatternBorder: [MaterialColors.grey400]
-            quadrant2.colorPatternFillerBorder: [MaterialColors.green600]
+            quadrant2.colorPatternBorder: [StyleConfigurator.theme.systemGeneralNotActive1Collor]
+            quadrant2.colorPatternFillerBorder: [StyleConfigurator.theme.systemAccnetSuccessActiveCollor]
             quadrant2.scaleWidth: quadrant3.diameter*0.1
             quadrant2.fillerWidth: quadrant3.diameter*0.15
 
-            quadrant1.colorPattern: [MaterialColors.green100]
+            quadrant1.colorPattern: [StyleConfigurator.theme.systemGeneralSuccessActive2Collor]
             quadrant1.valuePatternBorder: [quadrant1.minValue,quadrant1.maxValue]
-            quadrant1.colorPatternBorder: [MaterialColors.grey400]
-            quadrant1.colorPatternFillerBorder: [MaterialColors.green600]
+            quadrant1.colorPatternBorder: [StyleConfigurator.theme.systemGeneralNotActive1Collor]
+            quadrant1.colorPatternFillerBorder: [StyleConfigurator.theme.systemAccnetSuccessActiveCollor]
             quadrant1.scaleWidth: quadrant3.diameter*0.1
             quadrant1.fillerWidth: quadrant3.diameter*0.15
 
-            quadrant4.colorPattern: [MaterialColors.red100]
+            quadrant4.colorPattern: [StyleConfigurator.theme.systemGeneralErrorActive2Collor]
             quadrant4.valuePatternBorder: [quadrant4.minValue,quadrant4.maxValue]
-            quadrant4.colorPatternBorder: [MaterialColors.red600]
-            quadrant4.colorPatternFillerBorder: [MaterialColors.red600]
+            quadrant4.colorPatternBorder: [StyleConfigurator.theme.systemAccnetErrorActiveCollor]
+            quadrant4.colorPatternFillerBorder: [StyleConfigurator.theme.systemAccnetErrorActiveCollor]
             quadrant4.scaleWidth: quadrant3.diameter*0.1
             quadrant4.fillerWidth: quadrant3.diameter*0.15
 
@@ -963,6 +1098,12 @@ Item {
             anchors.top: textMesValueOfLeftBotomMinorDial.bottom
             anchors.topMargin: height*0.2
             anchors.horizontalCenter: leftBottomDial.horizontalCenter
+
+            ColorOverlay {
+                anchors.fill: imageOfLeftBottomMinorDial
+                source: imageOfLeftBottomMinorDial
+                color: StyleConfigurator.theme.iconGeneralCollor
+            }
         }
     }
     Item {
@@ -992,33 +1133,33 @@ Item {
             maxValue : 120
             value    : 25
 
-            quadrant3.colorPattern: [MaterialColors.green100]
+            quadrant3.colorPattern: [StyleConfigurator.theme.systemGeneralSuccessActive2Collor]
             quadrant3.valuePatternBorder: [quadrant3.minValue,quadrant3.maxValue]
-            quadrant3.colorPatternBorder: [MaterialColors.grey400]
-            quadrant3.colorPatternFillerBorder: [MaterialColors.green600]
+            quadrant3.colorPatternBorder: [StyleConfigurator.theme.systemGeneralNotActive1Collor]
+            quadrant3.colorPatternFillerBorder: [StyleConfigurator.theme.systemAccnetSuccessActiveCollor]
             quadrant3.scaleWidth: quadrant3.diameter*0.1
             quadrant3.fillerWidth: quadrant3.diameter*0.15
 
             quadrant3.koeff: 0.6
 
-            quadrant2.colorPattern: [MaterialColors.green100]
+            quadrant2.colorPattern: [StyleConfigurator.theme.systemGeneralSuccessActive2Collor]
             quadrant2.valuePatternBorder: [quadrant2.minValue,quadrant2.maxValue]
-            quadrant2.colorPatternBorder: [MaterialColors.grey400]
-            quadrant2.colorPatternFillerBorder: [MaterialColors.green600]
+            quadrant2.colorPatternBorder: [StyleConfigurator.theme.systemGeneralNotActive1Collor]
+            quadrant2.colorPatternFillerBorder: [StyleConfigurator.theme.systemAccnetSuccessActiveCollor]
             quadrant2.scaleWidth: quadrant3.diameter*0.1
             quadrant2.fillerWidth: quadrant3.diameter*0.15
 
-            quadrant1.colorPattern: [MaterialColors.green100]
+            quadrant1.colorPattern: [StyleConfigurator.theme.systemGeneralSuccessActive2Collor]
             quadrant1.valuePatternBorder: [quadrant1.minValue,quadrant1.maxValue]
-            quadrant1.colorPatternBorder: [MaterialColors.grey400]
-            quadrant1.colorPatternFillerBorder: [MaterialColors.green600]
+            quadrant1.colorPatternBorder: [StyleConfigurator.theme.systemGeneralNotActive1Collor]
+            quadrant1.colorPatternFillerBorder: [StyleConfigurator.theme.systemAccnetSuccessActiveCollor]
             quadrant1.scaleWidth: quadrant3.diameter*0.1
             quadrant1.fillerWidth: quadrant3.diameter*0.15
 
-            quadrant4.colorPattern: [MaterialColors.red100]
+            quadrant4.colorPattern: [StyleConfigurator.theme.systemGeneralErrorActive2Collor]
             quadrant4.valuePatternBorder: [quadrant4.minValue,quadrant4.maxValue]
-            quadrant4.colorPatternBorder: [MaterialColors.red600]
-            quadrant4.colorPatternFillerBorder: [MaterialColors.red600]
+            quadrant4.colorPatternBorder: [StyleConfigurator.theme.systemAccnetErrorActiveCollor]
+            quadrant4.colorPatternFillerBorder: [StyleConfigurator.theme.systemAccnetErrorActiveCollor]
             quadrant4.scaleWidth: quadrant3.diameter*0.1
             quadrant4.fillerWidth: quadrant3.diameter*0.15
 
@@ -1099,6 +1240,12 @@ Item {
             anchors.top: textMesValueOfRightBottomMinorDial.bottom
             anchors.topMargin: height*0.2
             anchors.horizontalCenter: rightBottomDial.horizontalCenter
+
+            ColorOverlay {
+                anchors.fill: imageOfRightBottomMinorDial
+                source: imageOfRightBottomMinorDial
+                color: StyleConfigurator.theme.iconGeneralCollor
+            }
         }
     }
 
@@ -1128,7 +1275,7 @@ Item {
             invert: true
             usualDrirectionFill: false
 
-            colorPattern: [MaterialColors.green400]
+            colorPattern: [StyleConfigurator.theme.systemGeneralSuccessActive1Collor]
             valuePattern: [minValue,maxValue]
 
             value: 90
@@ -1157,7 +1304,7 @@ Item {
             invert: true
             usualDrirectionFill: false
 
-            colorPattern: [MaterialColors.red400]
+            colorPattern: [StyleConfigurator.theme.systemGeneralSuccessActive1Collor]
             valuePattern: [minValue,maxValue]
 
             value: 87
@@ -1175,6 +1322,12 @@ Item {
         anchors.verticalCenterOffset: dialRight.quadrant2.diameter/2 + height/2
 
         visible: lowerRightSliderId.visible
+
+        ColorOverlay {
+            anchors.fill: lowerRightSliderImage
+            source: lowerRightSliderImage
+            color: StyleConfigurator.theme.iconGeneralCollor
+        }
 
         Text {
             id: textlowerRightSliderImage
@@ -1207,6 +1360,12 @@ Item {
         anchors.verticalCenterOffset: -dialRight.quadrant2.diameter/2 - height
 
         visible: upperRightSliderId.visible
+
+        ColorOverlay {
+            anchors.fill: upperRightSliderImage
+            source: upperRightSliderImage
+            color: StyleConfigurator.theme.iconGeneralCollor
+        }
 
         Text {
             id: textupperRightSliderImage
@@ -1241,23 +1400,23 @@ Item {
         maxValue : 60
         value    : 37
 
-        quadrant3.colorPattern: [MaterialColors.blue100]
+        quadrant3.colorPattern: [StyleConfigurator.theme.systemGeneralActive2Collor]
         quadrant3.valuePatternBorder: [quadrant3.minValue,quadrant3.maxValue]
-        quadrant3.colorPatternBorder: [MaterialColors.grey400]
-        quadrant3.colorPatternFillerBorder: [MaterialColors.blue600]
+        quadrant3.colorPatternBorder: [StyleConfigurator.theme.systemGeneralNotActive1Collor]
+        quadrant3.colorPatternFillerBorder: [StyleConfigurator.theme.systemAccentActiveCollor]
 
-        quadrant2.colorPattern: [MaterialColors.blue100]
+        quadrant2.colorPattern: [StyleConfigurator.theme.systemGeneralActive2Collor]
         quadrant2.valuePatternBorder: [quadrant2.minValue,quadrant2.maxValue]
-        quadrant2.colorPatternBorder: [MaterialColors.grey400]
-        quadrant2.colorPatternFillerBorder: [MaterialColors.blue600]
+        quadrant2.colorPatternBorder: [StyleConfigurator.theme.systemGeneralNotActive1Collor]
+        quadrant2.colorPatternFillerBorder: [StyleConfigurator.theme.systemAccentActiveCollor]
 
-        quadrant1.colorPattern: [MaterialColors.blue100]
+        quadrant1.colorPattern: [StyleConfigurator.theme.systemGeneralActive2Collor]
         quadrant1.valuePatternBorder: [quadrant1.minValue,quadrant1.maxValue]
-        quadrant1.colorPatternBorder: [MaterialColors.grey400]
-        quadrant1.colorPatternFillerBorder: [MaterialColors.blue600]
+        quadrant1.colorPatternBorder: [StyleConfigurator.theme.systemGeneralNotActive1Collor]
+        quadrant1.colorPatternFillerBorder: [StyleConfigurator.theme.systemAccentActiveCollor]
 
-        quadrant4.colorPattern: [MaterialColors.red100]
-        quadrant4.colorPatternBorder: [MaterialColors.red600]
+        quadrant4.colorPattern: [StyleConfigurator.theme.systemGeneralErrorActive2Collor]
+        quadrant4.colorPatternBorder: [StyleConfigurator.theme.systemAccnetErrorActiveCollor]
         quadrant4.valuePattern: [quadrant4.minValue,quadrant4.maxValue]
 
 
@@ -1363,7 +1522,7 @@ Item {
             font.italic: true
             font.pixelSize: Math.min(textLowerLeftSliderItem.width,textMesValueOfLeftDial.height)*dashboard.pointFontKoef
             text                   : dashboard.textOfFactorValueRightDial
-            color: MaterialColors.grey500
+            color: StyleConfigurator.theme.textGeneral2Collor
         }
         Text {
             id: textMesValueORightDial

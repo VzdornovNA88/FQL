@@ -1,6 +1,6 @@
 /**
 ******************************************************************************
-* @file             SliderHandle.qml
+* @file             SwitchStyle.qml
 * @brief
 * @authors          Nik A. Vzdornov
 * @date             10.09.19
@@ -29,20 +29,21 @@
 ******************************************************************************
 */
 
-import "../../Controls/Private/widgets"
-import "../../Core"
-import "../../Core/Meta"
-import "../../Resources/Colors"
+import "../../../Resources/Colors"
+import "../Flat" as Flat
 
-ContentItem {
-    id: sliderHandle
 
-    property bool vertical : false
-    property bool frontDirection : true
+Flat.SwitchStyle {
 
-    showPressedState    : false
-    borderFocus         : false
-    propagateEvents     : false
-
-    color: StyleConfigurator.theme.transparent
+    colorOffDefault             : RSM_Colors.white_primary
+    colorOnDefault              : RSM_Colors.red_brand
+    colorChekedBorder           : Qt.tint(RSM_Colors.black_primary,RSM_Colors.white20)
+    colorActiveFocusBorder      : Qt.tint(colorOn__,RSM_Colors.black_pressed20)
+    colorActiveFocusCheked      : Qt.tint(colorOn__,RSM_Colors.black_pressed20)
+    colorActiveFocusUnCheked    : Qt.tint(colorOff__,RSM_Colors.black_pressed20)
+    colorActiveFocusChekedBG    : Qt.tint(colorOn__,RSM_Colors.black_pressed20)
+    colorActiveFocusUnChekedBG  : Qt.tint(colorOff__,RSM_Colors.black_pressed20)
+    colorChekedHandle           : RSM_Colors.white_primary
+    colorUnChekedHandle         : Qt.tint(RSM_Colors.black_primary,RSM_Colors.white20)
+    colorDisabled               : RSM_Colors.white50
 }

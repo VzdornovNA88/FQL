@@ -1,6 +1,6 @@
 /**
 ******************************************************************************
-* @file             SliderHandle.qml
+* @file             TabItemStyle.qml
 * @brief
 * @authors          Nik A. Vzdornov
 * @date             10.09.19
@@ -29,20 +29,17 @@
 ******************************************************************************
 */
 
-import "../../Controls/Private/widgets"
-import "../../Core"
-import "../../Core/Meta"
-import "../../Resources/Colors"
+import "../../../Resources/Colors"
+import "../Flat" as Flat
 
-ContentItem {
-    id: sliderHandle
+Flat.TabItemStyle {
 
-    property bool vertical : false
-    property bool frontDirection : true
+    colorActiveFocus        : RSM_Colors.transparent
+    colorDisabled           : RSM_Colors.white50
+    colorBorderActiveFocus  : RSM_Colors.black_tertiary
+    colorPressed            : RSM_Colors.black_pressed20
+    colorEnabled            : RSM_Colors.transparent
+    colorCheked             : RSM_Colors.black_pressed20
 
-    showPressedState    : false
-    borderFocus         : false
-    propagateEvents     : false
-
-    color: StyleConfigurator.theme.transparent
+    colorHandle             : RSM_Colors.red_brand
 }

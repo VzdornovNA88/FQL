@@ -1,0 +1,2 @@
+module FQL.Compat.Effects
+ColorOverlay 1.0 ColorOverlay.qml

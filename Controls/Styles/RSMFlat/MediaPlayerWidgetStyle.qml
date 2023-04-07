@@ -1,6 +1,6 @@
 /**
 ******************************************************************************
-* @file             SliderHandle.qml
+* @file             MediaPlayerWidgetStyle.qml
 * @brief
 * @authors          Nik A. Vzdornov
 * @date             10.09.19
@@ -29,20 +29,19 @@
 ******************************************************************************
 */
 
-import "../../Controls/Private/widgets"
-import "../../Core"
-import "../../Core/Meta"
-import "../../Resources/Colors"
+import "../Flat" as Flat
+import "../../../Resources/Colors"
+import "../../../Core/ColorHelpers.js" as ColorHelpers
 
-ContentItem {
-    id: sliderHandle
+Flat.MediaPlayerWidgetStyle {
+    id: toolBarStyle
 
-    property bool vertical : false
-    property bool frontDirection : true
-
-    showPressedState    : false
-    borderFocus         : false
-    propagateEvents     : false
-
-    color: StyleConfigurator.theme.transparent
+    colorBackground              : RSM_Colors.black_secondary
+    colorText                    : RSM_Colors.white_primary
+    colorVolumeSlider            : RSM_Colors.red_brand
+    colorPosTrackSlider          : RSM_Colors.white_primary
+    colorTickMarkRadioStation    : RSM_Colors.red_brand
+    colorTrackPanel              : RSM_Colors.white20
+    colorDisabled                : RSM_Colors.white50
+    colorVolumePanel             : RSM_Colors.white80
 }

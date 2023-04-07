@@ -42,35 +42,37 @@ import QtQuick 2.2
 import "../"
 
 /*!
-    \qmltype OpacityMask
+    \qmltype ColorOverlay
     \inqmlmodule QtGraphicalEffects
     \since QtGraphicalEffects 1.0
     \inherits QtQuick2::Item
-    \ingroup qtgraphicaleffects-mask
-    \brief Masks the source item with another item.
+    \ingroup qtgraphicaleffects-color
+    \brief Alters the colors of the source item by applying an overlay color.
+
+    The effect is similar to what happens when a colorized glass is put on top
+    of a grayscale image. The color for the overlay is given in the RGBA format.
 
     \table
     \header
         \li Source
-        \li MaskSource
         \li Effect applied
     \row
-        \li \image Original_bug.png
-        \li \image OpacityMask_mask.png
-        \li \image OpacityMask_bug.png
+        \li \image Original_butterfly.png
+        \li \image ColorOverlay_butterfly.png
     \endtable
 
     \section1 Example
 
     The following example shows how to apply the effect.
-    \snippet OpacityMask-example.qml example
+    \snippet ColorOverlay-example.qml example
 
 */
 Item {
     id: rootItem
 
     /*!
-        This property defines the source item that is going to be masked.
+        This property defines the source item that provides the source pixels
+        for the effect.
 
         \note It is not supported to let the effect include itself, for
         instance by setting source to the effect's parent.
@@ -78,23 +80,28 @@ Item {
     property variant source
 
     /*!
-        This property defines the item that is going to be used as the mask. The
-        mask item gets rendered into an intermediate pixel buffer and the alpha
-        values from the result are used to determine the source item's pixels
-        visibility in the display.
+        This property defines the RGBA color value which is used to colorize the
+        source.
+
+        By default, the property is set to \c "transparent".
 
         \table
         \header
-            \li Original
-            \li Mask
-            \li Effect applied
+        \li Output examples with different color values
+        \li
+        \li
         \row
-            \li \image Original_bug.png
-            \li \image OpacityMask_mask.png
-            \li \image OpacityMask_bug.png
+            \li \image ColorOverlay_color1.png
+            \li \image ColorOverlay_color2.png
+            \li \image ColorOverlay_color3.png
+        \row
+            \li \b { color: #80ff0000 }
+            \li \b { color: #8000ff00 }
+            \li \b { color: #800000ff }
         \endtable
+
     */
-    property variant maskSource
+    property color color: "transparent"
 
     /*!
         This property allows the effect output pixels to be cached in order to
@@ -109,19 +116,12 @@ Item {
 
         By default, the property is set to \c false.
 
-        \note It is not supported to let the effect include itself, for
-        instance by setting maskSource to the effect's parent.
     */
     property bool cached: false
 
     SourceProxy {
         id: sourceProxy
         input: rootItem.source
-    }
-
-    SourceProxy {
-        id: maskSourceProxy
-        input: rootItem.maskSource
     }
 
     ShaderEffectSource {
@@ -137,17 +137,18 @@ Item {
     ShaderEffect {
         id: shaderItem
         property variant source: sourceProxy.output
-        property variant maskSource: maskSourceProxy.output
+        property color color: rootItem.color
 
         anchors.fill: parent
 
         fragmentShader: "
-            varying highp vec2 qt_TexCoord0;
+            varying mediump vec2 qt_TexCoord0;
             uniform highp float qt_Opacity;
             uniform lowp sampler2D source;
-            uniform lowp sampler2D maskSource;
-            void main(void) {
-                gl_FragColor = texture2D(source, qt_TexCoord0.st) * (texture2D(maskSource, qt_TexCoord0.st).a) * qt_Opacity;
+            uniform highp vec4 color;
+            void main() {
+                highp vec4 pixelColor = texture2D(source, qt_TexCoord0);
+                gl_FragColor = vec4(mix(pixelColor.rgb/max(pixelColor.a, 0.00390625), color.rgb/max(color.a, 0.00390625), color.a) * pixelColor.a, pixelColor.a) * qt_Opacity;
             }
         "
     }

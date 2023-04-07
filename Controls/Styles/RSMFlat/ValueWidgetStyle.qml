@@ -1,6 +1,6 @@
 /**
 ******************************************************************************
-* @file             SliderHandle.qml
+* @file             ValueWidgetStyle.qml
 * @brief
 * @authors          Nik A. Vzdornov
 * @date             10.09.19
@@ -29,20 +29,19 @@
 ******************************************************************************
 */
 
-import "../../Controls/Private/widgets"
-import "../../Core"
-import "../../Core/Meta"
-import "../../Resources/Colors"
+import "../../../Resources/Colors"
+import "../Flat" as Flat
 
-ContentItem {
-    id: sliderHandle
+Flat.ValueWidgetStyle {
+    id: valueWidgetStyle
 
-    property bool vertical : false
-    property bool frontDirection : true
+    colorActiveFocus        : RSM_Colors.red_activated
+    colorDisabled           : RSM_Colors.white50
+    colorBorderActiveFocus  : RSM_Colors.black_tertiary
+    colorPressed            : RSM_Colors.black_pressed20
+    colorEnabled            : RSM_Colors.red_brand
+    colorCheked             : RSM_Colors.red_activated
 
-    showPressedState    : false
-    borderFocus         : false
-    propagateEvents     : false
-
-    color: StyleConfigurator.theme.transparent
+    valueColor              : RSM_Colors.black_tertiary
+    unitMessureColor        : RSM_Colors.black_tertiary
 }

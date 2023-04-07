@@ -69,6 +69,7 @@ Item {
     property alias colorLevel        : level.colorLevel
     property alias colorDisplay      : level.colorDisplay
     property alias colorText         : level.colorText
+    property alias colorHandle       : level.colorHandle
     property alias unit              : level.unit
     property alias hintVisible       : level.hintVisible
     property alias displayVisible    : level.displayVisible
@@ -151,7 +152,7 @@ Item {
                 anchors.right: rowBtns.right
                 anchors.verticalCenter: rowBtns.verticalCenter
 
-                color: MaterialColors.grey300
+                color: StyleConfigurator.theme.buttonGeneralCollor
 
                 focus: true
                 textKoeffPointSize: 3.0
@@ -199,7 +200,7 @@ Item {
                 anchors.horizontalCenter: rowBtns.horizontalCenter
                 anchors.verticalCenter: rowBtns.verticalCenter
 
-                color: MaterialColors.grey300
+                color: StyleConfigurator.theme.buttonGeneralCollor
                 textKoeffPointSize: 3.0
 
                 onClicked: {
@@ -218,7 +219,7 @@ Item {
                 anchors.left: rowBtns.left
                 anchors.verticalCenter: rowBtns.verticalCenter
 
-                color: MaterialColors.grey300
+                color: StyleConfigurator.theme.buttonGeneralCollor
                 textKoeffPointSize: 3.0
 
                 enabled: valueSetPoint > min

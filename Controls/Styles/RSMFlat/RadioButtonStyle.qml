@@ -1,6 +1,6 @@
 /**
 ******************************************************************************
-* @file             SliderHandle.qml
+* @file             RadioButtonStyle.qml
 * @brief
 * @authors          Nik A. Vzdornov
 * @date             10.09.19
@@ -29,20 +29,16 @@
 ******************************************************************************
 */
 
-import "../../Controls/Private/widgets"
-import "../../Core"
-import "../../Core/Meta"
-import "../../Resources/Colors"
+import "../../../Resources/Colors"
+import "../Flat" as Flat
 
-ContentItem {
-    id: sliderHandle
+Flat.RadioButtonStyle {
 
-    property bool vertical : false
-    property bool frontDirection : true
-
-    showPressedState    : false
-    borderFocus         : false
-    propagateEvents     : false
-
-    color: StyleConfigurator.theme.transparent
+    colorOffDefault           : RSM_Colors.transparent
+    colorOnDefault            : RSM_Colors.red_brand
+    colorChekedBorder         : Qt.tint(RSM_Colors.black_primary,RSM_Colors.white20)
+    colorActiveFocusBorder    : Qt.tint(colorOn__,RSM_Colors.black_pressed20)
+    colorActiveFocusHandle    : Qt.tint(colorOn__,RSM_Colors.black_pressed20)
+    colorActiveFocusBG        : Qt.tint(colorOff__,RSM_Colors.black_pressed20)
+    colorDisabled             : RSM_Colors.white50
 }

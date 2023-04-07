@@ -31,6 +31,8 @@
 
 import QtQuick 2.2
 
+import FQL.Compat.Effects.ColorOverlay 1.0
+
 import "../"
 import "../../Controls" as FQL
 import "../../Resources/Colors"
@@ -45,26 +47,31 @@ ContentItem {
     activatable : false
     borderFocus : false
     contentUnder: false
-    color: MaterialColors.transparent
+    color: StyleConfigurator.theme.transparent
+
+    Component.onCompleted: {
+        view.__style.invertPressedColor = Qt.binding(function(){
+            return invertPressedColor;
+        });
+    }
 
     property var          iconAccount      : ""
-    property var          colorText        : MaterialColors.grey700
     property string       machineName      : "RSM F 2x50"
     property var          iconNotificationMachine : ""
     property var          iconNotificationEngine : ""
     property var          iconLevelLink    : ""
     property var          iconNumberOfSatellities    : ""
     property int          valueNumberOfSatellities : 3
-    property var          colorSpaceNotificationMachine : MaterialColors.amber600
-    property var          colorSpaceNotificationEngine : MaterialColors.red600
     property var          valueTemperOutside : -17
     property string       date : ""
     property string       time : ""
     property int          valueNumberOfNotificationsMachine : 7
     property int          valueNumberOfNotificationsEngine : 25
+    property bool         invertPressedColor : false
 
 
     signal close()
+
 
     Item  {
         id: row
@@ -82,6 +89,12 @@ ContentItem {
             anchors.verticalCenter: row.verticalCenter
 
             source                 : view.iconAccount
+
+            ColorOverlay {
+                anchors.fill: accountImage
+                source: accountImage
+                color: StyleConfigurator.theme.iconGeneralCollor
+            }
         }
 
 
@@ -100,7 +113,7 @@ ContentItem {
 
             font.pixelSize: Math.min(row.width*0.08,row.height)*0.6
             text                   : view.time
-            color: view.colorText
+            color: StyleConfigurator.theme.textAccentCollor
         }
         Text {
             id: dateText
@@ -117,7 +130,7 @@ ContentItem {
 
             font.pixelSize: Math.min(row.width*0.08,row.height)*0.4
             text                   : view.date
-            color: view.colorText
+            color: StyleConfigurator.theme.textAccentCollor
         }
 
 
@@ -138,7 +151,7 @@ ContentItem {
             font.italic: true
             font.pixelSize: Math.min(row.width*0.08,row.height)*0.4
             text                   : view.machineName
-            color: view.colorText
+            color: StyleConfigurator.theme.textAccentCollor
         }
 
 
@@ -161,9 +174,9 @@ ContentItem {
             anchors.centerIn: recNotificationMachineImageParent
 
             radius: width/2
-            clip: view.colorSpaceNotificationMachine
+            clip: true
 
-            color : view.colorSpaceNotificationMachine
+            color : StyleConfigurator.theme.systemAccnetWornActiveCollor
 
         Image {
             id: notificationMachineImage
@@ -174,6 +187,15 @@ ContentItem {
             anchors.centerIn: recNotificationMachineImage
 
             source                 : view.iconNotificationMachine
+
+            ColorOverlay {
+                anchors.fill: notificationMachineImage
+                source: notificationMachineImage
+                color: ColorHelpers
+                .suitableFor(recNotificationMachineImage.color)
+                .in([ StyleConfigurator.theme.iconGeneralCollor,
+                      StyleConfigurator.theme.iconInvertCollor])[0].itemColor.color
+            }
         }
         }
 
@@ -192,7 +214,7 @@ ContentItem {
 
             font.pixelSize: Math.min(notificationMachineImage.width,notificationMachineImage.height)*0.7
             text                   : view.valueNumberOfNotificationsMachine
-            color: view.colorText
+            color: StyleConfigurator.theme.textAccentCollor
         }
         }
 
@@ -215,9 +237,8 @@ ContentItem {
             anchors.centerIn: recNotificationEngineImageParent
 
             radius: width/2
-            clip: view.colorSpaceNotificationEngine
 
-            color: view.colorSpaceNotificationEngine
+            color: StyleConfigurator.theme.systemAccnetErrorActiveCollor
 
         Image {
             id: notificationEngineImage
@@ -228,6 +249,15 @@ ContentItem {
             anchors.centerIn: recNotificationEngineImage
 
             source                 : view.iconNotificationEngine
+
+            ColorOverlay {
+                anchors.fill: notificationEngineImage
+                source: notificationEngineImage
+                color: ColorHelpers
+                .suitableFor(recNotificationMachineImage.color)
+                .in([ StyleConfigurator.theme.iconGeneralCollor,
+                      StyleConfigurator.theme.iconInvertCollor])[0].itemColor.color
+            }
         }
         }
 
@@ -246,7 +276,7 @@ ContentItem {
 
             font.pixelSize: Math.min(notificationEngineImage.width,notificationEngineImage.height)*0.7
             text                   : view.valueNumberOfNotificationsEngine
-            color: view.colorText
+            color: StyleConfigurator.theme.textAccentCollor
         }
         }
 
@@ -266,7 +296,7 @@ ContentItem {
 
             font.pixelSize: Math.min(row.width*0.08,row.height)*0.6
             text                   : view.valueTemperOutside + qsTr(UnitsMeasurement.celsius.name)
-            color: view.colorText
+            color: StyleConfigurator.theme.textAccentCollor
         }
 
 
@@ -280,6 +310,12 @@ ContentItem {
             anchors.verticalCenter: row.verticalCenter
 
             source                 : view.iconLevelLink
+
+            ColorOverlay {
+                anchors.fill: levelLinkImage
+                source: levelLinkImage
+                color: StyleConfigurator.theme.iconGeneralCollor
+            }
         }
         Image {
             id: numberOfSatellitesImage
@@ -292,6 +328,11 @@ ContentItem {
 
             source                 : view.iconNumberOfSatellities
 
+            ColorOverlay {
+                anchors.fill: numberOfSatellitesImage
+                source: numberOfSatellitesImage
+                color: StyleConfigurator.theme.iconGeneralCollor
+            }
 
             Text {
                 id: valueNumberOfSatellitiesText
@@ -308,7 +349,7 @@ ContentItem {
 
                 font.pixelSize: Math.min(numberOfSatellitesImage.width,numberOfSatellitesImage.height)*0.6
                 text                   : view.valueNumberOfSatellities
-                color: view.colorText
+                color: StyleConfigurator.theme.textAccentCollor
             }
         }
     }

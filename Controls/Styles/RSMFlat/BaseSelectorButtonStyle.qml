@@ -1,6 +1,6 @@
 /**
 ******************************************************************************
-* @file             SliderHandle.qml
+* @file             BaseSelectorButtonStyle.qml
 * @brief
 * @authors          Nik A. Vzdornov
 * @date             10.09.19
@@ -29,20 +29,16 @@
 ******************************************************************************
 */
 
-import "../../Controls/Private/widgets"
-import "../../Core"
-import "../../Core/Meta"
-import "../../Resources/Colors"
+import "../../../Resources/Colors"
+import "../../../Core/ColorHelpers.js" as ColorHelpers
+import "../Flat" as Flat
 
-ContentItem {
-    id: sliderHandle
 
-    property bool vertical : false
-    property bool frontDirection : true
+Flat.BaseSelectorButtonStyle {
 
-    showPressedState    : false
-    borderFocus         : false
-    propagateEvents     : false
-
-    color: StyleConfigurator.theme.transparent
+    colorOffDefault    : Qt.tint(RSM_Colors.black_primary,RSM_Colors.white20)
+    colorOnDefault     : RSM_Colors.red_brand
+    colorBG            : RSM_Colors.white50
+    colorActiveFocus   : RSM_Colors.black_pressed20
+    colorDisabled      : RSM_Colors.white50
 }

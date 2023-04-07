@@ -67,6 +67,7 @@ PrivateFQL.Control {
     property string text: ""
 
     property url iconSource: ""
+    property var iconColor
 
     property string iconName: ""
 

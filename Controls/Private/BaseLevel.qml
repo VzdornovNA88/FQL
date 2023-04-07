@@ -46,6 +46,7 @@ Control {
     property var colorLevel
     property var colorDisplay
     property var colorText
+    property var colorHandle
     property UnitMeasurement unit
     property bool hintVisible             : true
     property bool displayVisible          : true

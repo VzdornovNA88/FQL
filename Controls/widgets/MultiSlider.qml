@@ -35,6 +35,7 @@ import "../"
 import "../../Controls" as FQL
 import "../../Resources/Colors"
 import "../../Core/Meta"
+import "../../Core"
 
 Item {
 
@@ -90,8 +91,8 @@ Item {
 
             activated               : false
             interactive             : false
-            backgroundColor         : MaterialColors.transparent
-            color                   : MaterialColors.transparent
+            backgroundColor         : StyleConfigurator.theme.transparent
+            color                   : StyleConfigurator.theme.transparent
             handleVisible           : true
 
             handle                  : null

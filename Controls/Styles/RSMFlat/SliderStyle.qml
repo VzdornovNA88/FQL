@@ -1,6 +1,6 @@
 /**
 ******************************************************************************
-* @file             SliderHandle.qml
+* @file             SliderStyle.qml
 * @brief
 * @authors          Nik A. Vzdornov
 * @date             10.09.19
@@ -29,20 +29,16 @@
 ******************************************************************************
 */
 
-import "../../Controls/Private/widgets"
-import "../../Core"
-import "../../Core/Meta"
-import "../../Resources/Colors"
+import "../Flat" as Flat
+import "../../../Resources/Colors"
+import "../../../Core/ColorHelpers.js" as ColorHelpers
 
-ContentItem {
-    id: sliderHandle
+Flat.SliderStyle {
+    backgroundColor     : RSM_Colors.background
+    fillColor           : RSM_Colors.red_brand
+    borderHandleColor   : RSM_Colors.black_tertiary
+    tickmarksColor      : RSM_Colors.black_primary
+    colorDisabled       : RSM_Colors.white50
 
-    property bool vertical : false
-    property bool frontDirection : true
-
-    showPressedState    : false
-    borderFocus         : false
-    propagateEvents     : false
-
-    color: StyleConfigurator.theme.transparent
+    valueLevelPatternFillColor: [control.color ? control.color : fillColor,RSM_Colors.orange,RSM_Colors.red_error]
 }

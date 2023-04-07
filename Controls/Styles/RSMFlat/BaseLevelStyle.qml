@@ -1,6 +1,6 @@
 /**
 ******************************************************************************
-* @file             SliderHandle.qml
+* @file             BaseLevelStyle.qml
 * @brief
 * @authors          Nik A. Vzdornov
 * @date             10.09.19
@@ -29,20 +29,18 @@
 ******************************************************************************
 */
 
-import "../../Controls/Private/widgets"
-import "../../Core"
-import "../../Core/Meta"
-import "../../Resources/Colors"
+import "../../../Core/Meta"
+import "../../../Core/Meta/Type.js" as Meta
+import "../../../Resources/Colors"
+import "../../../Core/ColorHelpers.js" as ColorHelpers
+import "../Flat" as Flat
 
-ContentItem {
-    id: sliderHandle
+Flat.BaseLevelStyle {
+    id: baseLevelStyle
 
-    property bool vertical : false
-    property bool frontDirection : true
-
-    showPressedState    : false
-    borderFocus         : false
-    propagateEvents     : false
-
-    color: StyleConfigurator.theme.transparent
+    colorLevel                   : RSM_Colors.green
+    colorDisplay                 : RSM_Colors.gray_light
+    colorText                    : RSM_Colors.text_black
+    colorDisabled                : RSM_Colors.white50
+    borderColor                  : RSM_Colors.gray_dark
 }

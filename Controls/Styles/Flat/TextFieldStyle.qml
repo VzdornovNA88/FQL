@@ -1,6 +1,6 @@
 /**
 ******************************************************************************
-* @file             SliderHandle.qml
+* @file             TextFieldStyle.qml
 * @brief
 * @authors          Nik A. Vzdornov
 * @date             10.09.19
@@ -29,20 +29,19 @@
 ******************************************************************************
 */
 
-import "../../Controls/Private/widgets"
-import "../../Core"
-import "../../Core/Meta"
-import "../../Resources/Colors"
+import QtQuick 2.2
 
-ContentItem {
-    id: sliderHandle
+import "../../../Core"
+import "../../../Core/Meta"
+import "../../../Core/Meta/Type.js" as Meta
+import "../../../Resources/Colors"
+import "../../../Core/ColorHelpers.js" as ColorHelpers
 
-    property bool vertical : false
-    property bool frontDirection : true
+WidgetButtonStyle {
+    id: textFieldStyle
 
-    showPressedState    : false
-    borderFocus         : false
-    propagateEvents     : false
+    colorPressed           : StyleConfigurator.theme.transparent
+    colorBorderActiveFocus : StyleConfigurator.theme.borderAccentCollor
 
-    color: StyleConfigurator.theme.transparent
+    widthOfBorder          : 2
 }

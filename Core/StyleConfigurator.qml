@@ -34,20 +34,37 @@ pragma Singleton
 import "./Meta/"
 import "./Meta/Type.js" as Meta
 import "../Controls/Styles"
+import "../Controls/Styles/Themes"
+
+import "../Core/Factory.js" as Factory
 
 Class {
     id: configurator
 
     property string pathStyle:  "../Controls/Styles/"
-    property string styleDefault:  Styles.rsmflat
+    property string styleDefault:  Styles.flat
     property string themeDefault:  Themes.light
+    
+    readonly property var theme : d.themeCurrentObject
 
     Private {
         id: d
 
         property var cache : ({})
+        property var cacheTheme : ({})
         property string styleCurrent:  styleDefault
         property string themeCurrent:  themeDefault
+
+        property var themeCurrentObject
+
+        onThemeCurrentChanged: {
+            var theme_ = configurator.getTheme();
+            if( theme_ )
+              themeCurrentObject = theme_;
+            else
+              console.log("FQL::StyleConfigurator.getTheme() - theme is undefined : 'themeCurrent'");
+            console.log("onThemeCurrentChanged - ",themeCurrentObject.valueCollor,themeCurrent)
+        }
 
         function getStyle(path) {
 
@@ -61,29 +78,43 @@ Class {
                 return cache[path];
             }
         }
+        
+        function getTheme(path) {
+
+            if( path in cacheTheme ) {
+                console.log("getTheme - path in cacheTheme ")
+                return cacheTheme[path];
+            }
+            else {
+                cacheTheme[path] = Factory.create( path, configurator );
+                console.log("getTheme - path create - ",path,cacheTheme[path])
+                return cacheTheme[path];
+            }
+        }     
     }
+
 
     function getStyle( style,control ) {
 
-        var path = pathStyle + style + "/" + d.themeCurrent + "/" +Meta.self.typeof( control ) + "Style.qml";
+        var path = pathStyle + style + "/" + Meta.self.typeof( control ) + "Style.qml";
         return d.getStyle( path );
     }
 
     function getStyleDefault( control ) {
 
-        var path = pathStyle + styleDefault + "/" + d.themeCurrent + "/"  + Meta.self.typeof( control ) + "Style.qml";
+        var path = pathStyle + styleDefault + "/" + Meta.self.typeof( control ) + "Style.qml";
         return d.getStyle( path );
     }
 
     function getStyleCurrent( control ) {
 
-        var path = pathStyle + d.styleCurrent + "/" + d.themeCurrent + "/"  + Meta.self.typeof( control ) + "Style.qml";
+        var path = pathStyle + d.styleCurrent + "/" + Meta.self.typeof( control ) + "Style.qml";
         return d.getStyle( path );
     }
 
     function getStyleCurrentByNameControl( nameControl ) {
 
-        var path = pathStyle + d.styleCurrent + "/" + d.themeCurrent + "/"  + nameControl + "Style.qml";
+        var path = pathStyle + d.styleCurrent + "/" + nameControl + "Style.qml";
         return d.getStyle( path );
     }
 
@@ -95,15 +126,18 @@ Class {
         d.styleCurrent = styleDefault;
     }
 
+
+    function getTheme() {
+
+        var path = pathStyle + d.styleCurrent + "/Themes/" + d.themeCurrent + ".qml";
+        return d.getTheme( path );
+    }
+    
     function switchToTheme( theme ) {
         d.themeCurrent = theme;
     }
 
     function backToDefaultTheme() {
         d.themeCurrent = themeDefault;
-    }
-
-    function cacheClear() {
-        cache = {};
-    }
+    }      
 }

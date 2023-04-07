@@ -35,6 +35,7 @@ import "../../Core/Meta/Type.js" as Meta
 import "../../Resources/Colors"
 import "../" as FQL
 import "../widgets" as Widgets
+import "../../Core/"
 
 Item {
     id: listContentItem
@@ -44,7 +45,7 @@ Item {
     property bool      contentUnder: true
     property bool      propagateEvents: true
     property bool      checkable: true
-    property var       color: MaterialColors.transparent
+    property var       color: StyleConfigurator.theme.transparent
 
     Widgets.ContentItem {
 
