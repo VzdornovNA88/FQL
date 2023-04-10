@@ -1,0 +1,13 @@
+module FQL.Controls.Base
+Button 1.0 Button.qml
+CircularSlider 1.0 CircularSlider.qml
+ExclusiveGroup 1.0 ExclusiveGroup.qml
+KeyboardInput 1.0 KeyboardInput.qml
+Level 1.0 Level.qml
+QtStackNavigator 1.0 QtStackNavigator.qml
+RadioButton 1.0 RadioButton.qml
+SelectorButton 1.0 SelectorButton.qml
+Slider 1.0 Slider.qml
+Switch 1.0 Switch.qml
+ValueButton 1.0 ValueButton.qml
+

@@ -1,0 +1,10 @@
+module FQL.Controls.Private
+AbstractCheckable 1.0 AbstractCheckable.qml
+BaseLevel 1.0 BaseLevel.qml
+BaseSelectorButton 1.0 BaseSelectorButton.qml
+BaseSlider 1.0 BaseSlider.qml
+BaseValueButton 1.0 BaseValueButton.qml
+BaseWidgetButton 1.0 BaseWidgetButton.qml
+Control 1.0 Control.qml
+Style 1.0 Style.qml
+

@@ -1,0 +1,10 @@
+module FQL.Core.Base
+singleton StyleConfigurator 1.0 StyleConfigurator.qml
+singleton UnitsMeasurement 1.0 UnitsMeasurement.qml
+ColorHelpers 1.0 ColorHelpers.js
+Factory 1.0 Factory.js
+InplaceViewer 1.0 InplaceViewer.qml
+Navigator 1.0 Navigator.qml
+Presenter 1.0 Presenter.qml
+RangeModel 1.0 RangeModel.qml
+UnitMeasurement 1.0 UnitMeasurement.qml

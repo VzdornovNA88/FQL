@@ -1,0 +1,18 @@
+module FQL.Controls.Styles.Flat
+Dark 1.0 /Themes/Dark.qml
+Light 1.0 /Themes/Light.qml
+BaseLevelStyle 1.0 BaseLevelStyle.qml
+BaseSelectorButtonStyle 1.0 BaseSelectorButtonStyle.qml
+BaseValueButtonStyle 1.0 BaseValueButtonStyle.qml
+ButtonBaseStyle 1.0 ButtonBaseStyle.qml
+ButtonStyle 1.0 ButtonStyle.qml
+CircularSliderStyle 1.0 CircularSliderStyle.qml
+MediaPlayerWidgetStyle 1.0 MediaPlayerWidgetStyle.qml
+RadioButtonStyle 1.0 RadioButtonStyle.qml
+SliderStyle 1.0 SliderStyle.qml
+SwitchStyle 1.0 SwitchStyle.qml
+TabItemStyle 1.0 TabItemStyle.qml
+TextFieldStyle 1.0 TextFieldStyle.qml
+ToolBarStyle 1.0 ToolBarStyle.qml
+ValueWidgetStyle 1.0 ValueWidgetStyle.qml
+WidgetButtonStyle 1.0 WidgetButtonStyle.qml
