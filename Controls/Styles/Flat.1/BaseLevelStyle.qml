@@ -41,7 +41,7 @@ import FQL.Controls.Base 1.0
 Style {
     id: styleitem
 
-    property var colorLevel                   : StyleConfigurator.theme.systemAccnetSuccessActiveCollor
+    property var colorLevel                   : StyleConfigurator.theme.sliderGeneralCollor
     property var colorDisplay                 : StyleConfigurator.theme.backgroundGeneral3Collor
     property var colorText                    : StyleConfigurator.theme.textGeneralCollor
     property var colorDisabled                : StyleConfigurator.theme.lighter50Collor
@@ -71,57 +71,73 @@ Style {
 
             property int idxOfMaskedValue__ : 0
 
+            Item{
+                id: header
+
+                width: horizontalLayoutItem.width
+                height: (!control.headerText || control.headerText === "") ? 0 : horizontalLayoutItem.height/5
+
+                Text {
+                    id: headerText
+
+                    width: header.width
+                    height: header.height
+
+                    anchors.top: header.top
+                    anchors.horizontalCenter: header.horizontalCenter
+                    text: qsTr(control.headerText) /*+ " " + qsTr(control.unit ? control.unit.name : "")*/
+
+                    wrapMode : Text.WrapAtWordBoundaryOrAnywhere
+                    minimumPixelSize: 1
+                    font.pixelSize: Math.min(header.width,header.height*2)*0.25*control.koefPointSizeTextHeader
+                     font.italic: true
+
+                    color: control.colorText ? control.colorText : colorText
+                }
+            }
+
             Column {
                 id: layout
 
                 width: horizontalLayoutItem.width
-                height: horizontalLayoutItem.height
+                height: control.headerText === "" ?
+                            (horizontalLayoutItem.height*3/4 + horizontalLayoutItem.height*1/5) :
+                            horizontalLayoutItem.height*3/4
 
-                spacing: 0
+                anchors.top: header.bottom
+                anchors.topMargin: 10
 
-                Item{
-                    id: header
+                spacing: 3
 
-                    width: layout.width
-                    height: layout.height/3
+                Text {
+                    id: curValText
 
-                    Text {
-                        id: headerText
+                    height: control.visibleCurrentValaue ? layout.height/6 : 0
 
-                        anchors.top: header.top
-                        anchors.horizontalCenter: header.horizontalCenter
-                        text: qsTr(control.headerText) + ", " + qsTr(control.unit ? control.unit.name : "")
+//                    anchors.bottom: header.bottom
+                    x : slider.__style.handlePosition + slider.height*1.2*0.5 - 6
+                    text:    qsTr( (control.maskLevelPattern.length && control.maskLevelPattern.length > 0) ?
+                                        control.maskLevelPattern[horizontalLayoutItem.getIdxOfMaskedValueFor(control.levelPattern,slider.value)] :
+                                      slider.value.toFixed(fixedPrecision))
 
-                        wrapMode : Text.WrapAtWordBoundaryOrAnywhere
-                        minimumPixelSize: 1
-                        font.pixelSize: Math.min(header.width,header.height*2)*0.2
+                    visible  : control.visibleCurrentValaue
+                    wrapMode : Text.WrapAtWordBoundaryOrAnywhere
+                    minimumPixelSize: 1
+                    font.bold: true
+                    font.italic: true
+                    font.pixelSize: Math.min(layout.width*0.3,layout.height*0.19)*control.koefPointSizeTextCurValue
 
-                        color: control.colorText ? control.colorText : colorText
-                    }
-
-                    Text {
-                        id: curValText
-
-                        anchors.bottom: header.bottom
-                        x : slider.__style.handlePosition
-                        text:    qsTr( (control.maskLevelPattern.length && control.maskLevelPattern.length > 0) ?
-                                            control.maskLevelPattern[horizontalLayoutItem.getIdxOfMaskedValueFor(control.levelPattern,slider.value)] :
-                                          slider.value.toFixed(fixedPrecision))
-
-                        wrapMode : Text.WrapAtWordBoundaryOrAnywhere
-                        minimumPixelSize: 1
-                        font.bold: true
-                        font.pixelSize: Math.min(header.width,header.height*2.0)*0.2
-
-                        color: control.colorText ? control.colorText : colorText
-                    }
+                    color: control.colorText ? control.colorText : colorText
                 }
 
                 Slider {
                     id: slider
 
                     width: layout.width
-                    height: layout.height/6
+                    height: (!control.visibleCurrentValaue && !control.displayVisible ? layout.height/6 : 0) +
+                            (control.hintVisible          ? 0 : layout.height/6) +
+                            (control.displayVisible       ? 0 : layout.height/6) +
+                            layout.height/3
 
                     color: control.colorLevel ? control.colorLevel : colorLevel
                     clip: true
@@ -152,6 +168,10 @@ Style {
                         }
                     }
 
+                    onPositionChanged : {
+                        control.positionChanged();
+                    }
+
                     Component.onCompleted: {
                         control.__valueSetPoint = Qt.binding(function(){
                             return slider.valueSetPoint.toFixed(fixedPrecision);
@@ -162,7 +182,8 @@ Style {
                 Item {
                     id: itemSlider
                     width: layout.width
-                    height: layout.height/6
+                    height: (control.displayVisible       ? 0 : layout.height/6) +
+                             control.hintVisible ? layout.height/6 : 0
 
                     visible: control.hintVisible
 
@@ -179,7 +200,8 @@ Style {
 
                         wrapMode : Text.WrapAtWordBoundaryOrAnywhere
                         minimumPixelSize: 1
-                        font.pixelSize: Math.min(itemSlider.width/2,itemSlider.height)*0.7
+                        font.italic: true
+                        font.pixelSize: Math.min(itemSlider.width/2,itemSlider.height)*control.koefPointSizeTextHints
 
                         color: control.colorText ? control.colorText : colorText
                     }
@@ -197,7 +219,8 @@ Style {
 
                         wrapMode : Text.WrapAtWordBoundaryOrAnywhere
                         minimumPixelSize: 1
-                        font.pixelSize: Math.min(itemSlider.width/2,itemSlider.height)*0.7
+                         font.italic: true
+                        font.pixelSize: Math.min(itemSlider.width/2,itemSlider.height)*control.koefPointSizeTextHints
 
                         color: control.colorText ? control.colorText : colorText
                     }
@@ -207,7 +230,8 @@ Style {
                     id: display
 
                     width: layout.width
-                    height: layout.height/3
+                    height: (control.visibleCurrentValaue    ? 0 : layout.height/6) +
+                             (control.displayVisible          ? layout.height/3 : 0) - layout.spacing*2
 
                     border.color: borderColor
                     border.width: 1
@@ -216,13 +240,15 @@ Style {
                     Text {
                         id: curValDisplay
                         anchors.left: display.left
-                        anchors.leftMargin: + display.width*0.05
-                        anchors.verticalCenter: targetValDisplay.verticalCenter
-                        text: qsTr(control.valueCurrent.toString()/*.toFixed(fixedPrecision)*/)
+                        anchors.leftMargin: + display.width*0.04
+                        anchors.bottom: display.bottom
+                        anchors.bottomMargin: display.height*0.05
+                        text: qsTr(control.valueCurrent.toFixed(fixedPrecision).toString())
 
                         wrapMode : Text.WrapAtWordBoundaryOrAnywhere
                         minimumPixelSize: 1
-                        font.pixelSize: Math.min(display.width/2,display.height/2)*0.7
+                         font.italic: true
+                        font.pixelSize: Math.min(display.width/2,display.height/2)*0.55
 
                         color: control.colorText ? control.colorText : colorText
                     }
@@ -239,6 +265,7 @@ Style {
                         wrapMode : Text.WrapAtWordBoundaryOrAnywhere
                         minimumPixelSize: 1
                         font.bold: true
+                         font.italic: true
                         font.pixelSize: Math.min(display.width,display.height*2.0)*0.225
 
                         color: control.colorText ? control.colorText : colorText

@@ -35,7 +35,10 @@ import FQL.Core.Meta 1.0
 
 Class {
 
+    readonly property UnitMeasurement count                : UnitMeasurement { readonly property string name : ""       }
+
     readonly property UnitMeasurement percent              : UnitMeasurement { readonly property string name : "%"       }
+    readonly property UnitMeasurement dig                  : UnitMeasurement { readonly property string name : "°"       }
 
     readonly property UnitMeasurement m                    : UnitMeasurement { readonly property string name : "м"       }
     readonly property UnitMeasurement km                   : UnitMeasurement { readonly property string name : "км"      }
@@ -47,6 +50,7 @@ Class {
     readonly property UnitMeasurement m2                   : UnitMeasurement { readonly property string name : "м²"      }
     readonly property UnitMeasurement dm2                  : UnitMeasurement { readonly property string name : "дм²"     }
     readonly property UnitMeasurement ha                   : UnitMeasurement { readonly property string name : "Га"      }
+    readonly property UnitMeasurement ha_per_h             : UnitMeasurement { readonly property string name : "Га/ч"    }
     readonly property UnitMeasurement km2                  : UnitMeasurement { readonly property string name : "км²"     }
     readonly property UnitMeasurement acre                 : UnitMeasurement { readonly property string name : "акр"     }
     readonly property UnitMeasurement ft2                  : UnitMeasurement { readonly property string name : "фут²"    }
@@ -61,6 +65,8 @@ Class {
     readonly property UnitMeasurement g                    : UnitMeasurement { readonly property string name : "г"       }
     readonly property UnitMeasurement kg                   : UnitMeasurement { readonly property string name : "кг"      }
     readonly property UnitMeasurement t                    : UnitMeasurement { readonly property string name : "т"       }
+    readonly property UnitMeasurement t_per_h              : UnitMeasurement { readonly property string name : "т/ч"     }
+    readonly property UnitMeasurement t_per_ha             : UnitMeasurement { readonly property string name : "т/Га"    }
     readonly property UnitMeasurement lb                   : UnitMeasurement { readonly property string name : "фунт"    }
 
     readonly property UnitMeasurement bar                  : UnitMeasurement { readonly property string name : "Бар"     }
@@ -100,4 +106,5 @@ Class {
     readonly property UnitMeasurement l_acre               : UnitMeasurement { readonly property string name : "л/акр"   }
     readonly property UnitMeasurement gallon_eu_acre       : UnitMeasurement { readonly property string name : "гал/акр" }
     readonly property UnitMeasurement gallon_us_acre       : UnitMeasurement { readonly property string name : "гал/акр" }
+    readonly property UnitMeasurement l_per_t               : UnitMeasurement { readonly property string name : "л/т"   }
 }

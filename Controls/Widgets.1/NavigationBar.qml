@@ -86,27 +86,10 @@ ContentItem {
 
             visible: backButtonVisible
 
-            Component.onCompleted: {
-                if( imageBackButtonURI !== undefined &&
-                        imageBackButtonURI !== null && imageBackButtonURI !== "" )
-                    visible = true;
-            }
-
-            Image {
-                id: imgback
-
-                width                    : back.width*0.6
-                height                   : back.height*0.6
-                source                   : imageBackButtonURI
-                anchors.verticalCenter   : back.verticalCenter
-                anchors.horizontalCenter : back.horizontalCenter
-
-                ColorOverlay {
-                    anchors.fill: imgback
-                    source: imgback
-                    color: view.colorIcon ? view.colorIcon : StyleConfigurator.theme.iconGeneralCollor
-                }
-            }
+            iconWidth                : back.width*0.6
+            iconHeight               : back.height*0.6
+            iconSource               : imageBackButtonURI
+            iconColor                : view.colorIcon ? view.colorIcon : StyleConfigurator.theme.iconGeneralCollor
 
             onClicked: view.back()
         }
@@ -145,27 +128,10 @@ ContentItem {
 
             visible: closeButtonVisible
 
-            Component.onCompleted: {
-                if( imageCloseButtonURI !== undefined &&
-                        imageCloseButtonURI !== null && imageCloseButtonURI !== "" )
-                    visible = true;
-            }
-
-            Image {
-                id: imgclose
-
-                width                    : close.width*0.5
-                height                   : close.height*0.5
-                source                   : imageCloseButtonURI
-                anchors.verticalCenter   : close.verticalCenter
-                anchors.horizontalCenter : close.horizontalCenter
-
-                ColorOverlay {
-                    anchors.fill: imgclose
-                    source: imgclose
-                    color: view.colorIcon ? view.colorIcon : StyleConfigurator.theme.iconGeneralCollor
-                }
-            }
+            iconWidth                : close.width*0.5
+            iconHeight               : close.height*0.5
+            iconSource               : imageCloseButtonURI
+            iconColor                : view.colorIcon ? view.colorIcon : StyleConfigurator.theme.iconGeneralCollor
 
             onClicked: view.close()
         }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW X5 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="12.0846mm" height="6.3132mm" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 1196382 625010"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str0 {stroke:black;stroke-width:49500.3}
+    .fil0 {fill:none}
+    .fil1 {fill:black}
+   ]]>
+  </style>
+ </defs>
+ <g id="Слой_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <polygon class="fil0 str0" points="179132,106782 33126,600260 306387,600260 "/>
+  <polygon class="fil1 str0" points="355947,103713 305644,259560 397467,259560 "/>
+  <line class="fil0 str0" x1="355947" y1="103713" x2="355947" y2= "28304" />
+  <polygon class="fil0 str0" points="542988,106782 396982,600260 670244,600260 "/>
+  <polyline class="fil0 str0" points="179132,154649 179132,24750 542988,24750 542988,150699 "/>
+  <line class="fil0 str0" x1="802271" y1="15998" x2="731525" y2= "610002" />
+  <rect class="fil0 str0" x="864859" y="24747" width="306773" height="575508"/>
+  <polygon class="fil1 str0" points="873868,456383 873868,168628 981234,312505 "/>
+  <polygon class="fil1 str0" points="1163167,456383 1163167,168628 1055801,312505 "/>
+ </g>
+</svg>

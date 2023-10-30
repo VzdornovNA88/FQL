@@ -34,5 +34,14 @@ import QtQuick 2.2
 Item {
     id: navigator
 
+    signal itemLoaded(var item,var component)
+    signal removeRequested(var item,var component)
+    property var isItemRemoving
+    property var acceptRemove
+    property var currentItem
+    property var currentComponent
+    property var popAll
+    property var pop
     property var navigateTo
+    property int length : 0
 }

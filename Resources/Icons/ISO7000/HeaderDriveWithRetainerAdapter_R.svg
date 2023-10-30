@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   id="svg7054"
+   viewBox="0 0 46.252938 21.9545"
+   height="6.1960478mm"
+   width="13.053607mm">
+  <defs
+     id="defs7056" />
+  <metadata
+     id="metadata7059">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(517.41218,-158.52781)"
+     id="layer1">
+    <g
+       transform="translate(241.16246,-489.23256)"
+       id="g4570">
+      <g
+         style="clip-rule:evenodd;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+         id="g4407"
+         transform="matrix(9.9999997e-5,0,0,9.9999997e-5,-765.25194,644.51517)">
+        <g
+           id="Слой_x0020_1-8">
+          <metadata
+             id="CorelCorpID_0Corel-Layer-7" />
+          <g
+             id="_517487120">
+            <path
+               id="path4396"
+               d="m 66773,238546 0,13451 228757,-105 c 45234,431 75614,-33086 74865,-81680 l 7,-137760 -303629,206094 z m 284421,-169120 0,100030 c 7,40807 -23755,63350 -55822,63340 l -186386,0 242207,-163370 z"
+               class="fil0"
+               style="fill:#000000" />
+            <path
+               id="path4398"
+               d="m 162040,85404 -4851,0 0,21956 c 0,2881 -637,5012 -1911,6381 -1271,1369 -2944,2055 -4995,2055 -2195,0 -3913,-718 -5124,-2149 -1208,-1432 -1813,-3518 -1813,-6286 l 0,-52584 c 0,-2975 669,-5138 2006,-6475 1334,-1337 3500,-2006 6475,-2006 l 22512,0 c 3105,0 5761,126 7973,399 2212,252 4200,795 5968,1607 2146,907 4039,2195 5695,3864 1638,1687 2898,3630 3738,5856 861,2212 1292,4568 1292,7067 0,5089 -1432,9163 -4312,12205 -2881,3052 -7242,5201 -13080,6475 2450,1306 4806,3245 7049,5793 2226,2545 4232,5250 5982,8131 1750,2877 3119,5471 4106,7781 970,2321 1463,3913 1463,4771 0,907 -287,1799 -858,2692 -574,875 -1355,1575 -2356,2100 -1001,508 -2149,763 -3455,763 -1544,0 -2863,-368 -3913,-1099 -1050,-732 -1957,-1656 -2720,-2769 -763,-1113 -1799,-2769 -3105,-4949 l -5551,-9226 c -1992,-3392 -3773,-5968 -5331,-7735 -1575,-1764 -3168,-2975 -4792,-3626 -1607,-655 -3644,-987 -6094,-987 z m 7924,-28721 -12775,0 0,18792 12394,0 c 3325,0 6125,-287 8400,-858 2261,-574 3994,-1561 5187,-2944 1194,-1386 1799,-3280 1799,-5712 0,-1894 -476,-3567 -1449,-5012 -952,-1449 -2289,-2531 -4008,-3248 -1607,-683 -4788,-1019 -9548,-1019 z"
+               class="fil1"
+               style="fill:#000000;fill-rule:nonzero" />
+          </g>
+        </g>
+        <g
+           id="Направляющие-92">
+          <metadata
+             id="CorelCorpID_1Corel-Layer-0" />
+        </g>
+      </g>
+      <g
+         id="g4488-3"
+         transform="translate(-95.419539,18.987691)">
+        <path
+           id="path4155-5-6"
+           d="m -632.90908,639.43231 4.54896,0"
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.05788374;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <path
+           id="path4157-9-1"
+           d="m -626.27418,628.77359 -0.0129,14.55899"
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.05788374;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <path
+           id="path4159-2-2"
+           d="m -623.42125,639.43231 6.49851,0.12998"
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.05788374;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      </g>
+    </g>
+  </g>
+</svg>

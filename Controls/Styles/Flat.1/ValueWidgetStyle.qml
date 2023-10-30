@@ -42,15 +42,15 @@ WidgetButtonStyle {
     property var valueColor : ColorHelpers
     .suitableFor(valueWidget.color)
     .in([ StyleConfigurator.theme.textGeneralCollor,
-          StyleConfigurator.theme.textInvertCollor])[0].itemColor.color
+    StyleConfigurator.theme.textInvertCollor])[0].itemColor.color
     property var iconColor : ColorHelpers
     .suitableFor(valueWidget.color)
     .in([ StyleConfigurator.theme.iconGeneralCollor,
-          StyleConfigurator.theme.iconInvertCollor])[0].itemColor.color
+    StyleConfigurator.theme.iconInvertCollor])[0].itemColor.color
     property var unitMessureColor : ColorHelpers
     .suitableFor(valueWidget.color)
     .in([ StyleConfigurator.theme.textGeneralCollor,
-          StyleConfigurator.theme.textInvertCollor])[0].itemColor.color
+    StyleConfigurator.theme.textInvertCollor])[0].itemColor.color
 
     property alias valueWidget: valueWidgetStyle.control
 
@@ -62,56 +62,68 @@ WidgetButtonStyle {
 
         anchors.centerIn: parent
 
-            Image {
-                id: img1
+        Image {
+            id: img1
 
-                anchors.bottom: itemHorizontalLayoutWithImage.verticalCenter
-                anchors.right: itemHorizontalLayoutWithImage.horizontalCenter
-                anchors.rightMargin: itemHorizontalLayoutWithImage.width*0.05
+            anchors.bottom: itemHorizontalLayoutWithImage.verticalCenter
+            anchors.right: itemHorizontalLayoutWithImage.horizontalCenter
+            anchors.rightMargin: Math.round(itemHorizontalLayoutWithImage.width*0.05)
 
-                width                  : itemHorizontalLayoutWithImage.width*0.35
-                height                 : itemHorizontalLayoutWithImage.height*0.35
-                source                 : valueWidget.iconSource ? valueWidget.iconSource : ""
+            width                  : Math.round(control.iconWidthK ? itemHorizontalLayoutWithImage.width*0.4*control.iconWidthK :
+                                                                     itemHorizontalLayoutWithImage.width*0.4)
+            height                 : Math.round(control.iconWidthK ? itemHorizontalLayoutWithImage.height*0.5*control.iconHeightK :
+                                                                     itemHorizontalLayoutWithImage.height*0.5)
 
-                ColorOverlay {
-                    anchors.fill: img1
-                    source: img1
-                    color: valueWidget.iconColor ? valueWidget.iconColor : valueWidgetStyle.iconColor
-                }
+            sourceSize.width       : width
+            sourceSize.height      : height
+
+            source                 : valueWidget.iconSource ? valueWidget.iconSource : ""
+
+            ColorOverlay {
+                anchors.fill: img1
+                source: img1
+                visible: valueWidget.iconSource && img1.sourceSize.width > 0 && img1.sourceSize.height > 0 ? true : false
+                color: valueWidget.iconColor ? valueWidget.iconColor : valueWidgetStyle.iconColor
             }
-            Text {
-                id: textValue2
+        }
+        Text {
+            id: textValue2
 
-                height                 : itemHorizontalLayoutWithImage.height*0.25
+            height                 : itemHorizontalLayoutWithImage.height*0.25
 
-                anchors.verticalCenter: img1.verticalCenter
-                anchors.left: itemHorizontalLayoutWithImage.horizontalCenter
-                anchors.leftMargin: itemHorizontalLayoutWithImage.width*0.05
+            anchors.verticalCenter: img1.verticalCenter
+            anchors.left: itemHorizontalLayoutWithImage.horizontalCenter
+            anchors.leftMargin: itemHorizontalLayoutWithImage.width*0.01
 
-                wrapMode : Text.WrapAtWordBoundaryOrAnywhere
-                minimumPixelSize: 1
+            wrapMode : Text.WrapAtWordBoundaryOrAnywhere
+            minimumPixelSize: 1
 
-                font.pixelSize: Math.min(itemHorizontalLayoutWithImage.width,itemHorizontalLayoutWithImage.height)*0.25*valueWidget.koefFontValuePixelSize
-                text                   : (valueWidget.value && !isNaN(valueWidget.value)) ?
-                                             valueWidget.value.toFixed(valueWidget.fixedPrecision).toString() : "---"
-                color: valueWidget.valueColor ? valueWidget.valueColor : valueWidgetStyle.valueColor
-            }
-            Text {
-                id: unitMesText2
+            font.italic: true
+            property double value_ : !isNaN(valueWidget.value) ? valueWidget.value : NaN
+            font.pixelSize: Math.min(itemHorizontalLayoutWithImage.width,itemHorizontalLayoutWithImage.height)*0.25*valueWidget.koefFontValuePixelSize
+            text                   : !isNaN(value_) ? value_.toFixed(valueWidget.fixedPrecision).toString() :
+                                                      control.textModeValue ? valueWidget.value : "---"
+            color: valueWidget.valueColor ? valueWidget.valueColor : valueWidgetStyle.valueColor
+        }
+        Text {
+            id: unitMesText2
 
-                height                 : itemHorizontalLayoutWithImage.height*0.14
+            height                 : itemHorizontalLayoutWithImage.height*0.14
 
-                anchors.top: itemHorizontalLayoutWithImage.verticalCenter
-                anchors.horizontalCenter: itemHorizontalLayoutWithImage.horizontalCenter
+            anchors.top: itemHorizontalLayoutWithImage.verticalCenter
+            //                anchors.bottom: itemHorizontalLayoutWithImage.bottom
+            //                anchors.bottomMargin: itemHorizontalLayoutWithImage.height*0.1
+            anchors.horizontalCenter: itemHorizontalLayoutWithImage.horizontalCenter
 
-                text: qsTr(valueWidget.unit ? valueWidget.unit.name : "")
+            text: qsTr(valueWidget.unit ? valueWidget.unit.name : "")
 
-                wrapMode : Text.WrapAtWordBoundaryOrAnywhere
-                minimumPixelSize: 1
-                font.pixelSize: Math.min(itemHorizontalLayoutWithImage.width,itemHorizontalLayoutWithImage.height)*0.25*valueWidget.koefFontValuePixelSize
+            font.italic: true
+            wrapMode : Text.WrapAtWordBoundaryOrAnywhere
+            minimumPixelSize: 1
+            font.pixelSize: Math.min(itemHorizontalLayoutWithImage.width,itemHorizontalLayoutWithImage.height)*0.25*valueWidget.koefFontValuePixelSize
 
-                color: valueWidget.unitMessureColor ? valueWidget.unitMessureColor : valueWidgetStyle.unitMessureColor
-            }
+            color: valueWidget.unitMessureColor ? valueWidget.unitMessureColor : valueWidgetStyle.unitMessureColor
+        }
     }
 
     property Component horizontalLayout : Item {
@@ -134,6 +146,7 @@ WidgetButtonStyle {
                 wrapMode : Text.WrapAtWordBoundaryOrAnywhere
                 minimumPixelSize: 1
 
+                font.italic: true
                 font.pixelSize: itemRowTexts1.fontPixSize
                 text                   : (valueWidget.value && !isNaN(valueWidget.value)) ?
                                              valueWidget.value.toFixed(valueWidget.fixedPrecision).toString() : "---"
@@ -147,6 +160,7 @@ WidgetButtonStyle {
                 wrapMode : Text.WrapAtWordBoundaryOrAnywhere
                 minimumPixelSize: 1
                 font.pixelSize: itemRowTexts1.fontPixSize
+                font.italic: true
 
                 color: valueWidget.unitMessureColor ? valueWidget.unitMessureColor : valueWidgetStyle.unitMessureColor
             }
@@ -161,72 +175,79 @@ WidgetButtonStyle {
 
         anchors.centerIn: parent
 
-            Image {
-                id: img2
+        Image {
+            id: img2
 
-                anchors.top: itemVerticalLayout.top
-                anchors.horizontalCenter: itemVerticalLayout.horizontalCenter
+            anchors.top: itemVerticalLayout.top
+            anchors.horizontalCenter: itemVerticalLayout.horizontalCenter
 
-                width                  : itemVerticalLayout.width*0.4
-                height                 : itemVerticalLayout.height*0.4
-                source                 : valueWidget.iconSource ? valueWidget.iconSource : ""
+            width                  : control.iconWidthK ? itemVerticalLayout.width*0.45*control.iconWidthK :
+                                                          itemVerticalLayout.width*0.45
+            height                 : control.iconWidthK ? itemVerticalLayout.height*0.45*control.iconHeightK :
+                                                          itemVerticalLayout.height*0.45
+            sourceSize.width       : width
+            sourceSize.height      : height
 
-                ColorOverlay {
-                    anchors.fill: img2
-                    source: img2
-                    visible: valueWidget.iconSource ? true : false
-                    color: valueWidget.iconColor ? valueWidget.iconColor : valueWidgetStyle.iconColor
-                }
+            source                 : valueWidget.iconSource ? valueWidget.iconSource : ""
+
+            ColorOverlay {
+                anchors.fill: img2
+                source: img2
+                visible: valueWidget.iconSource && img2.sourceSize.width > 0 && img2.sourceSize.height > 0 ? true : false
+                color: valueWidget.iconColor ? valueWidget.iconColor : valueWidgetStyle.iconColor
             }
-            Text {
-                id: textValue3
+        }
+        Text {
+            id: textValue3
 
-                height                 : itemVerticalLayout.height*0.25
+            height                 : itemVerticalLayout.height*0.25
 
-                anchors.verticalCenter: valueWidget.iconSource !== "" ?
-                                            itemVerticalLayout.verticalCenter :
-                                            undefined
-                anchors.bottom: valueWidget.iconSource == "" ?
-                                    itemVerticalLayout.verticalCenter :
-                                    undefined
-                anchors.verticalCenterOffset: valueWidget.iconSource !== "" ? height*0.5 : 0
-                anchors.horizontalCenter: itemVerticalLayout.horizontalCenter
+            anchors.verticalCenter: valueWidget.iconSource !== "" ?
+                                        itemVerticalLayout.verticalCenter :
+                                        undefined
+            anchors.bottom: valueWidget.iconSource == "" ?
+                                itemVerticalLayout.verticalCenter :
+                                undefined
+            anchors.verticalCenterOffset: valueWidget.iconSource !== "" ? height*0.5 : 0
+            anchors.horizontalCenter: itemVerticalLayout.horizontalCenter
 
-                wrapMode : Text.WrapAtWordBoundaryOrAnywhere
-                minimumPixelSize: 1
+            wrapMode : Text.WrapAtWordBoundaryOrAnywhere
+            minimumPixelSize: 1
 
-                font.pixelSize: Math.min(itemVerticalLayout.width,itemVerticalLayout.height) *
-                                (valueWidget.iconSource ? 0.3 : 0.35) *
-                                valueWidget.koefFontValuePixelSize
-                text                   : (valueWidget.value && !isNaN(valueWidget.value)) ?
-                                             valueWidget.value.toFixed(valueWidget.fixedPrecision).toString() : "---"
-                color: valueWidget.valueColor ? valueWidget.valueColor : valueWidgetStyle.valueColor
-            }
-            Text {
-                id: unitMesText3
+            font.italic: true
+            font.pixelSize: Math.min(itemVerticalLayout.width,itemVerticalLayout.height) *
+                            (valueWidget.iconSource ? 0.3 : 0.35) *
+                            valueWidget.koefFontValuePixelSize
+            text                   : (valueWidget.value && !isNaN(valueWidget.value)) ?
+                                         valueWidget.value.toFixed(valueWidget.fixedPrecision).toString() : "---"
+            color: valueWidget.valueColor ? valueWidget.valueColor : valueWidgetStyle.valueColor
+        }
+        Text {
+            id: unitMesText3
 
-                height                 : itemVerticalLayout.height*0.14
+            height                 : itemVerticalLayout.height*0.14
 
-                anchors.top: textValue3.bottom
-                anchors.topMargin: textValue3.font.pixelSize/4
+            anchors.top: textValue3.bottom
+            anchors.topMargin: textValue3.font.pixelSize/4
 
-                anchors.horizontalCenter: itemVerticalLayout.horizontalCenter
+            anchors.horizontalCenter: itemVerticalLayout.horizontalCenter
 
-                text: qsTr(valueWidget.unit ? valueWidget.unit.name : "")
+            text: qsTr(valueWidget.unit ? valueWidget.unit.name : "")
 
-                wrapMode : Text.WrapAtWordBoundaryOrAnywhere
-                minimumPixelSize: 1
-                font.pixelSize: Math.min(itemVerticalLayout.width*0.7,itemVerticalLayout.height*0.7) *
-                                (valueWidget.iconSource ? 0.3 : 0.35) *
-                                valueWidget.koefFontValuePixelSize
+            wrapMode : Text.WrapAtWordBoundaryOrAnywhere
+            minimumPixelSize: 1
+            font.italic: true
+            font.pixelSize: Math.min(itemVerticalLayout.width*0.7,itemVerticalLayout.height*0.7) *
+                            (valueWidget.iconSource ? 0.3 : 0.35) *
+                            valueWidget.koefFontValuePixelSize
 
-                color: valueWidget.unitMessureColor ? valueWidget.unitMessureColor : valueWidgetStyle.unitMessureColor
-            }
+            color: valueWidget.unitMessureColor ? valueWidget.unitMessureColor : valueWidgetStyle.unitMessureColor
+        }
     }
 
     content : valueWidget.orientation === Qt.Vertical ?
-               verticalLayout :
-               (valueWidget.iconSource ?
-                    horizontalLayoutWithImage :
-                    horizontalLayout)
+                  verticalLayout :
+                  (valueWidget.iconSource ?
+                       horizontalLayoutWithImage :
+                       horizontalLayout)
 }

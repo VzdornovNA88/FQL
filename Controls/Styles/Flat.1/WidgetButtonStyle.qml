@@ -65,7 +65,9 @@ ButtonBaseStyle {
                         "textColorBack"
                     );
                     textColorBack.color = Qt.binding(function(){
-                        return colorBackground__;
+                        return !ColorHelpers.isAlphaAdded(control.color) ?
+                                    colorBackground__ :
+                                    "#00000000";
                     });
 
                     var textColorFront = Qt.createQmlObject(
@@ -74,7 +76,7 @@ ButtonBaseStyle {
                         "textColorFront"
                     );
                     textColorFront.color = Qt.binding(function(){
-                        return control.color !== "#00000000" ?
+                        return !ColorHelpers.isAlphaAdded(control.color) ?
                                     colorForeground__ :
                                     "#00000000";
                     });
@@ -118,10 +120,17 @@ ButtonBaseStyle {
                 case "Checkable" :
 
                     if( control.propagateEvents === true ) {
-                    control.clicked.connect(function(){
-
-                        child_.checked = !child_.checked;
-                    });
+                        control.onCheckedChanged.connect(function(){
+                            child_.checked = control.checked;
+                        });
+                        if(control.activated !== undefined &&
+                                control.activated !== null &&
+                                child_.activated !== undefined &&
+                                child_.activated !== null) {
+                            control.onActivatedChanged.connect(function(){
+                                child_.activated = control.activated;
+                            });
+                        }
                     }
                     activities_++;
                     componentLoaded( type_ );

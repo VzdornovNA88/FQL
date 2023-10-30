@@ -45,8 +45,17 @@ Class {
     property bool inverted : d.inverted
 
     onInvertedChanged: setValue( value )
-    onMaximumValueChanged: setValue( value )
-    onMinimumValueChanged: setValue( value )
+    onMaximumValueChanged: {
+
+        if( maximumValue < value )
+            setValue( maximumValue );
+    }
+    onMinimumValueChanged: {
+
+        if( minimumValue > value ) {
+            setValue( minimumValue );
+        }
+    }
 //    onPositionAtMaximumChanged: setValue( value )
 //    onPositionAtMinimumChanged: setValue( value )
     onStepSizeChanged: setValue( value )

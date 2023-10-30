@@ -42,6 +42,7 @@ Control {
     property var contentBorderColor
     property bool contentUnder: true
     property bool propagateEvents: true
+    property double radius : 0
 
     property Component content__        : null
     property QtObject  contentItem__    : null
@@ -50,6 +51,8 @@ Control {
 
     property bool clickable : true
     signal clicked
+    signal rightSwipe
+    signal leftSwipe
 
     property var contentAvailableWidth : contentLoader.width
     property var contentAvailableHeight : contentLoader.height
@@ -63,11 +66,12 @@ Control {
     property bool checked: false
 
     property bool activatable: false
-    readonly property bool activated: behavior.activated__
+    property bool activated: false
+    property bool activatedFromFocus: false
 
     property bool showPressedState : true
 
-    onActivatableChanged: if(!activatable) behavior.activated__ = false;
+    onActivatableChanged: if(!activatable) activated = false;
 
     property ExclusiveGroup exclusiveGroup: null
 
@@ -82,6 +86,15 @@ Control {
 
     activeFocusOnTab: false
 
+    function toggle() {
+        if( !clickable ) return;
+
+        if( !activatedFromFocus )
+            activated = !activated;
+        if (button.checkable && (!exclusiveGroup || !checked))
+            button.checked = !button.checked
+    }
+
     Keys.onPressed: {
         if( !clickable ) return;
         if (event.key === Qt.Key_Space && !event.isAutoRepeat && !behavior.pressed)
@@ -89,13 +102,16 @@ Control {
     }
 
     onFocusChanged:{
-        if( activatable ) {
-            behavior.activated__ = !behavior.activated__;
-            if( !behavior.activated__ )
-                button.focus = false;
+        if( button.activatedFromFocus ) {
+            button.activated = focus;
         }
-        if( !activatable ) focus = false;
         if (!focus) behavior.keyPressed = false
+    }
+
+    onActivatedChanged: {
+        if( button.activatedFromFocus ) {
+            button.focus = button.activated;
+        }
     }
 
     Keys.onReleased: {
@@ -134,20 +150,15 @@ Control {
 
     MouseArea {
         id: behavior
-        property bool keyPressed: false
+        property bool keyPressed      : false
         property bool effectivePressed: clickable ? pressed && containsMouse || keyPressed : false
+        property bool activated__     : false
+        property double contentX__    : 0
 
         anchors.fill: parent
-        enabled: !keyPressed
-        property bool activated__ : false
+        enabled     : !keyPressed
+
 //        hoverEnabled: false
-
-        function toggle() {
-            if( !clickable ) return;
-
-            if (button.checkable && (!exclusiveGroup || !checked))
-                button.checked = !button.checked
-        }
 
         onReleased: {
             if( !clickable ) return;
@@ -160,6 +171,13 @@ Control {
             if( !clickable ) return;
             if (activeFocusOnPress)
                 button.forceActiveFocus()
+            contentX__ = mouseX;
+        }
+        onPositionChanged: {
+            if( mouseX - contentX__ > behavior.width*0.1 )
+                rightSwipe();
+            else if ( mouseX - contentX__ < -behavior.width*0.1 )
+                leftSwipe();
         }
     }
 

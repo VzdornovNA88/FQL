@@ -40,7 +40,7 @@ Style {
     id: buttonstyle
 
     property bool invertPressedColor     : false
-    property var colorActiveFocus        : StyleConfigurator.theme.buttonActivatedCollor
+    property var colorActiveFocus        : control.activatable ? StyleConfigurator.theme.buttonActivatedCollor : color__
     property var colorDisabled           : StyleConfigurator.theme.buttonDisabledCollor
     property var colorBorderActiveFocus  : StyleConfigurator.theme.borderAccentCollor
     property var colorPressed            : suitableColorPressed
@@ -63,6 +63,9 @@ Style {
     property bool      down                   : control.pressed
 
     readonly
+    property bool      activated              : !control.activatable ? control.activeFocus : control.activated
+
+    readonly
     property var suitableColorPressed         : !invertPressedColor ?
                                                         StyleConfigurator.theme.buttonPressedCollor :
                                                         StyleConfigurator.theme.buttonPressedInvertCollor
@@ -75,23 +78,23 @@ Style {
 
     readonly
     property var colorForeground__            : buttonstyle.control.enabled     ?
-                                                 ( buttonstyle.down             ?
+                                                 ( buttonstyle.down ?
                                                     (buttonstyle.control.showPressedState ?
                                                          buttonstyle.colorPressed :
                                                          StyleConfigurator.theme.transparent) :
-                                                 ( buttonstyle.checked__        ?
+                                                 ( buttonstyle.checked__ ?
                                                     buttonstyle.colorCheked     :
                                                  StyleConfigurator.theme.transparent ) ) :
                                                 buttonstyle.colorDisabled
 
     readonly
     property var colorBackground__            : control.borderFocus ?
-                                                    ( buttonstyle.checked__        ?
-                                                       StyleConfigurator.theme.transparent     :
-                                                    buttonstyle.color__ )   :
+                                                    /*( buttonstyle.checked__        ?
+                                                       StyleConfigurator.theme.transparent     :*/
+                                                    buttonstyle.color__ /*) */  :
                                                     buttonstyle.down ?
                                                         buttonstyle.color__ :
-                                                        ( control.activeFocus ?
+                                                        ( control.activated ?
                                                              buttonstyle.colorActiveFocus :
                                                              ( buttonstyle.checked__        ?
                                                                 buttonstyle.colorActiveFocus     :
@@ -105,12 +108,13 @@ Style {
         border.width        : widthOfBorder
         border.pixelAligned : true
         border.color        : control.borderFocus ?
-                                  ( control.activeFocus ?
+                                  ( control.activated ?
                                        buttonstyle.colorBorderActiveFocus :
                                        StyleConfigurator.theme.transparent ) :
                                   StyleConfigurator.theme.transparent
 
         color               : StyleConfigurator.theme.transparent
+        radius              : control.radius
 
         Rectangle {
 
@@ -122,6 +126,7 @@ Style {
             anchors.centerIn: parent
 
             color           : colorBackground__
+            radius          : control.radius
 
             FocusScope {
                 id: contentID
@@ -151,6 +156,7 @@ Style {
                 height      : bg.height
                 color       : buttonstyle.colorForeground__
 
+                radius      : control.radius
                 border.width: 2
                 border.color: control.contentBorderColor ? control.contentBorderColor : buttonstyle.contentBorderColor
             }

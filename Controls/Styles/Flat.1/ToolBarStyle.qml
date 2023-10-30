@@ -56,6 +56,8 @@ Style {
 
         color: toolBar.colorBackground ? toolBar.colorBackground : toolBarStyle.colorBackground
 
+        property int currentIndex : 0
+
         property Component horizontalLayout : Component {
 
             Row {
@@ -129,6 +131,22 @@ Style {
 
                     ExclusiveGroup { id: tabGroup }
 
+                    function activateTargetIndex_(){
+                        tools.currentIndex = toolBar.targetIndex;
+                    }
+
+                    onCurrentItemChanged: {
+                        tools.currentItem.checked = true;
+                    }
+
+                    onCurrentIndexChanged : {
+                        focusable.currentIndex = tools.currentIndex;
+                    }
+                    onModelChanged: {
+                        toolBar.onTargetIndexChanged.connect(activateTargetIndex_);
+                        activateTargetIndex_();
+                    }
+
                     model: toolBar.model
                     delegate: TabItem {
                         id: tab
@@ -141,9 +159,8 @@ Style {
                         color: toolBar.colorTabItems ? toolBar.colorTabItems : toolBarStyle.colorTabItems
 
                         onClicked: {
-
                             tools.currentIndex = index;
-                            toolBar.tabCliked( tools.currentIndex );
+                            toolBar.tabCliked( tools.currentIndex,tab.checked );
                         }
 
                         Item  {
@@ -298,6 +315,22 @@ Style {
 
                     ExclusiveGroup { id: tabGroup }
 
+                    function activateTargetIndex_(){
+                        tools.currentIndex = toolBar.targetIndex;
+                    }
+
+                    onCurrentItemChanged: {
+                        tools.currentItem.checked = true;
+                    }
+
+                    onCurrentIndexChanged : {
+                        focusable.currentIndex = tools.currentIndex;
+                    }
+                    onModelChanged: {
+                        toolBar.onTargetIndexChanged.connect(activateTargetIndex_);
+                        activateTargetIndex_();
+                    }
+
                     model: toolBar.model
                     delegate: TabItem {
                         id: tab
@@ -312,7 +345,7 @@ Style {
                         onClicked: {
 
                             tools.currentIndex = index;
-                            toolBar.tabCliked( tools.currentIndex );
+                            toolBar.tabCliked( tools.currentIndex,tab.checked );
                         }
 
                         Item  {

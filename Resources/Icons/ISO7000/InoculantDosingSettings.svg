@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 14.025001 7.6499996"
+   height="7.6499996mm"
+   width="14.025001mm">
+  <defs
+     id="defs2">
+    <style
+       type="text/css"
+       id="style3699"><![CDATA[
+    .fil0 {fill:black}
+   ]]></style>
+    <style
+       type="text/css"
+       id="style3719"><![CDATA[
+    .fil0 {fill:black}
+   ]]></style>
+  </defs>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(-11.391352,-69.858073)"
+     id="layer1">
+    <g
+       transform="matrix(3.7173978e-4,0,0,3.433726e-4,14.666753,68.881523)"
+       id="g3717"
+       style="clip-rule:evenodd;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision">
+      <g
+         id="Слой_x0020_1">
+        <metadata
+           id="CorelCorpID_0Corel-Layer" />
+        <path
+           style="fill:#000000"
+           class="fil0"
+           d="m 17504,2846 -3008,3636 v 13293 h 4632 V 18061 H 16211 V 7103 l 2095,-2541 h 5679 l 994,1152 1383,-644 713,1079 -1119,521 v 11393 h -3181 v 1715 h 4896 V 7053 l 1246,-588 -1905,-2891 -1464,682 -1216,-1408 h -6829 z m 1624,17924 h -1534 l 3368,4353 3348,-4353 -1534,1 v -5672 h -3648 v 5672 z m 1119,1967 v -6346 h 1411 v 6346 z"
+           id="path3704" />
+      </g>
+    </g>
+    <g
+       transform="matrix(3.7173978e-4,0,0,3.433726e-4,7.5546258,68.880835)"
+       id="g3737"
+       style="clip-rule:evenodd;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision">
+      <g
+         id="Слой_x0020_1-3">
+        <metadata
+           id="CorelCorpID_0Corel-Layer-6" />
+        <path
+           style="fill:#000000"
+           class="fil0"
+           d="M 19174,18063 H 12036 V 6795 H 24727 V 4562 h 2667 v 2233 h 2464 V 18063 H 22823 V 15100 H 19174 Z M 29109,5079 V 2846 H 23012 V 5079 H 10321 v 14699 h 8853 v 994 h -1534 l 3359,4353 3359,-4353 h -1535 v -995 h 8805 l -3,-14699 h -2515 z m -8816,17660 v -6346 h 1411 v 6346 z"
+           id="path3724" />
+      </g>
+    </g>
+  </g>
+</svg>

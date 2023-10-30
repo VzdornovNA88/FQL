@@ -56,16 +56,29 @@ ButtonBaseStyle {
     content : Row {
         id: row
 
-        property var pointSize__   : undefined === control.textKoeffPointSize ?
-                                       Math.min(control.width,control.height*2.0)*0.3 :
-                                         Math.min(control.width,control.height*2.0)*0.3*control.textKoeffPointSize
+        width                  : control.width
+        height                 : control.height
 
-        spacing                    : 5
+        property var pointSize__   : undefined === control.textKoeffPointSize ?
+                                       Math.min(row.width,row.height*2.0)*0.2 :
+                                         Math.min(row.width,row.height*2.0)*0.2*control.textKoeffPointSize
+
+        spacing                    : 2
 
         Image {
             id: img
-            width                  : img.sourceSize.width > 0 ? control.width*0.15 : 0
-            height                 : img.sourceSize.height > 0 ? control.height*0.45 :0
+            width                  : control.iconSource !== undefined &&
+                                     control.iconSource !== null &&
+                                     control.iconSource !== "" ?
+                                         (control.iconWidth ? control.iconWidth : row.width*0.45) :
+                                         row.width*0.1
+            height                 : control.iconSource !== undefined &&
+                                     control.iconSource !== null &&
+                                     control.iconSource !== "" ?
+                                         (control.iconHeight ? control.iconHeight : row.height*0.45) :
+                                         row.width*0.1
+            sourceSize.width       : width
+            sourceSize.height      : height
             source                 : control.iconSource
             anchors.verticalCenter : parent.verticalCenter
 
@@ -78,23 +91,26 @@ ButtonBaseStyle {
         Text {
             id: text
 
-            anchors.bottom : parent.bottom
+            anchors.verticalCenter : img.verticalCenter
 
             font.pixelSize         : row.pointSize__
             text                   : control.text
             color                  : undefined === control.color_text ?
                                      buttonstyle.colorDefaultText : control.color_text
+
+            font.italic            : true
         }
         Text {
             id: textMeasuringUnit
 
-            anchors.bottom : parent.bottom
-            anchors.bottomMargin: 5
+            anchors.verticalCenter : img.verticalCenter
 
-            font.pixelSize         : row.pointSize__*0.5
+            font.pixelSize         : row.pointSize__*0.7
             text                   : qsTr(control.unit ? control.unit.name : "")
             color                  : undefined === control.colorTextUnitOfMeasurement ?
                                          text.color : control.colorTextUnitOfMeasurement
+
+            font.italic            : true
         }
     }
 }

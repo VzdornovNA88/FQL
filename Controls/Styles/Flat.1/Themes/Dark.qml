@@ -46,6 +46,8 @@ QtObject {
     readonly
     property var darker50Collor: ColorHelpers.addAlpha( 0.5,MaterialColors.grey900 )
     readonly
+    property var darker80Collor: ColorHelpers.addAlpha( 0.8,MaterialColors.grey900 )
+    readonly
     property var darker40Collor: ColorHelpers.addAlpha( 0.4,MaterialColors.grey900 )
     readonly
     property var lighter20Collor: ColorHelpers.addAlpha( 0.2,MaterialColors.grey50 )
@@ -58,6 +60,8 @@ QtObject {
     property var iconGeneralDisabledCollor: lighter50Collor
     readonly
     property var iconAccentCollor: MaterialColors.grey50
+    readonly
+    property var iconAccent1Collor: MaterialColors.pink500
     readonly
     property var iconInvertCollor: MaterialColors.grey900
 
@@ -78,6 +82,8 @@ QtObject {
     property var backgroundSpecialLightCollor: MaterialColors.grey50
     readonly
     property var backgroundSpecialDarkCollor: MaterialColors.grey800
+    readonly
+    property var backgroundSpecialDark1Collor: MaterialColors.grey600
     readonly
     property var backgroundSpecialToolBarCollor: backgroundSpecialDarkCollor
 
@@ -118,8 +124,7 @@ QtObject {
     readonly
     property var buttonAccentCollor: MaterialColors.pink500
     readonly
-    property var buttonActivatedCollor: Qt.tint( MaterialColors.pink500 ,
-                                                          ColorHelpers.addAlpha( 0.7,MaterialColors.grey50 ) )
+    property var buttonActivatedCollor: MaterialColors.red200
     readonly
     property var buttonDisabledCollor: lighter50Collor
     readonly
@@ -134,6 +139,8 @@ QtObject {
     readonly
     property var systemGeneralActive2Collor: MaterialColors.blue300
 
+    readonly
+    property var systemAccnetSuccessActiveDarkCollor: MaterialColors.green900
     readonly
     property var systemAccnetSuccessActiveCollor: MaterialColors.green700
     readonly
@@ -161,4 +168,14 @@ QtObject {
     property var systemGeneralNotActive1Collor: MaterialColors.grey500
     readonly
     property var systemGeneralNotActive2Collor: MaterialColors.grey200
+
+    readonly
+    property var sliderAccentCollor: MaterialColors.pink500
+    readonly
+    property var sliderGeneralCollor: MaterialColors.green500
+
+    readonly
+    property var sliderHandleAccentCollor: MaterialColors.pink500
+    readonly
+    property var sliderHandleGeneralCollor: MaterialColors.grey900
 }

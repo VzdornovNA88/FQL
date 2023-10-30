@@ -43,6 +43,35 @@ FocusScope {
       property bool isBound : false
       property var bindings : []
 
+      function isNotHandler (item,index,array) {
+          return  item.toString().indexOf("Changed") === -1;
+      }
+
+      function isSignal (item) {
+          return  item instanceof Function  &&
+                  item.prototype === undefined &&
+                  item.connect instanceof Function;
+      }
+
+      function isSlot (item) {
+          return  item instanceof Function;
+      }
+
+      function createBinding(name,index,array) {
+          console.log("createBinding - ",name);
+          var functionInView = root.view[name];
+          var functionInModel = root.model[name];
+          if( isSlot(functionInModel) && isSignal(functionInView) )
+              functionInView.connect(functionInModel);
+          else
+              privateScoupe.bindings.push( dynamicBinding.createObject( root, {
+                                                                       target: root.view,
+                                                                       property: name,
+                                                                       source: root.model,
+                                                                       sourceProperty: name
+                                                                   } ) );
+      }
+
       function modelToViewBind() {
 
           if( ( ( root.model == null || root.model == undefined )  ||
@@ -62,23 +91,56 @@ FocusScope {
                   isBound )
               return;
 
-          var name;
-          for ( var j in root.bindings ) {
-              name = root.bindings[ j ];
-              privateScoupe.bindings.push( dynamicBinding.createObject( root, {
-                                                                           target: root.view, property: name, source: root.model, sourceProperty: name
-                                                                       } ) );
-          }
+          if( root.bindings )
+              root.bindings
+                  .forEach ( createBinding );
+          Object  .keys    ( root.model    )
+                  .filter  ( isNotHandler  )
+                  .forEach ( createBinding );
 
-          if( privateScoupe.bindings != null      &&
-              privateScoupe.bindings != undefined &&
-              privateScoupe.bindings.length > 0 )
-              isBound = true;
+          isBound = true;
       }
+
+      function removeReqHandler ( item,component ) {
+          if( root && item === root ) {
+              root.acceptRemove( item,component );
+          }
+      }
+  }
+
+  function bind() {
+      privateScoupe.modelToViewBind();
   }
 
   /// set the property to instance of QML Navigator to control navigation your chain of Presenters
   property Navigator navigator: null
+  onNavigatorChanged: {
+      if( navigator ) {
+          navigator.removeRequested.connect(privateScoupe.removeReqHandler);
+          if( navigator.isItemRemoving() )
+              privateScoupe.removeReqHandler(navigator.currentItem(),navigator.currentComponent());
+      }
+  }
+
+
+  property var acceptRemove : defaultAcceptRemove
+  onAcceptRemoveChanged: {
+      if( navigator ) {
+          navigator.removeRequested.disconnect(privateScoupe.removeReqHandler);
+          navigator.removeRequested.connect(privateScoupe.removeReqHandler);
+          if( navigator.isItemRemoving() )
+              privateScoupe.removeReqHandler(navigator.currentItem(),navigator.currentComponent());
+      }
+  }
+
+  function defaultAcceptRemove(item,component) {
+      if( navigator )
+          navigator.acceptRemove( item );
+  }
+
+  function isRemoving() {
+      return navigator && navigator.isItemRemoving();
+  }
 
   /// set these properties to usual relative path in your filesystem of components
   /// to use the automatic binding mechanism between them or use properties ( view, model )
@@ -86,21 +148,24 @@ FocusScope {
 
   /// set these properties to really objects to use the automatic binding mechanism between them
   property Item           view  : Factory.create( pathView ,root )
-  property var            model : []
+  property var            model : undefined
 
   /// set these arrays of properties to really name properties of objects to use the automatic binding mechanism between them
   property var bindings: []
 
   /// Auto binding mechanism
   onModelChanged: privateScoupe.modelToViewBind()
-  onViewChanged:  privateScoupe.modelToViewBind()
+  onViewChanged: privateScoupe.modelToViewBind()
 
   Component.onCompleted: {
 
-      root.view.anchors.fill = root;
+      if( root.view.parent == root )
+          root.view.anchors.fill = root;
       root.view.focus = true;
 
       privateScoupe.modelToViewBind();
+      if( navigator && navigator.isItemRemoving() )
+          privateScoupe.removeReqHandler(navigator.currentItem(),navigator.currentComponent());
   }
 
   Component {

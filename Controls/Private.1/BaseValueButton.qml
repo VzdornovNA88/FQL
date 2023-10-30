@@ -46,6 +46,7 @@ Control {
     property var  color_text
     property bool borderFocus : true
     property double  textKoeffPointSize : 1.0
+    property double radius : 0
 
     property bool showPressedState : true
 
@@ -67,8 +68,10 @@ Control {
 
     property string text: ""
 
-    property url iconSource: ""
+    property var iconSource: ""
     property var iconColor
+    property var iconWidth
+    property var iconHeight
 
     property string iconName: ""
 

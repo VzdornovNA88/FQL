@@ -29,6 +29,8 @@
 ******************************************************************************
 */
 
+import QtQuick 2.2
+
 import FQL.Core.Meta 1.0
 import FQL.Core.Base 1.0
 import FQL.Resources.Colors 1.0
@@ -40,6 +42,7 @@ Control {
     signal           last
     signal           play(bool state)
     signal           next
+    signal           apllyCurrentStation
 
     property bool    maximizedMode              : false
     property bool    audioPlayerMode            : false
@@ -50,20 +53,19 @@ Control {
     property bool    playing                    : false
 
 
-    property var     tracks                     : [
-                                                    {title : "track1track1track1track1track1track1" , icon : "" ,duration : 1.52} ,
-                                                    {title : "track2track2track2" , icon : "" ,duration : 3.52} ,
-                                                    {title : "track3" , icon : "" ,duration : 4.52}
-                                                  ]
-    property int     currentTrack               : 0
+    property var     tracks                     : []
+    readonly property int  currentTrack         : __panel.currentIndexOfTrack__
+    property int     targetTrack                : 4
     property double  positionInTrack            : 0
 
     property var     colorBackground
+    property var     expanderButtonColor
 
     property double  minNumberOfRadioStation    : 87.5
     property double  maxNumberOfRadioStation    : 108.0
     property double  radioSignal                : 0
-    property double  currentNumStation          : minNumberOfRadioStation
+    property double  targetNumStation           : minNumberOfRadioStation
+    readonly property double  currentNumStation : __panel.currentNumStation__
     property double  appliedCurrentNumStation   : minNumberOfRadioStation
 
     style                                       : StyleConfigurator.getStyleCurrentByNameControl( "MediaPlayerWidget" )

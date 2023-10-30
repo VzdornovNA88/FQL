@@ -50,11 +50,21 @@ Control {
     property UnitMeasurement unit
     property bool hintVisible             : true
     property bool displayVisible          : true
+    property bool visibleCurrentValaue    : true
     property string  headerText           : ""
-    readonly property int fixedPrecision  : Math.abs( step ) > 1 ? 0 : Math.abs(parseInt(step.toExponential().split('e')[1]))
+    /*readonly*/ property int fixedPrecision  : ( Math.abs(parseInt(step.toExponential().split('e')[1])) +
+                                                  (step.toExponential().split('e')[0].split('.')[1] !== undefined ?
+                                                       step.toExponential().split('e')[0].split('.')[1].length :
+                                                       0) )
+
     property bool tickmarksEnabled        : false
+    property double koefPointSizeTextHeader : 1.0
+    property double koefPointSizeTextHints : 1.0
+    property double koefPointSizeTextCurValue : 1.0
 
     // TODO : remove
     property real __valueSetPoint  : 0
+
+    signal positionChanged
 }
 

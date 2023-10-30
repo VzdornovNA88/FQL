@@ -36,12 +36,26 @@ import FQL.Core.Base 1.0
 Item {
     id: listContentItem
 
+    property int       columns : 1
+    property int       rows : 1
     property Component delegate
     property var       model
     property bool      contentUnder: true
     property bool      propagateEvents: true
-    property bool      checkable: true
+    property bool      checkable: false
+    property bool      activatable: true
+    property bool      clickable: true
     property var       color: StyleConfigurator.theme.transparent
+    property double    radius : 0
+
+    property alias     checked : contentItem.checked
+    property alias     activated : contentItem.activated
+    property alias     activatedFromFocus : contentItem.activatedFromFocus
+
+    property alias     hovered : contentItem.hovered
+    property alias     pressed : contentItem.pressed
+
+    signal clicked()
 
     ContentItem {
 
@@ -54,14 +68,32 @@ Item {
         contentUnder: listContentItem.contentUnder
         propagateEvents: listContentItem.propagateEvents
         checkable: listContentItem.checkable
+        activatable: listContentItem.activatable
+        clickable: listContentItem.clickable
+        radius: listContentItem.radius
 
+        onClicked: listContentItem.clicked()
+
+        Item {
+            id : item
+
+            width: contentItem.contentAvailableWidth
+            height: contentItem.contentAvailableHeight
         Grid {
-            columns: 1
-            spacing: 1
+            columns: listContentItem.columns
+            rows: listContentItem.rows
+
+            width: item.width*0.99
+            height: item.height*0.99
+
+            anchors.centerIn: item
+
+//            spacing: 1
             Repeater{
                 model: listContentItem.model
                 delegate: listContentItem.delegate
             }
+        }
         }
     }
 }

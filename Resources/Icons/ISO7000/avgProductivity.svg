@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   id="svg973"
+   version="1.1"
+   viewBox="0 0 11.695396 4.7056451"
+   height="4.7056451mm"
+   width="11.695396mm">
+  <defs
+     id="defs967" />
+  <metadata
+     id="metadata970">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(-2.4677777,-97.343606)"
+     id="layer1">
+    <g
+       transform="translate(-10.366939,98.837867)"
+       id="g1461">
+      <line
+         id="line1087-2-3"
+         y2="2.8374026"
+         x2="17.802532"
+         y1="-1.4467121"
+         x1="19.057514"
+         class="fil0 str0"
+         style="clip-rule:evenodd;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.33827919;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision" />
+      <g
+         id="g1174-6-5-6"
+         transform="matrix(0.63610167,0,0,0.67398294,-13.813354,-38.680758)">
+        <polygon
+           transform="matrix(1.0100957e-5,0,0,1.0100957e-5,41.892862,55.260372)"
+           style="clip-rule:evenodd;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:49500.30078125;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+           class="fil0 str0"
+           points="306387,600260 179132,106782 33126,600260 "
+           id="polygon1077-0-4-7" />
+        <polygon
+           transform="matrix(1.0100957e-5,0,0,1.0100957e-5,41.892862,55.260372)"
+           style="clip-rule:evenodd;fill:#000000;fill-rule:evenodd;stroke:#000000;stroke-width:49500.30078125;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+           class="fil1 str0"
+           points="397467,259560 355947,103713 305644,259560 "
+           id="polygon1079-6-7-5" />
+        <line
+           style="clip-rule:evenodd;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.50000042;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+           class="fil0 str0"
+           x1="45.48827"
+           y1="56.307972"
+           x2="45.48827"
+           y2="55.546268"
+           id="line1081-2-4-3" />
+        <polygon
+           transform="matrix(1.0100957e-5,0,0,1.0100957e-5,41.892862,55.260372)"
+           style="clip-rule:evenodd;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:49500.30078125;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+           class="fil0 str0"
+           points="670244,600260 542988,106782 396982,600260 "
+           id="polygon1083-6-4-5" />
+        <polyline
+           transform="matrix(1.0100957e-5,0,0,1.0100957e-5,41.892862,55.260372)"
+           style="clip-rule:evenodd;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:49500.30078125;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+           class="fil0 str0"
+           points="179132,154649 179132,24750 542988,24750 542988,150699 "
+           id="polyline1085-1-3-6" />
+      </g>
+      <g
+         style="clip-rule:evenodd;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+         id="g1853-2-2"
+         transform="matrix(7.6482027e-5,0,0,7.5305899e-5,17.468451,-2.1189936)">
+        <g
+           id="Слой_x0020_1-6-9">
+          <metadata
+             id="CorelCorpID_0Corel-Layer-1-1" />
+          <g
+             id="_298376456-0-2">
+            <path
+               id="path1828-6-7"
+               d="m 66376,62772 h 6983 v 2736 h -6983 z m 18972,0 h 6983 v 2736 h -6983 z m -9339,0 h 6983 v 2736 h -6983 z"
+               class="fil0"
+               style="fill:none" />
+            <path
+               id="path1830-1-0"
+               d="m 30882,41741 10540,10543 v 2734 l -10540,10536 697,705 4530,4524 10538,-10539 h 2735 l 10538,10539 703,-697 4524,-4532 -10540,-10536 v -2734 l 187,-194 10353,-10349 -698,-699 -4529,-4526 -10538,10542 H 46647 L 36109,36516 Z m 25528,6359 6416,-6413 -1606,-1607 -4824,4817 z m -13945,-2848 -6410,-6413 -1610,1609 4819,4815 z m -2850,13943 -6413,6412 1611,1612 4818,-4818 z m 13944,2851 6412,6416 1612,-1611 -4819,-4818 z M 49892,51771 c 1033,1036 1033,2724 0,3753 -1033,1038 -2715,1038 -3755,0 -1034,-1029 -1034,-2717 0,-3753 1040,-1030 2722,-1030 3755,0 z"
+               class="fil0"
+               style="fill:none" />
+            <path
+               id="path1832-5-9"
+               d="M 84092,65519 H 72344 L 84092,53793 Z m -24463,0 H 46915 L 84092,28412 v 12690 z m -25429,0 H 27642 V 59374 L 77936,9175 h 6156 v 6546 z M 27642,46684 V 33994 L 52507,9175 h 12714 z m 0,-25381 V 9175 h 12150 z"
+               class="fil1"
+               style="fill:#000000" />
+          </g>
+        </g>
+        <g
+           id="Направляющие-9-3">
+          <metadata
+             id="CorelCorpID_1Corel-Layer-4-6" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

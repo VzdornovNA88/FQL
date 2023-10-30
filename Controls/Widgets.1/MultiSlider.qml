@@ -132,7 +132,7 @@ Item {
                 targetSlider_.handleVisible = false;
                 multiSlider.activated = true;
                 multiSlider.handle = targetSlider_.handle;
-                multiSlider.value = multiSlider.valueSetPoint;
+//                multiSlider.value = multiSlider.valueSetPoint;
                 multiSlider.value = targetSlider_.value;
                 multiSlider.handleVisible = true;
         }
@@ -163,11 +163,21 @@ Item {
     }
 
     function setValue( handle_,val ) {
-        if( !multiSlider.__sliders[handle_] )
-            multiSlider.__sliders[handle_] = val;
+        var slider_ = multiSlider.__sliders[handle_];
+        if( !slider_ )
+            slider_ = val;
         else
-            multiSlider.__sliders[handle_].value = val;
+            slider_.value = val;
+
+        if( multiSlider.__activatedSlider === slider_ )
+            multiSlider.value = val;
     }
+
+//    function setHandleVisible( handle_ ) {
+//        var slider_ = multiSlider.__sliders[handle_];
+//        if( slider_ )
+//            slider_.handleVisible = false;
+//    }
 
     function setActivatedValue( val ) {
         if( multiSlider.__activatedSlider )
@@ -183,8 +193,13 @@ Item {
     }
 
     function activateHandle( handle_ ) {
-        if( typeof multiSlider.__sliders[handle_] === 'object' )
-            multiSlider.__activate(multiSlider.__sliders[handle_])
+        if( typeof multiSlider.__sliders[handle_] === 'object' ) {
+            multiSlider.__activate(multiSlider.__sliders[handle_]);
+        }
+    }
+
+    function deactivateHandle() {
+            multiSlider.__deactivate(undefined);
     }
 
 }

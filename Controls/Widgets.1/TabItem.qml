@@ -39,7 +39,7 @@ ContentItem {
 
     property bool vertical : false
 
-    activatable         : true
+    activatable         : false
     borderFocus         : false
     propagateEvents     : false
     checkable           : true

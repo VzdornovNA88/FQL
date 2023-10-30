@@ -50,7 +50,9 @@ Control {
 
     property bool  visibleControlButtons : true
 
-    signal tabCliked(int index)
+    readonly property int currentIndex : __panel.currentIndex
+    property int targetIndex : Number.MAX_VALUE
+    signal tabCliked(int index,bool checked)
 
     style: StyleConfigurator.getStyleCurrentByNameControl( "ToolBar" )
 }

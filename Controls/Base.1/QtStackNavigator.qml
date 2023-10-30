@@ -35,16 +35,22 @@ import FQL.Compat.Controls.QtQuickControls 1.0
 Navigator {
     id: qtStackNavigator
 
-    anchors.fill: parent
+    width: parent.width
+    height: parent.height
+//    anchors.fill: parent
     focus: true
 
     property alias stack : d
 
     StackView {
         id: d
-        anchors.fill: qtStackNavigator
+//        anchors.fill: qtStackNavigator
+        width: qtStackNavigator.width
+        height: qtStackNavigator.height
         focus: true
     }
+
+    length     : stack.depth;
 
     navigateTo : function (nextItem) {
 

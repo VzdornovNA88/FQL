@@ -277,3 +277,8 @@ function addAlpha( alpha,color ) {
 
     return color_
 }
+
+function isAlphaAdded(color) {
+    var alpha = convert( color ).toARGB()[0];
+    return alpha !== 255;
+}

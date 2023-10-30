@@ -50,7 +50,7 @@ Style {
     property var colorTickMarkRadioStation    : StyleConfigurator.theme.buttonAccentCollor
     property var colorTrackPanel              : ColorHelpers.addAlpha( 0.2,StyleConfigurator.theme.backgroundGeneral3Collor  )
     property var colorDisabled                : StyleConfigurator.theme.lighter50Collor
-    property var colorVolumePanel             : ColorHelpers.addAlpha( 0.7,StyleConfigurator.theme.backgroundGeneral3Collor )
+    property var colorVolumePanel             : ColorHelpers.addAlpha( 0.7,StyleConfigurator.theme.backgroundGeneral2Collor )
 
     readonly property var suitableColorText__ : ColorHelpers.suitableFor(control.colorBackground ?
                                                                              control.colorBackground :
@@ -64,6 +64,43 @@ Style {
 
         width               : control.width
         height              : control.height
+
+        readonly property int currentIndexOfTrack__  : tracks.currentIndex
+        property double currentNumStation__ : control.targetNumStation
+        // Init
+        Component.onCompleted: {
+            var slot_;
+            control.onMaximizedModeChanged.connect(function(){
+                if( !control.maximizedMode )
+                    bg.extended = false;
+            });
+            slot_ = function(){
+                if( !control.audioPlayerMode )
+                    fmMode.checked = true;
+                else
+                    audioMode.checked = true;
+            };
+            control.onAudioPlayerModeChanged.connect(slot_);
+            slot_();
+
+            control.onTargetTrackChanged.connect(function(){
+                tracks.currentIndex = control.targetTrack;
+            });
+            control.onTargetNumStationChanged.connect(function(){
+                bg.currentNumStation__ = control.targetNumStation;
+            });
+
+            tracks.changeCurrentIndex.connect(function(direction){
+                if( !tracks ) return;
+                if( direction === 1 && tracks.currentIndex < ((control.tracks && control.tracks.length > 0)? (control.tracks.length - 1) : 0))
+                    tracks.currentIndex++;
+                else
+                    if( direction === -1 && tracks.currentIndex > 0 )
+                        tracks.currentIndex--;
+                tracks.positionViewAtIndex(tracks.currentIndex,ListView.Center);
+                console.log("changeCurrentIndex - ",control,control.currentTrack,tracks.currentIndex,tracks.currentItem,direction);
+            });
+        }
 
         property bool extended : false
 
@@ -111,22 +148,27 @@ Style {
                         anchors.left: topButtonsGroup.left
                         anchors.top: topButtonsGroup.top
 
-                        width: topButtons.width*0.35
+                        width: topButtons.width*0.25
                         height: topButtons.height*0.9
 
+                        borderFocus: false
                         color: StyleConfigurator.theme.transparent
-                        color_text: mediaPlayerWidgetStyle.colorText
-                        text: "FM"
+                        iconSource: "qrc:/FQL/Resources/Icons/Ui/Radio.svg"
+                        iconColor: ColorHelpers
+                        .suitableFor(bg.color)
+                        .in([ StyleConfigurator.theme.iconGeneralCollor,
+                              StyleConfigurator.theme.iconGeneralDisabledCollor,
+                              StyleConfigurator.theme.iconAccentCollor,
+                              StyleConfigurator.theme.iconInvertCollor  ])[0].itemColor.color
+//                        color_text: mediaPlayerWidgetStyle.colorText
+//                        text: "FM"
                         textKoeffPointSize: 2.5
 
                         checkable: true
-                        checked: true
 
                         exclusiveGroup: topButtonsGroup
 
-                        onCheckedChanged: {
-                            control.audioPlayerMode = !checked;
-                        }
+                        onClicked: control.audioPlayerMode = false;
                     }
 
                     Button {
@@ -135,17 +177,27 @@ Style {
                         anchors.left: fmMode.right
                         anchors.top: topButtonsGroup.top
 
-                        width: topButtons.width*0.35
+                        width: topButtons.width*0.25
                         height: topButtons.height*0.9
 
+                        borderFocus: false
                         color: StyleConfigurator.theme.transparent
-                        color_text: mediaPlayerWidgetStyle.colorText
-                        text: "Player"
+                        iconSource: "qrc:/FQL/Resources/Icons/Ui/Multimedia.svg"
+                        iconColor: ColorHelpers
+                        .suitableFor(bg.color)
+                        .in([ StyleConfigurator.theme.iconGeneralCollor,
+                              StyleConfigurator.theme.iconGeneralDisabledCollor,
+                              StyleConfigurator.theme.iconAccentCollor,
+                              StyleConfigurator.theme.iconInvertCollor  ])[0].itemColor.color
+//                        color_text: mediaPlayerWidgetStyle.colorText
+//                        text: "Player"
                         textKoeffPointSize: 2.5
 
                         checkable: true
 
                         exclusiveGroup: topButtonsGroup
+
+                        onClicked: control.audioPlayerMode = true;
                     }
                 }
 
@@ -158,6 +210,7 @@ Style {
                     width: topButtons.width*0.25
                     height: topButtons.height*0.6
 
+                    borderFocus: false
                     color: StyleConfigurator.theme.transparent
                     iconSource: "qrc:/FQL/Resources/Icons/Ui/arrow_down_inverse.svg"
                     iconColor: ColorHelpers
@@ -201,6 +254,13 @@ Style {
                         anchors.fill: chart
 
                         source: "qrc:/FQL/Resources/Icons/Ui/radio_signal.svg"
+
+                        ColorOverlay {
+                            id                 : overlay
+                            anchors.fill       : iconRadioSignal
+                            source             : iconRadioSignal
+                            color              : StyleConfigurator.theme.iconAccent1Collor
+                        }
                     }
                 }
                 Item{
@@ -295,11 +355,11 @@ Style {
                             else
                                 if (Math.abs(val) > maxVal) val = maxVal*direction;
 
-                            control.currentNumStation += val;
+                            bg.currentNumStation__ += val;
 
-                            if( control.currentNumStation < control.minNumberOfRadioStation ) control.currentNumStation = control.minNumberOfRadioStation;
+                            if( bg.currentNumStation__ < control.minNumberOfRadioStation ) bg.currentNumStation__ = control.minNumberOfRadioStation;
                             else
-                                if( control.currentNumStation > control.maxNumberOfRadioStation ) control.currentNumStation = control.maxNumberOfRadioStation;
+                                if( bg.currentNumStation__> control.maxNumberOfRadioStation ) bg.currentNumStation__ = control.maxNumberOfRadioStation;
                         }
 
                         onPositionChanged: scroolAnimation.running = true;
@@ -349,7 +409,7 @@ Style {
                         anchors.leftMargin: bottomButtons.width*0.07
                         anchors.top: bottomButtons.bottom
 
-                        property double lastStation : ((control.currentNumStation - 3) >= control.minNumberOfRadioStation ? (control.currentNumStation - 3) : control.minNumberOfRadioStation)
+                        property double lastStation : /*((bg.currentNumStation__ - 3) >= */control.minNumberOfRadioStation /*? (bg.currentNumStation__ - 3) : control.minNumberOfRadioStation)*/
                         text: lastStation.toFixed(2).toString()
 
                         wrapMode : Text.WrapAtWordBoundaryOrAnywhere
@@ -369,13 +429,14 @@ Style {
                         width: bottomButtons.width*0.38
                         height: bottomButtons.height*0.85
 
-                        color: StyleConfigurator.theme.transparent
+                        borderFocus: false
+                        color: StyleConfigurator.theme.backgroundAccent1Collor
                         color_text: mediaPlayerWidgetStyle.colorText
 
-                        text: control.currentNumStation.toFixed(2).toString()
-                        textKoeffPointSize: 3.0
+                        text: bg.currentNumStation__.toFixed(2).toString()
+                        textKoeffPointSize: 2.0
 
-                        onClicked: control.appliedCurrentNumStation = control.currentNumStation;
+                        onClicked: control.appliedCurrentNumStation = bg.currentNumStation__;
                     }
 
                     Text {
@@ -387,7 +448,7 @@ Style {
                         anchors.rightMargin: bottomButtons.width*0.07
                         anchors.top: bottomButtons.bottom
 
-                        property double nextStation : ((control.currentNumStation + 3) <= control.maxNumberOfRadioStation ? (control.currentNumStation + 3) : control.maxNumberOfRadioStation)
+                        property double nextStation : /*((bg.currentNumStation__ + 3) <= */control.maxNumberOfRadioStation /*? (bg.currentNumStation__ + 3) : control.maxNumberOfRadioStation)*/
                         text: nextStation.toFixed(2).toString()
 
                         wrapMode : Text.WrapAtWordBoundaryOrAnywhere
@@ -419,15 +480,15 @@ Style {
                     height: audioItem.height*0.7
 
                     orientation: ListView.Horizontal
-                    snapMode: ListView.SnapOneItem
+//                    snapMode: ListView.SnapOneItem
                     spacing: 10
 
-                    model: control.tracks
+                    model: control.tracks ? control.tracks : []
 
                     signal changeCurrentIndex( int direction );
-                    property bool connected_ : false
                     property double contentX_ : 0
 
+                    currentIndex: control.targetTrack
 
                     onDragStarted: {
                         contentX_ = contentX;
@@ -435,7 +496,7 @@ Style {
 
                     onDragEnded:  {
 
-                        var diff = Math.abs(contentX - contentX_) > tracks.width*0.15 ? 1 : 0;
+                        var diff = Math.abs(contentX - contentX_) > tracks.width*0.1 ? 1 : 0;
                         changeCurrentIndex(( contentX < contentX_ ? -1 : 1) * diff);
                     }
 
@@ -447,25 +508,6 @@ Style {
 
                         radius: 10
 
-                        Component.onCompleted: {
-
-                            if( !tracks.connected_ ) {
-
-                                control.currentTrack = control.tracks.length - 1;
-                                tracks.changeCurrentIndex.connect(function(direction){
-                                    if( !tracks ) return;
-                                    if( direction === 1 && control.currentTrack < control.tracks.length - 1)
-                                        control.currentTrack++;
-                                    else
-                                        if( direction === -1 && control.currentTrack > 0 )
-                                            control.currentTrack--;
-
-                                    tracks.positionViewAtIndex(control.currentTrack,ListView.Center);
-                                });
-                                tracks.connected_ = true;
-                            }
-                        }
-
                         color: mediaPlayerWidgetStyle.colorTrackPanel
 
                         Image {
@@ -473,13 +515,15 @@ Style {
 
                             width: delegateTrack.width
                             height: delegateTrack.height*0.68
+                            sourceSize.width: delegateTrack.width
+                            sourceSize.height: delegateTrack.height*0.68
 
-                            source: modelData.icon
+                            source: modelData.icon ? modelData.icon :
+                                                     "qrc:/FQL/Resources/Icons/Ui/audio_file.svg"
 
                             ColorOverlay {
                                     anchors.fill: iconTrack
                                     source: iconTrack
-                                    visible: modelData.icon ? true : false
                                     color: StyleConfigurator.theme.iconInvertCollor
                                 }
                         }
@@ -516,8 +560,14 @@ Style {
 
                     stepSize: 0.01
                     minimumValue: 0
-                    maximumValue: (( control.currentTrack <= control.tracks.length - 1 || control.currentTrack >= 0 ) ?
-                                       control.tracks[control.currentTrack].duration : 0)
+                    maximumValue: (control.tracks && control.tracks.length > 0) ? ((( control.currentTrack <= control.tracks.length - 1 || control.currentTrack >= 0 ) ?
+                                       control.tracks[control.currentTrack].duration : 0)) : 0
+
+                    onMaximumValueChanged: {
+                        if( control.positionInTrack > positionInTrackSlider.maximumValue ) {
+                            control.positionInTrack = positionInTrackSlider.maximumValue;
+                        }
+                    }
 
                     color: mediaPlayerWidgetStyle.colorVolumeSlider
 
@@ -602,8 +652,8 @@ Style {
                         minimumPixelSize: 1
 
                         font.pixelSize: Math.min(itemTrackDurationTexts.width,itemTrackDurationTexts.height)*0.27
-                        text                   : (( control.currentTrack <= control.tracks.length - 1 || control.currentTrack >= 0 ) ?
-                                                      control.tracks[control.currentTrack].duration : 0).toFixed(2).toString()
+                        text                   : (control.tracks && control.tracks.length > 0) ? ((( control.currentTrack <= control.tracks.length - 1 || control.currentTrack >= 0 ) ?
+                                                      control.tracks[control.currentTrack].duration : 0).toFixed(2).toString()) : 0
                         color: mediaPlayerWidgetStyle.colorText
                     }
                 }
@@ -629,13 +679,14 @@ Style {
             Button {
                 id : last
 
-                width: itemBg.width*0.15
+                width: itemBg.width*0.225
                 height: itemBg.height
 
                 anchors.verticalCenter: itemBg.verticalCenter
                 anchors.right: play.left
                 anchors.rightMargin: itemBg.width*0.03
 
+                borderFocus: false
                 color: StyleConfigurator.theme.transparent
                 iconSource: "qrc:/FQL/Resources/Icons/Ui/left_inverse.svg"
                 iconColor: ColorHelpers
@@ -645,29 +696,30 @@ Style {
                       StyleConfigurator.theme.iconAccentCollor,
                       StyleConfigurator.theme.iconInvertCollor  ])[0].itemColor.color
 
-                onClicked: control.last()
+                onClicked: {
+                    control.last();
+                    if( control.audioPlayerMode )
+                        tracks.changeCurrentIndex(-1);
+                }
             }
 
             Button {
                 id : play
 
-                width: itemBg.width*0.15
+                width: itemBg.width*0.225
                 height: itemBg.height
 
                 anchors.verticalCenter: itemBg.verticalCenter
                 anchors.right: next.left
                 anchors.rightMargin: itemBg.width*0.03
 
+                borderFocus: false
                 color: StyleConfigurator.theme.transparent
-                iconSource: "qrc:/FQL/Resources/Icons/Ui/play_inverse.svg"
-                iconColor: ColorHelpers
-                .suitableFor(bg.color)
-                .in([ StyleConfigurator.theme.iconGeneralCollor,
-                      StyleConfigurator.theme.iconGeneralDisabledCollor,
-                      StyleConfigurator.theme.iconAccentCollor,
-                      StyleConfigurator.theme.iconInvertCollor  ])[0].itemColor.color
+                iconSource: checked ? "qrc:/FQL/Resources/Icons/Ui/music_playing.svg" : "qrc:/FQL/Resources/Icons/Ui/play_inverse.svg"
+                iconColor: StyleConfigurator.theme.buttonAccentCollor
 
                 checkable: true
+                checked: control.playing
 
                 onCheckedChanged: {
                     control.playing = checked;
@@ -678,13 +730,14 @@ Style {
             Button {
                 id : next
 
-                width: itemBg.width*0.15
+                width: itemBg.width*0.225
                 height: itemBg.height
 
                 anchors.verticalCenter: itemBg.verticalCenter
                 anchors.right: volumeBtn.left
                 anchors.rightMargin: itemBg.width*0.03
 
+                borderFocus: false
                 color: StyleConfigurator.theme.transparent
                 iconSource: "qrc:/FQL/Resources/Icons/Ui/right_inverse.svg"
                 iconColor: ColorHelpers
@@ -694,19 +747,25 @@ Style {
                       StyleConfigurator.theme.iconAccentCollor,
                       StyleConfigurator.theme.iconInvertCollor  ])[0].itemColor.color
 
-                onClicked: control.next()
+                onClicked: {
+
+                    control.next();
+                    if( control.audioPlayerMode )
+                        tracks.changeCurrentIndex(1);
+                }
             }
 
             Button {
                 id : volumeBtn
 
-                width: itemBg.width*0.15
+                width: itemBg.width*0.225
                 height: itemBg.height
 
                 anchors.verticalCenter: itemBg.verticalCenter
                 anchors.right: itemBg.right
                 anchors.rightMargin: itemBg.width*0.03
 
+                borderFocus: false
                 color: StyleConfigurator.theme.transparent
                 iconSource: "qrc:/FQL/Resources/Icons/Ui/volume_inverse.svg"
                 iconColor: ColorHelpers
@@ -721,12 +780,12 @@ Style {
                 Rectangle {
                     id: volumePanel
 
-                    width: volumeBtn.width*1.2
-                    height: control.expandedHeight*1.3
+                    width: volumeBtn.width*1
+                    height: control.expandedHeight*0.8
                     radius: 5
 
                     anchors.bottom: volumeBtn.top
-                    anchors.bottomMargin: volumeBtn.height*0.4
+                    anchors.bottomMargin: volumeBtn.height*0.9
                     anchors.horizontalCenter: volumeBtn.horizontalCenter
 
                     color: mediaPlayerWidgetStyle.colorVolumePanel
@@ -740,7 +799,7 @@ Style {
                         anchors.bottom: volumeDisable.top
                         anchors.bottomMargin: volumePanel.height*0.05
 
-                        width: volumePanel.width*0.35
+                        width: volumePanel.width*0.45
                         height: volumePanel.height*0.7
 
                         color: mediaPlayerWidgetStyle.colorVolumeSlider
@@ -807,6 +866,7 @@ Style {
                         anchors.bottomMargin: volumePanel.height*0.025
                         anchors.horizontalCenter: volumePanel.horizontalCenter
 
+                        borderFocus: false
                         color: StyleConfigurator.theme.transparent
                         iconSource: !checked ? "qrc:/FQL/Resources/Icons/Ui/volume-2.svg" :
                                                "qrc:/FQL/Resources/Icons/Ui/volume off.svg"
@@ -832,8 +892,10 @@ Style {
             anchors.bottom: itemBg.top
             anchors.right: itemBg.right
 
-            color: bg.color
-            iconSource: "qrc:/FQL/Resources/Icons/Ui/up_inverse.svg"
+            borderFocus: false
+            color: control.expanderButtonColor ? control.expanderButtonColor : bg.color
+            iconSource: /*!control.maximizedMode ? */"qrc:/FQL/Resources/Icons/Ui/up_inverse.svg" /*:*/
+                                                 /*"qrc:/FQL/Resources/Icons/Ui/arrow_down_inverse.svg"*/
             iconColor: ColorHelpers
             .suitableFor(bg.color)
             .in([ StyleConfigurator.theme.iconGeneralCollor,
@@ -843,7 +905,11 @@ Style {
 
             visible: !bg.extended
 
-            onClicked: control.maximizedMode = true;
+            onClicked: {
+                control.maximizedMode = true/*!control.maximizedMode*/;
+//                if( !control.maximizedMode )
+//                    bg.extended = false;
+            }
         }
     }
 }

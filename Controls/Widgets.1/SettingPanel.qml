@@ -79,6 +79,9 @@ Item {
     property alias levelPattern      : level.levelPattern
     property alias maskLevelPattern  : level.maskLevelPattern
     property alias tickmarksEnabled  : level.tickmarksEnabled
+    property alias visibleCurrentValaue : level.visibleCurrentValaue
+    property alias koefPointSizeTextHeader : level.koefPointSizeTextHeader
+    property alias koefPointSizeTextHints : level.koefPointSizeTextHints
 
     property real  koeffStepHoldingButton : 1.0
 
@@ -87,6 +90,7 @@ Item {
     signal clickedDec
     signal pressedAndHoldedDec
     signal clickedOnFunctionButton
+    signal positionChanged
 
     Component.onCompleted: {
         if(level.enabled) {
@@ -100,16 +104,20 @@ Item {
         }
     }
 
-    Column {
+    Item {
         id: columnID
 
-        spacing: settingPanel.height*0.05
+        width: settingPanel.width
+        height: settingPanel.height
+//        spacing: settingPanel.height*0.1
 
         Level {
             id: level
 
-            width: settingPanel.width
-            height: settingPanel.height*0.7
+            width: columnID.width
+            height: columnID.height*0.7
+
+            anchors.top: columnID.top
 
             onEnabledChanged: {
                 if(level.enabled) {
@@ -127,27 +135,42 @@ Item {
                 settingPanel.valueSetPoint = level.valueSetPoint;
             }
 
-            onDisplayVisibleChanged: {
-                rowBtns.y = !level.displayVisible ? level.height/3 + level.height/6 + columnID.spacing + (level.hintVisible ? level.height/6 : 0) : level.height + columnID.spacing
-            }
+//            onDisplayVisibleChanged: {
+//                rowBtns.y = !level.displayVisible ?
+//                            (level.height*(1-(3/4*0.5)) +
+//                             (level.visibleCurrentValaue ? level.height/6 : 0) +
+//                             columnID.spacing +
+//                             (level.hintVisible ? level.height/6 : 0) ) :
+//                            level.height + 22 + columnID.spacing
+//            }
+
+            onPositionChanged: settingPanel.positionChanged();
         }
 
         Item {
             id: rowBtns
 
             width: settingPanel.width
-            height: settingPanel.height*0.2
+            height: settingPanel.height*0.3 - 10
 
-            onYChanged: {
-                y = !level.displayVisible ? level.height/3 + level.height/6 + columnID.spacing + (level.hintVisible ? level.height/6 : 0) : level.height + columnID.spacing
-            }
+            anchors.top: level.bottom
+            anchors.topMargin: 10
+
+//            onYChanged: {
+//                y = !level.displayVisible ?
+//                            (level.height*0.25 +
+//                             (level.visibleCurrentValaue ? level.height/6 + 6 : 0) +
+//                             columnID.spacing +
+//                             (level.hintVisible ? level.height/6 + 6 : 0) ) :
+//                            level.height + 22 + columnID.spacing
+//            }
 
             property double spacing: 2
 
             Button {
                 id: inc
 
-                width: rowBtns.width/3 - rowBtns.spacing*3
+                width: rowBtns.width/3 - rowBtns.spacing*2
                 height: rowBtns.height
 
                 anchors.right: rowBtns.right
@@ -156,7 +179,7 @@ Item {
                 color: StyleConfigurator.theme.buttonGeneralCollor
 
                 focus: true
-                textKoeffPointSize: 3.0
+                textKoeffPointSize: 1.8
 
                 enabled: valueSetPoint < max
 
@@ -195,14 +218,14 @@ Item {
             Button {
                 id: func
 
-                width: rowBtns.width/3 - rowBtns.spacing*3
+                width: rowBtns.width/3 - rowBtns.spacing*2
                 height: rowBtns.height
 
                 anchors.horizontalCenter: rowBtns.horizontalCenter
                 anchors.verticalCenter: rowBtns.verticalCenter
 
                 color: StyleConfigurator.theme.buttonGeneralCollor
-                textKoeffPointSize: 3.0
+                textKoeffPointSize: 1.8
 
                 onClicked: {
                     clickedOnFunctionButton();
@@ -214,14 +237,14 @@ Item {
             Button {
                 id: dec
 
-                width: rowBtns.width/3 - rowBtns.spacing*3
+                width: rowBtns.width/3 - rowBtns.spacing*2
                 height: rowBtns.height
 
                 anchors.left: rowBtns.left
                 anchors.verticalCenter: rowBtns.verticalCenter
 
                 color: StyleConfigurator.theme.buttonGeneralCollor
-                textKoeffPointSize: 3.0
+                textKoeffPointSize: 1.8
 
                 enabled: valueSetPoint > min
 

@@ -40,5 +40,6 @@ BaseWidgetButton {
 
     borderFocus: false
 
-    default property alias content : widgetButton.content__
+    readonly property alias contentItem : widgetButton.contentItem__
+    default property alias content      : widgetButton.content__
 }

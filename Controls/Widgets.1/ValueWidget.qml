@@ -40,13 +40,16 @@ ContentItem {
 
     property int orientation : Qt.Vertical
 
-    property double value
+    property bool textModeValue : typeof value === "string"
+    property var value
     property UnitMeasurement unit
     property var valueColor         /* : StyleConfigurator.theme.valueCollor*/
     property var unitMessureColor /* : StyleConfigurator.theme.unitMessureCollor*/
 
     property string iconSource
     property var iconColor
+    property double iconHeightK
+    property double iconWidthK
     property double koefFontValuePixelSize : 1
     property int fixedPrecision            : 0
 

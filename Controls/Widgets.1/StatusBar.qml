@@ -54,18 +54,21 @@ ContentItem {
     }
 
     property var          iconAccount      : ""
-    property string       machineName      : "RSM F 2x50"
+    property string       machineName      : ""
     property var          iconNotificationMachine : ""
     property var          iconNotificationEngine : ""
     property var          iconLevelLink    : ""
     property var          iconNumberOfSatellities    : ""
-    property int          valueNumberOfSatellities : 3
-    property var          valueTemperOutside : -17
+    property int          valueNumberOfSatellities : 0
+    property var          valueTemperOutside : ""
     property string       date : ""
     property string       time : ""
-    property int          valueNumberOfNotificationsMachine : 7
-    property int          valueNumberOfNotificationsEngine : 25
+    property int          valueNumberOfNotificationsMachine : 0
+    property int          valueNumberOfNotificationsEngine : 0
+    property bool         isCriticalErorrsOfMachine : false
+    property bool         isCriticalErorrsOfEngine : false
     property bool         invertPressedColor : false
+    property bool         enabledTemperOutside : true
 
 
     signal close()
@@ -148,7 +151,13 @@ ContentItem {
             font.bold: true
             font.italic: true
             font.pixelSize: Math.min(row.width*0.08,row.height)*0.4
-            text                   : view.machineName
+
+            property bool   isMachineNameExists : !( view.machineName == undefined ||
+                                                 view.machineName == null      ||
+                                                 view.machineName == ""         )
+
+            text                   : isMachineNameExists ? view.machineName : "---"
+
             color: StyleConfigurator.theme.textAccentCollor
         }
 
@@ -158,6 +167,8 @@ ContentItem {
 
             width:  Math.min(row.width*0.05,row.height)
             height: width
+
+            visible: valueNumberOfNotificationsMachine > 0
 
             anchors.right: recNotificationEngineImageParent.left
             anchors.rightMargin: row.width*0.015
@@ -174,7 +185,9 @@ ContentItem {
             radius: width/2
             clip: true
 
-            color : StyleConfigurator.theme.systemAccnetWornActiveCollor
+            color : view.isCriticalErorrsOfMachine ?
+                        StyleConfigurator.theme.systemAccnetErrorActiveCollor :
+                        StyleConfigurator.theme.systemAccnetWornActiveCollor
 
         Image {
             id: notificationMachineImage
@@ -222,6 +235,8 @@ ContentItem {
             width:  Math.min(row.width*0.05,row.height)
             height: width
 
+            visible: valueNumberOfNotificationsEngine > 0
+
             anchors.right: temperOutsideText.left
             anchors.rightMargin: row.width*0.035
             anchors.verticalCenter: row.verticalCenter
@@ -236,7 +251,9 @@ ContentItem {
 
             radius: width/2
 
-            color: StyleConfigurator.theme.systemAccnetErrorActiveCollor
+            color: view.isCriticalErorrsOfEngine ?
+                       StyleConfigurator.theme.systemAccnetErrorActiveCollor :
+                       StyleConfigurator.theme.systemAccnetWornActiveCollor
 
         Image {
             id: notificationEngineImage
@@ -252,7 +269,7 @@ ContentItem {
                 anchors.fill: notificationEngineImage
                 source: notificationEngineImage
                 color: ColorHelpers
-                .suitableFor(recNotificationMachineImage.color)
+                .suitableFor(recNotificationEngineImage.color)
                 .in([ StyleConfigurator.theme.iconGeneralCollor,
                       StyleConfigurator.theme.iconInvertCollor])[0].itemColor.color
             }
@@ -292,8 +309,16 @@ ContentItem {
             wrapMode : Text.WrapAtWordBoundaryOrAnywhere
             minimumPixelSize: 1
 
+            visible: enabledTemperOutside
+
             font.pixelSize: Math.min(row.width*0.08,row.height)*0.6
-            text                   : view.valueTemperOutside + qsTr(UnitsMeasurement.celsius.name)
+
+            property bool   isValueTemperOutsideExists : !( view.valueTemperOutside == undefined ||
+                                                 view.valueTemperOutside == null      ||
+                                                 view.valueTemperOutside == ""         )
+
+            text                   : (isValueTemperOutsideExists ? view.valueTemperOutside : "--") + qsTr(UnitsMeasurement.celsius.name)
+
             color: StyleConfigurator.theme.textAccentCollor
         }
 
@@ -329,7 +354,9 @@ ContentItem {
             ColorOverlay {
                 anchors.fill: numberOfSatellitesImage
                 source: numberOfSatellitesImage
-                color: StyleConfigurator.theme.iconGeneralCollor
+                color: view.valueNumberOfSatellities > 0 ?
+                           StyleConfigurator.theme.iconGeneralCollor :
+                           StyleConfigurator.theme.iconGeneralDisabledCollor
             }
 
             Text {
@@ -344,6 +371,8 @@ ContentItem {
 
                 wrapMode : Text.WrapAtWordBoundaryOrAnywhere
                 minimumPixelSize: 1
+
+                visible: view.valueNumberOfSatellities > 0
 
                 font.pixelSize: Math.min(numberOfSatellitesImage.width,numberOfSatellitesImage.height)*0.6
                 text                   : view.valueNumberOfSatellities

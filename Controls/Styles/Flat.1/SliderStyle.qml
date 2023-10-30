@@ -126,6 +126,23 @@ Style {
 
             color: control.backgroundColor ? control.backgroundColor : backgroundColor
 
+            Repeater {
+                id: repeater3
+                y: 0
+                model: control.scaleValuePattern.length
+                Rectangle {
+                    color: control.scaleValuePattern[index].color
+
+                    property double x0 : background.width*((control.scaleValuePattern[index].x0-control.minimumValue)/(control.maximumValue - control.minimumValue))
+                    property double xn : background.width*((control.scaleValuePattern[index].xn-control.minimumValue)/(control.maximumValue - control.minimumValue))
+
+                    y: 0
+                    x: x0
+                    width: Math.abs(xn - x0)
+                    height: background.height
+                }
+            }
+
             Item {
                 clip: true
                 width: styleData.handlePosition
@@ -143,12 +160,12 @@ Style {
             Repeater {
                 id: repeater
                 y: 0
-                model: control.stepSize > 0 && control.tickmarksEnabled ? ((control.maximumValue - control.minimumValue) / control.stepSize +1) : 0
+                model: control.stepSize > 0 && control.tickmarksEnabled ? (Math.abs(control.maximumValue - control.minimumValue) / control.stepSize +1) : 0
                 Rectangle {
-                    color: tickmarksColor
-                    width: 2 ; height: background.height/2
+                    color: control.colorTickmarks ? control.colorTickmarks : tickmarksColor
+                    width: 1 ; height: background.height/4
                     y: control.tickmarksFrontSidePosition ? background.height - height : 0
-                    x: index*background.width*(1 + control.stepSize/(control.maximumValue - control.minimumValue))/repeater.count - 2
+                    x: index*background.width*(1 + control.stepSize/(control.maximumValue - control.minimumValue))/repeater.count /*- 2*/
                     visible: control.tickmarksEnabled && (0 < index && index < repeater.count-1)
                 }
             }
@@ -158,10 +175,10 @@ Style {
                 y: 0
                 model: control.valuePattern && control.valuePattern.length !== undefined && control.valuePattern.length > 0 ? control.valuePattern.length : 0
                 Rectangle {
-                    color: tickmarksColor
-                    width: 1 ; height: background.height
+                    color: control.colorSpecialTickmarks ? control.colorSpecialTickmarks : tickmarksColor
+                    width: 2 ; height: background.height
                     y: 0
-                    x: background.width*(control.valuePattern[index]/(control.maximumValue - control.minimumValue))
+                    x: background.width*((control.valuePattern[index]-control.minimumValue)/(control.maximumValue - control.minimumValue))
                 }
             }
         }
@@ -216,7 +233,7 @@ Style {
                 property double handlePosition: Math.round((control.valueSetPoint - control.minimumValue) /
                                                         (control.maximumValue - control.minimumValue) *
                                                         ((root.horizontal ? root.width : root.height) ))
-                property double __value : handlePosition - handleLoader.width/2 -1
+                property double __value : handlePosition - handleLoader.width/2-1
                 x: __value < -handleLoader.width/2 + control.borderWidth ? -handleLoader.width/2 + control.borderWidth : __value
 
                 onWidthChanged: styleitem.handleWidth = handleLoader.width

@@ -68,8 +68,10 @@ ButtonBaseStyle {
         Image {
             id: img
 
-            width                  : img.sourceSize.width > 0 ? Math.min(control.width,control.height)*0.5 : 0
-            height                 : img.sourceSize.height > 0 ? width :0
+//            width                  : img.sourceSize.width > 0 ? Math.min(control.width,control.height)*0.5 : 0
+//            height                 : img.sourceSize.height > 0 ? width :0
+            sourceSize.width       : control.iconWidth ? control.iconWidth : Math.min(control.width,control.height)*0.5
+            sourceSize.height      : control.iconHeight ? control.iconHeight : Math.min(control.width,control.height)*0.5
             source                 : control.iconSource
             anchors.verticalCenter : parent.verticalCenter
 
@@ -81,6 +83,8 @@ ButtonBaseStyle {
         }
         Text {
             id: text
+
+            width: text.text ? (control.width - img.sourceSize.width)*0.9 : 0
 
             anchors.verticalCenter : parent.verticalCenter
 

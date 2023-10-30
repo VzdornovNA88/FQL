@@ -59,6 +59,7 @@ Control {
 
 
 
+    property var scaleValuePattern             : []
     property var valuePattern                  : []
     property var colorPattern                  : null
     property var color                         : null
@@ -72,12 +73,15 @@ Control {
     property bool activated                    : true
     property bool tickmarksFrontSidePosition   : true
     property Component handle                  : null
+    property var  colorTickmarks
+    property var  colorSpecialTickmarks
 
 
      activeFocusOnTab                           : true
 
     signal handleClicked(var slider_);
     signal handleLoaded( var handle_ )
+    signal positionChanged
 
 
     function __onHandleLoaded(handle_) {
@@ -148,15 +152,19 @@ Control {
                 overThreshold = Math.abs(mouse.x - pressX) >= 1;
                 if (overThreshold)
                     preventStealing = true;
-                if (overThreshold || force)
+                if (overThreshold || force) {
                     fakeHandle.x = pos;
+                    slider.positionChanged();
+                }
             } else if (!__horizontal) {
                 pos = clamp (mouse.y - fakeHandle.height/2);
                 overThreshold = Math.abs(mouse.y - pressY) >= 1;
                 if (overThreshold)
                     preventStealing = true;
-                if (overThreshold || force)
+                if (overThreshold || force) {
                     fakeHandle.y = pos;
+                    slider.positionChanged();
+                }
             }
         }
 

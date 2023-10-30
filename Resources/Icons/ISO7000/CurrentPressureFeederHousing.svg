@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Creator: CorelDRAW X5 -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xml:space="preserve"
+   width="28"
+   height="28"
+   style="fill-rule:evenodd"
+   viewBox="0 0 79022.224 79022.223"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="CurrentPressureFeederHousing.svg"><metadata
+   id="metadata27"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="858"
+   inkscape:window-height="676"
+   id="namedview25"
+   showgrid="false"
+   inkscape:zoom="10"
+   inkscape:cx="21.259842"
+   inkscape:cy="14.173228"
+   inkscape:window-x="0"
+   inkscape:window-y="74"
+   inkscape:window-maximized="0"
+   inkscape:current-layer="svg2" />
+ <defs
+   id="defs4">
+  <style
+   type="text/css"
+   id="style6">
+   
+    .fil1 {fill:black}
+    .fil0 {fill:black;fill-rule:nonzero}
+   
+  </style>
+ </defs>
+ <g
+   id="Слой_x0020_1"
+   transform="translate(-22577.778,-977.77733)">
+  <metadata
+   id="CorelCorpID_0Corel-Layer" />
+  <g
+   id="_323757952">
+   <g
+   id="g11">
+    <g
+   id="g13">
+     <polygon
+   class="fil0"
+   points="51624,72814 53309,71735 51624,70656 41344,64075 39927,66234 46511,70449 26565,70449 26565,73021 46514,73021 39927,77242 40636,78321 41344,79400 "
+   id="polygon15"
+   style="fill:#000000;fill-rule:nonzero" />
+     <ellipse
+   class="fil1"
+   cx="59860"
+   cy="71735"
+   rx="6151"
+   ry="6074"
+   id="ellipse17"
+   sodipodi:cx="59860"
+   sodipodi:cy="71735"
+   sodipodi:rx="6151"
+   sodipodi:ry="6074"
+   style="fill:#000000"
+   d="m 66011,71735 c 0,3354.578 -2753.897,6074 -6151,6074 -3397.103,0 -6151,-2719.422 -6151,-6074 0,-3354.578 2753.897,-6074 6151,-6074 3397.103,0 6151,2719.422 6151,6074 z" />
+     <polygon
+   class="fil0"
+   points="68235,70656 66551,71735 68236,72815 78515,79396 79932,77237 73348,73021 93295,73021 93295,70449 73345,70449 79933,66228 79224,65149 78515,64070 "
+   id="polygon19"
+   style="fill:#000000;fill-rule:nonzero" />
+    </g>
+    <path
+   class="fil1"
+   d="m 26548,60257 1,2661 50288,-21 c 9943,86 16551,-6649 16387,-16261 l 72,-27148 -66748,40769 z m 61064,-30523 -24,16759 c 1,7034 -4736,10960 -10966,10959 l -35087,62 46077,-27780 z"
+   id="path21"
+   inkscape:connector-curvature="0"
+   style="fill:#000000" />
+   </g>
+  </g>
+ </g>
+ <g
+   id="Направляющие"
+   transform="translate(0,-977.77733)">
+  <metadata
+   id="CorelCorpID_1Corel-Layer" />
+ </g>
+</svg>

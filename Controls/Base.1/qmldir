@@ -8,6 +8,7 @@ QtStackNavigator 1.0 QtStackNavigator.qml
 RadioButton 1.0 RadioButton.qml
 SelectorButton 1.0 SelectorButton.qml
 Slider 1.0 Slider.qml
+StackLoaderNavigator 1.0 StackLoaderNavigator.qml
 Switch 1.0 Switch.qml
 ValueButton 1.0 ValueButton.qml
 

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="5.3126817mm"
+   height="7.8055668mm"
+   viewBox="0 0 5.3126817 7.8055668"
+   version="1.1"
+   id="svg1498"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="CanisterMaxConsumption.svg">
+  <defs
+     id="defs1492" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="5.6"
+     inkscape:cx="42.152465"
+     inkscape:cy="20.949475"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata1495">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-56.30794,-217.50197)">
+    <g
+       transform="translate(347.81581,129.44606)"
+       id="g883">
+      <g
+         transform="matrix(2.6458333e-4,0,0,2.6458333e-4,-294.328,87.30291)"
+         id="g853"
+         style="clip-rule:evenodd;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision">
+        <g
+           id="Слой_x0020_1-5">
+          <metadata
+             id="CorelCorpID_0Corel-Layer-5" />
+          <path
+             style="fill:#000000"
+             inkscape:connector-curvature="0"
+             class="fil0"
+             d="m 17504,2846 -3008,3636 v 13293 h 4632 V 18061 H 16211 V 7103 l 2095,-2541 h 5679 l 994,1152 1383,-644 713,1079 -1119,521 v 11393 h -3181 v 1715 h 4896 V 7053 l 1246,-588 -1905,-2891 -1464,682 -1216,-1408 h -6829 z m 1624,17924 h -1534 l 3368,4353 3348,-4353 -1534,1 v -5672 h -3648 v 5672 z m 1119,1967 v -6346 h 1411 v 6346 z"
+             id="path840" />
+        </g>
+      </g>
+      <text
+         id="text857-6"
+         y="95.861481"
+         x="-291.68271"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="font-weight:bold;font-size:2.46944451px;stroke-width:0.26458332"
+           y="95.861481"
+           x="-291.68271"
+           id="tspan855-0"
+           sodipodi:role="line">MAX</tspan></text>
+    </g>
+  </g>
+</svg>
