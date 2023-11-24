@@ -90,7 +90,7 @@ QtObject {
     readonly
     property var borderAccentCollor: MaterialColors.grey900
     readonly
-    property var borderAccent2Collor: MaterialColors.pink700
+    property var borderAccent2Collor: MaterialColors.pink500
     readonly
     property var borderGeneralCollor: MaterialColors.grey700
     readonly

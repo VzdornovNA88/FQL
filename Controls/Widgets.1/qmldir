@@ -1,6 +1,7 @@
 module FQL.Controls.Widgets
 ContentItem 1.0 ContentItem.qml
 Dashboard 1.0 Dashboard.qml
+DatePicker 1.0 DatePicker.qml
 Dial 1.0 Dial.qml
 GridContentItem 1.0 GridContentItem.qml
 MediaPlayerWidget 1.0 MediaPlayerWidget.qml
@@ -12,6 +13,7 @@ SliderHandle 1.0 SliderHandle.qml
 StatusBar 1.0 StatusBar.qml
 TabItem 1.0 TabItem.qml
 TextField 1.0 TextField.qml
+TimePicker 1.0 TimePicker.qml
 ToolBar 1.0 ToolBar.qml
 ValueWidget 1.0 ValueWidget.qml
 WidgetButton 1.0 WidgetButton.qml

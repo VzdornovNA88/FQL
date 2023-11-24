@@ -177,6 +177,7 @@ Item {
                 anchors.verticalCenter: rowBtns.verticalCenter
 
                 color: StyleConfigurator.theme.buttonGeneralCollor
+                color_text: StyleConfigurator.theme.textGeneralCollor
 
                 focus: true
                 textKoeffPointSize: 1.8
@@ -225,6 +226,7 @@ Item {
                 anchors.verticalCenter: rowBtns.verticalCenter
 
                 color: StyleConfigurator.theme.buttonGeneralCollor
+                color_text: StyleConfigurator.theme.textGeneralCollor
                 textKoeffPointSize: 1.8
 
                 onClicked: {
@@ -244,6 +246,7 @@ Item {
                 anchors.verticalCenter: rowBtns.verticalCenter
 
                 color: StyleConfigurator.theme.buttonGeneralCollor
+                color_text: StyleConfigurator.theme.textGeneralCollor
                 textKoeffPointSize: 1.8
 
                 enabled: valueSetPoint > min

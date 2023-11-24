@@ -157,6 +157,8 @@ Style {
 
                         width:  height
                         height: slider.height*1.2
+                        sourceSize.width: width
+                        sourceSize.height: height
 
                         y: height*0.003
                         rotation: 90

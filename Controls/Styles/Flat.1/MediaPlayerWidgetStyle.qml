@@ -715,8 +715,8 @@ Style {
 
                 borderFocus: false
                 color: StyleConfigurator.theme.transparent
-                iconSource: checked ? "qrc:/FQL/Resources/Icons/Ui/music_playing.svg" : "qrc:/FQL/Resources/Icons/Ui/play_inverse.svg"
-                iconColor: StyleConfigurator.theme.buttonAccentCollor
+                iconSource: checked ? "qrc:/FQL/Resources/Icons/Ui/pause.svg" : "qrc:/FQL/Resources/Icons/Ui/play.svg"
+                iconColor: StyleConfigurator.theme.iconAccent1Collor
 
                 checkable: true
                 checked: control.playing
