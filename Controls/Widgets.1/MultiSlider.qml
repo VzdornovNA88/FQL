@@ -116,7 +116,8 @@ Item {
         property var              __activatedSlider : null
 
         onValueSetPointChanged: {
-            multiSlider.__activatedSlider.value = multiSlider.valueSetPoint
+            if( multiSlider.__activatedSlider )
+                multiSlider.__activatedSlider.value = multiSlider.valueSetPoint
         }
 
         function __activate( targetSlider_ ) {
@@ -182,6 +183,8 @@ Item {
     function setActivatedValue( val ) {
         if( multiSlider.__activatedSlider )
             multiSlider.__activatedSlider.value = val;
+        else
+            multiSlider.value = val;
     }
 
     function getValueSetPoint( handle_ ) {

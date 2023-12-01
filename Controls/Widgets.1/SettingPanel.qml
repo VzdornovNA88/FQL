@@ -82,6 +82,7 @@ Item {
     property alias visibleCurrentValaue : level.visibleCurrentValaue
     property alias koefPointSizeTextHeader : level.koefPointSizeTextHeader
     property alias koefPointSizeTextHints : level.koefPointSizeTextHints
+    property alias interactive: level.interactive
 
     property real  koeffStepHoldingButton : 1.0
 

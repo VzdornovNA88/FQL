@@ -61,6 +61,8 @@ Control {
     property double koefPointSizeTextHeader : 1.0
     property double koefPointSizeTextHints : 1.0
     property double koefPointSizeTextCurValue : 1.0
+    property bool interactive: true
+    property bool handleVisible: true
 
     // TODO : remove
     property real __valueSetPoint  : 0

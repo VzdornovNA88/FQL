@@ -150,7 +150,9 @@ Style {
                     enabled: control.enabled
                     value: control.value
                     valueCurrent: control.valueCurrent
+                    interactive: control.interactive
 
+                    handleVisible: control.handleVisible
                     handle: Image {
                         id : img
                         source: "qrc:/FQL/Resources/Icons/Ui/Vector1lb.svg"
