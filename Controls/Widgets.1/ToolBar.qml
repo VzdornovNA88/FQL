@@ -49,6 +49,7 @@ Control {
     property var   colorBackground
 
     property bool  visibleControlButtons : true
+    property bool  invertPressedColor    : false
 
     readonly property int currentIndex : __panel.currentIndex
     property int targetIndex : Number.MAX_VALUE

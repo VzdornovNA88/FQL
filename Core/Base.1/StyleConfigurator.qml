@@ -43,6 +43,7 @@ Class {
     property string themeDefault:  Themes.light
     
     readonly property var theme : d.themeCurrentObject
+    readonly property var nameOfCurrentTheme : d.themeCurrent
 
     Private {
         id: d

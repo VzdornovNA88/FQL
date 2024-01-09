@@ -430,8 +430,8 @@ Style {
                         height: bottomButtons.height*0.85
 
                         borderFocus: false
-                        color: StyleConfigurator.theme.backgroundAccent1Collor
-                        color_text: mediaPlayerWidgetStyle.colorText
+                        color: StyleConfigurator.theme.backgroundSpecialDark1Collor
+                        color_text: StyleConfigurator.theme.backgroundSpecialLightCollor
 
                         text: bg.currentNumStation__.toFixed(2).toString()
                         textKoeffPointSize: 2.0
@@ -524,7 +524,7 @@ Style {
                             ColorOverlay {
                                     anchors.fill: iconTrack
                                     source: iconTrack
-                                    color: StyleConfigurator.theme.iconInvertCollor
+                                    color: StyleConfigurator.theme.backgroundSpecialLightCollor
                                 }
                         }
 

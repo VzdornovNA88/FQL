@@ -40,6 +40,8 @@ import FQL.Controls.Base 1.0
 Item {
     id: dashboard
 
+    property bool isFunctionOn : false
+
     property alias rightDial : dialRight
     property alias leftDial : dialleft
 
@@ -58,7 +60,9 @@ Item {
 
     property alias centralValueWidget : valW1
 
-    property alias gearField : indicatorsField
+//    property alias gearField : indicatorsField
+    property alias direction: indicatorsField.direction
+    property alias gear : indicatorsField.gear
 
 
     property alias iconLowerLeftSlider : lowerLeftSliderImage.source
@@ -741,7 +745,7 @@ Item {
             anchors.top: midleContentItem.top
             anchors.horizontalCenter: midleContentItem.horizontalCenter
 
-                property int direction: 0
+                property var direction: 0
                 property var gear : 1
 
             Image {
@@ -908,7 +912,7 @@ Item {
             width: midleContentItem.width
             height:  midleContentItem.height*0.3
 
-            color: (dialRight.value > 0 && !isNaN(dialRight.value)) ? dashboard.colorOnCentralValueWidget : dashboard.colorOffCentralValueWidget
+            color: dashboard.isFunctionOn ? dashboard.colorOnCentralValueWidget : dashboard.colorOffCentralValueWidget
         }
 
         ValueWidget {

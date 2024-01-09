@@ -65,33 +65,60 @@ ButtonBaseStyle {
 
         spacing                    : 2
 
-        Image {
-            id: img
-            width                  : control.iconSource !== undefined &&
+        Item {
+            id : itemImg
+            width                  : Math.round(control.iconSource !== undefined &&
                                      control.iconSource !== null &&
                                      control.iconSource !== "" ?
                                          (control.iconWidth ? control.iconWidth : row.width*0.45) :
-                                         row.width*0.1
-            height                 : control.iconSource !== undefined &&
+                                         row.width*0.1)
+            height                 : Math.round(control.iconSource !== undefined &&
                                      control.iconSource !== null &&
                                      control.iconSource !== "" ?
                                          (control.iconHeight ? control.iconHeight : row.height*0.45) :
-                                         row.width*0.1
+                                         row.height*0.1)
+            anchors.verticalCenter : parent.verticalCenter
+        Image {
+            id: img
+            width                  : Math.round(control.iconSource !== undefined &&
+                                     control.iconSource !== null &&
+                                     control.iconSource !== "" ?
+                                         (control.iconWidth ? control.iconWidth : row.width*0.45) :
+                                         row.width*0.1)
+            height                 : Math.round(control.iconSource !== undefined &&
+                                     control.iconSource !== null &&
+                                     control.iconSource !== "" ?
+                                         (control.iconHeight ? control.iconHeight : row.height*0.45) :
+                                         row.height*0.1)
             sourceSize.width       : width
             sourceSize.height      : height
-            source                 : control.iconSource
-            anchors.verticalCenter : parent.verticalCenter
+
+            visible                : control.iconSource && control.iconSource !== "" && width > 0 && height > 0 && img.sourceSize.width > 0 &&
+                                     img.sourceSize.height > 0
+
+            source                 : control.iconSource ? control.iconSource : ""
+
+            anchors.verticalCenter : itemImg.verticalCenter
+
+            onSourceSizeChanged: {
+                if( sourceSize.width > 0 && sourceSize.height > 0 ) {
+                    colorOverLay.source = img;
+                }
+            }
 
             ColorOverlay {
+                id : colorOverLay
                 anchors.fill: img
                 source: img
+                visible: img.visible
                 color: control.iconColor ? control.iconColor : StyleConfigurator.theme.iconGeneralCollor
             }
+        }
         }
         Text {
             id: text
 
-            anchors.verticalCenter : img.verticalCenter
+            anchors.verticalCenter : itemImg.verticalCenter
 
             font.pixelSize         : row.pointSize__
             text                   : control.text
@@ -103,7 +130,7 @@ ButtonBaseStyle {
         Text {
             id: textMeasuringUnit
 
-            anchors.verticalCenter : img.verticalCenter
+            anchors.verticalCenter : itemImg.verticalCenter
 
             font.pixelSize         : row.pointSize__*0.7
             text                   : qsTr(control.unit ? control.unit.name : "")

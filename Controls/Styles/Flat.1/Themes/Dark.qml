@@ -76,6 +76,8 @@ QtObject {
     readonly
     property var backgroundGeneral3Collor: MaterialColors.grey600
     readonly
+    property var backgroundGeneral3_5Collor: MaterialColors.grey800
+    readonly
     property var backgroundGeneral4Collor: MaterialColors.grey900
 
     readonly
@@ -120,7 +122,7 @@ QtObject {
     property var unitMessureGeneralCollor: textGeneralCollor
 
     readonly
-    property var buttonGeneralCollor: MaterialColors.grey100
+    property var buttonGeneralCollor: MaterialColors.grey600
     readonly
     property var buttonAccentCollor: MaterialColors.pink500
     readonly

@@ -157,6 +157,7 @@ Style {
                         vertical: false
                         exclusiveGroup: toolBar.isExclusiveGroup ? tabGroup : null
                         color: toolBar.colorTabItems ? toolBar.colorTabItems : toolBarStyle.colorTabItems
+                        invertPressedColor : control.invertPressedColor
 
                         onClicked: {
                             tools.currentIndex = index;
@@ -341,6 +342,7 @@ Style {
                         vertical: true
                         exclusiveGroup: toolBar.isExclusiveGroup ? tabGroup : null
                         color: toolBar.colorTabItems ? toolBar.colorTabItems : toolBarStyle.colorTabItems
+                        invertPressedColor : control.invertPressedColor
 
                         onClicked: {
 
@@ -370,7 +372,6 @@ Style {
                                     color: ColorHelpers
                                     .suitableFor(tab.color)
                                     .in([ StyleConfigurator.theme.iconGeneralCollor,
-                                         StyleConfigurator.theme.iconAccentCollor,
                                          StyleConfigurator.theme.iconInvertCollor])[0].itemColor.color
                                 }
                             }

@@ -41,6 +41,7 @@ WidgetButtonStyle {
     property var colorHandle : StyleConfigurator.theme.buttonAccentCollor
 
     colorActiveFocus: tabItemStyle.color__
+    invertPressedColor : control.invertPressedColor
 
     panel: Rectangle {
         id : focusable

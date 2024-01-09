@@ -77,12 +77,21 @@ WidgetButtonStyle {
             sourceSize.width       : width
             sourceSize.height      : height
 
+            visible                : valueWidget.iconSource && valueWidget.iconSource !== "" && width > 0 && height > 0 && img1.sourceSize.width > 0 &&
+                                     img1.sourceSize.height > 0
+
             source                 : valueWidget.iconSource ? valueWidget.iconSource : ""
 
+            onSourceSizeChanged: {
+                if( sourceSize.width > 0 && sourceSize.height > 0 ) {
+                    colorOverLay.source = img1;
+                }
+            }
+
             ColorOverlay {
+                id: colorOverLay
                 anchors.fill: img1
-                source: img1
-                visible: valueWidget.iconSource && img1.sourceSize.width > 0 && img1.sourceSize.height > 0 ? true : false
+                visible: img1.visible
                 color: valueWidget.iconColor ? valueWidget.iconColor : valueWidgetStyle.iconColor
             }
         }
@@ -188,12 +197,21 @@ WidgetButtonStyle {
             sourceSize.width       : width
             sourceSize.height      : height
 
+            visible                : valueWidget.iconSource && valueWidget.iconSource !== "" && width > 0 && height > 0 && img2.sourceSize.width > 0 &&
+                                     img2.sourceSize.height > 0
+
             source                 : valueWidget.iconSource ? valueWidget.iconSource : ""
 
+            onSourceSizeChanged: {
+                if( sourceSize.width > 0 && sourceSize.height > 0 ) {
+                    colorOverLay2.source = img2;
+                }
+            }
+
             ColorOverlay {
+                id : colorOverLay2
                 anchors.fill: img2
-                source: img2
-                visible: valueWidget.iconSource && img2.sourceSize.width > 0 && img2.sourceSize.height > 0 ? true : false
+                visible: img2.visible
                 color: valueWidget.iconColor ? valueWidget.iconColor : valueWidgetStyle.iconColor
             }
         }
@@ -247,7 +265,7 @@ WidgetButtonStyle {
 
     content : valueWidget.orientation === Qt.Vertical ?
                   verticalLayout :
-                  (valueWidget.iconSource ?
+                  (valueWidget.iconSource && valueWidget.iconSource !== "" ?
                        horizontalLayoutWithImage :
                        horizontalLayout)
 }

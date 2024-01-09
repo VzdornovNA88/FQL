@@ -38,6 +38,7 @@ ContentItem {
     id: tabItem
 
     property bool vertical : false
+    property bool invertPressedColor : false
 
     activatable         : false
     borderFocus         : false

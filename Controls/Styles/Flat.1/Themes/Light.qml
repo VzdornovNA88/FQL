@@ -76,6 +76,8 @@ QtObject {
     readonly
     property var backgroundGeneral3Collor: MaterialColors.grey100
     readonly
+    property var backgroundGeneral3_5Collor: MaterialColors.grey200
+    readonly
     property var backgroundGeneral4Collor: MaterialColors.grey50
 
     readonly

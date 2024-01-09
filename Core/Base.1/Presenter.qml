@@ -157,6 +157,16 @@ FocusScope {
   onModelChanged: privateScoupe.modelToViewBind()
   onViewChanged: privateScoupe.modelToViewBind()
 
+  signal activated
+  signal deactivated
+
+//  onParentChanged: {
+//      if( parent )
+//          activated();
+//      else
+//          deactivated();
+//  }
+
   Component.onCompleted: {
 
       if( root.view.parent == root )

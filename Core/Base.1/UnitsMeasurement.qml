@@ -65,6 +65,7 @@ Class {
     readonly property UnitMeasurement g                    : UnitMeasurement { readonly property string name : "г"       }
     readonly property UnitMeasurement kg                   : UnitMeasurement { readonly property string name : "кг"      }
     readonly property UnitMeasurement t                    : UnitMeasurement { readonly property string name : "т"       }
+    readonly property UnitMeasurement t_per_m3             : UnitMeasurement { readonly property string name : "т/м³"    }
     readonly property UnitMeasurement t_per_h              : UnitMeasurement { readonly property string name : "т/ч"     }
     readonly property UnitMeasurement t_per_ha             : UnitMeasurement { readonly property string name : "т/Га"    }
     readonly property UnitMeasurement lb                   : UnitMeasurement { readonly property string name : "фунт"    }
