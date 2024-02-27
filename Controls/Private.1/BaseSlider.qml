@@ -82,6 +82,7 @@ Control {
     signal handleClicked(var slider_);
     signal handleLoaded( var handle_ )
     signal positionChanged
+    signal clicked
 
 
     function __onHandleLoaded(handle_) {
@@ -196,6 +197,8 @@ Control {
         onDoubleClicked: {
             handleClicked( slider );
         }
+
+        onClicked: slider.clicked()
     }
 
     onValueChanged: {

@@ -68,5 +68,6 @@ Control {
     property real __valueSetPoint  : 0
 
     signal positionChanged
+    signal clicked
 }
 

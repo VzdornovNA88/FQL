@@ -172,6 +172,8 @@ Style {
                         }
                     }
 
+                    onClicked: control.clicked()
+
                     onPositionChanged : {
                         control.positionChanged();
                     }

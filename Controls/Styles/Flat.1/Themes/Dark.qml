@@ -53,6 +53,10 @@ QtObject {
     property var lighter20Collor: ColorHelpers.addAlpha( 0.2,MaterialColors.grey50 )
     readonly
     property var lighter50Collor: ColorHelpers.addAlpha( 0.5,MaterialColors.grey50 )
+    readonly
+    property var lighter80Collor: ColorHelpers.addAlpha( 0.8,MaterialColors.grey50 )
+    readonly
+    property var lighter40Collor: ColorHelpers.addAlpha( 0.4,MaterialColors.grey50 )
 
     readonly
     property var iconGeneralCollor: MaterialColors.grey100
@@ -180,4 +184,7 @@ QtObject {
     property var sliderHandleAccentCollor: MaterialColors.pink500
     readonly
     property var sliderHandleGeneralCollor: MaterialColors.grey900
+
+    readonly
+    property var notificationBarGeneralCollor: StyleConfigurator.theme.backgroundGeneral3_5Collor
 }

@@ -196,9 +196,9 @@ ContentItem {
             height: row.height*0.5
 
             wrapMode : Text.WrapAtWordBoundaryOrAnywhere
-            fontSizeMode : Text.Fit
+//            fontSizeMode : Text.Fit
             minimumPixelSize: 1
-            font.pixelSize: 480
+            font.pixelSize: Math.min(row.width*0.5,row.height)*0.2
 
             anchors.verticalCenter: row.verticalCenter
             anchors.left: imgtext.right
