@@ -40,7 +40,7 @@ Class {
 
     property string pathStyle:  "../../Controls/Styles/"
     property string styleDefault:  Styles.flat
-    property string themeDefault:  Themes.light
+    property string themeDefault:  Themes.dark
     
     readonly property var theme : d.themeCurrentObject
     readonly property var nameOfCurrentTheme : d.themeCurrent

@@ -108,7 +108,7 @@ WidgetButtonStyle {
             minimumPixelSize: 1
 
             font.italic: true
-            property double value_ : !isNaN(valueWidget.value) ? valueWidget.value : NaN
+            property double value_ : valueWidget.value
             font.pixelSize: Math.min(itemHorizontalLayoutWithImage.width,itemHorizontalLayoutWithImage.height)*0.25*valueWidget.koefFontValuePixelSize
             text                   : !isNaN(value_) ? value_.toFixed(valueWidget.fixedPrecision).toString() :
                                                       control.textModeValue ? valueWidget.value : "---"
@@ -157,8 +157,11 @@ WidgetButtonStyle {
 
                 font.italic: true
                 font.pixelSize: itemRowTexts1.fontPixSize
-                text                   : (valueWidget.value && !isNaN(valueWidget.value)) ?
-                                             valueWidget.value.toFixed(valueWidget.fixedPrecision).toString() : "---"
+
+                property double value_ : valueWidget.value
+                text                   : !isNaN(value_) ? value_.toFixed(valueWidget.fixedPrecision).toString() :
+                                                          control.textModeValue ? valueWidget.value : "---"
+
                 color: valueWidget.valueColor ? valueWidget.valueColor : valueWidgetStyle.valueColor
             }
             Text {
@@ -236,8 +239,9 @@ WidgetButtonStyle {
             font.pixelSize: Math.min(itemVerticalLayout.width,itemVerticalLayout.height) *
                             (valueWidget.iconSource ? 0.3 : 0.35) *
                             valueWidget.koefFontValuePixelSize
-            text                   : (valueWidget.value && !isNaN(valueWidget.value)) ?
-                                         valueWidget.value.toFixed(valueWidget.fixedPrecision).toString() : "---"
+            property double value_ : valueWidget.value
+            text                   : !isNaN(value_) ? value_.toFixed(valueWidget.fixedPrecision).toString() :
+                                                      control.textModeValue ? valueWidget.value : "---"
             color: valueWidget.valueColor ? valueWidget.valueColor : valueWidgetStyle.valueColor
         }
         Text {

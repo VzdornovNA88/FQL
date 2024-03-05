@@ -443,13 +443,13 @@ Item {
     Item {
         id: topLeftMinorDialItem
 
-        width: dashboard.width*0.35
-        height:  dashboard.height*0.25
+        width: leftTopDial.visible ? dashboard.width*0.35 : 0
+        height:  leftTopDial.visible ? dashboard.height*0.25 : 0
 
         anchors.bottom: midleContentItem.top
         anchors.right: midleContentItem.horizontalCenter
 
-        visible: leftTopDial.visible
+//        visible: leftTopDial.visible
 
         Dial {
             id: leftTopDial
@@ -524,6 +524,8 @@ Item {
             wrapMode : Text.WrapAtWordBoundaryOrAnywhere
             minimumPixelSize: 1
 
+            visible: leftTopDial.visible
+
             font.italic: true
             font.pixelSize: Math.min(leftTopDial.width,leftTopDial.height)*0.2*dashboard.pointFontKoef
             text                   : ((leftTopDial.value && !isNaN(leftTopDial.value)) ?
@@ -542,6 +544,8 @@ Item {
             wrapMode : Text.WrapAtWordBoundaryOrAnywhere
             minimumPixelSize: 1
 
+            visible: leftTopDial.visible
+
             font.italic: true
             font.pixelSize: Math.min(leftTopDial.width,leftTopDial.height)*0.12*dashboard.pointFontKoef
             text                   : dashboard.textOfFactorValueLeftTopMinorDial
@@ -557,6 +561,8 @@ Item {
 
             wrapMode : Text.WrapAtWordBoundaryOrAnywhere
             minimumPixelSize: 1
+
+            visible: leftTopDial.visible
 
             font.italic: true
             font.pixelSize: Math.min(leftTopDial.width,leftTopDial.height)*0.15*dashboard.pointFontKoef
@@ -574,6 +580,8 @@ Item {
             anchors.topMargin: height*0.2
             anchors.horizontalCenter: leftTopDial.horizontalCenter
 
+            visible: leftTopDial.visible
+
             ColorOverlay {
                 anchors.fill: imageOfLeftTopMinorDial
                 source: imageOfLeftTopMinorDial
@@ -584,13 +592,13 @@ Item {
     Item {
         id: topRightMinorDialItem
 
-        width: dashboard.width*0.35
-        height:  dashboard.height*0.25
+        width: rightTopDial.visible ? dashboard.width*0.35 : 0
+        height:  rightTopDial.visible ? dashboard.height*0.25 : 0
 
         anchors.bottom: midleContentItem.top
         anchors.left: midleContentItem.horizontalCenter
 
-        visible: rightTopDial.visible
+//        visible: rightTopDial.visible
 
         Dial {
             id: rightTopDial
@@ -665,6 +673,8 @@ Item {
             wrapMode : Text.WrapAtWordBoundaryOrAnywhere
             minimumPixelSize: 1
 
+            visible: rightTopDial.visible
+
             font.italic: true
             font.pixelSize: Math.min(rightTopDial.width,rightTopDial.height)*0.2*dashboard.pointFontKoef
             text                   : ((rightTopDial.value && !isNaN(rightTopDial.value)) ?
@@ -683,6 +693,8 @@ Item {
             wrapMode : Text.WrapAtWordBoundaryOrAnywhere
             minimumPixelSize: 1
 
+            visible: rightTopDial.visible
+
             font.italic: true
             font.pixelSize: Math.min(rightTopDial.width,rightTopDial.height)*0.12*dashboard.pointFontKoef
             text                   : dashboard.textOfFactorValueRightTopMinorDial
@@ -699,6 +711,8 @@ Item {
             wrapMode : Text.WrapAtWordBoundaryOrAnywhere
             minimumPixelSize: 1
 
+            visible: rightTopDial.visible
+
             font.italic: true
             font.pixelSize: Math.min(rightTopDial.width,rightTopDial.height)*0.15*dashboard.pointFontKoef
             text                   : qsTr(dashboard.unitMessurementOfLeftTopMinorDial ?
@@ -713,6 +727,8 @@ Item {
 
             anchors.top: textMesValueOfRightTopMinorDial.bottom
             anchors.horizontalCenter: rightTopDial.horizontalCenter
+
+            visible: rightTopDial.visible
 
             ColorOverlay {
                 anchors.fill: imageOfRightTopMinorDial
@@ -968,13 +984,13 @@ Item {
     Item {
         id: bottomLeftMinorDialItem
 
-        width: dashboard.width*0.35
-        height:  dashboard.height*0.25
+        width: leftBottomDial.visible ? dashboard.width*0.35 : 0
+        height:  leftBottomDial.visible ? dashboard.height*0.25 : 0
 
         anchors.top: midleContentItem.bottom
         anchors.right: midleContentItem.horizontalCenter
 
-        visible: leftBottomDial.visible
+//        visible: leftBottomDial.visible
 
         Dial {
             id: leftBottomDial
@@ -1111,13 +1127,13 @@ Item {
     Item {
         id: bottomRightMinorDialItem
 
-        width: dashboard.width*0.35
-        height:  dashboard.height*0.25
+        width: rightBottomDial.visible ? dashboard.width*0.35 : 0
+        height:  rightBottomDial.visible ? dashboard.height*0.25 : 0
 
         anchors.top: midleContentItem.bottom
         anchors.left: midleContentItem.horizontalCenter
 
-        visible: rightBottomDial.visible
+//        visible: rightBottomDial.visible
 
         Dial {
             id: rightBottomDial

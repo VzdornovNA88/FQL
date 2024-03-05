@@ -85,6 +85,12 @@ Style {
 
         readonly property double startPointAngleRotation     : circularGaugeStyle.control.usualDrirectionFill && circularGaugeStyle.control.invert ? parentShortener.rotation : 0
 
+        property double val_ : circularGaugeStyle.control.value < circularGaugeStyle.control.minValue ?
+                                   circularGaugeStyle.control.minValue :
+                                   circularGaugeStyle.control.value > circularGaugeStyle.control.maxValue ?
+                                       circularGaugeStyle.control.maxValue :
+                                       circularGaugeStyle.control.value
+
         clip: true
 
         Rectangle {
@@ -165,7 +171,7 @@ Style {
                     maskSource: externalCircle
                 }
 
-                rotation: rootItem.startPointAngleRotation + circularGaugeStyle.value2AngleRot( circularGaugeStyle.control.value,
+                rotation: rootItem.startPointAngleRotation + circularGaugeStyle.value2AngleRot( rootItem.val_,
                                                                          circularGaugeStyle.control.minValue,
                                                                          circularGaugeStyle.control.valuePatternFillerBorder[repeaterFillerBorder.lenVal_],
                                                                          !circularGaugeStyle.control.usualDrirectionFill || !circularGaugeStyle.control.invert ?
@@ -224,7 +230,7 @@ Style {
                     maskSource: internalCircle
                 }
 
-                rotation: rootItem.startPointAngleRotation + circularGaugeStyle.value2AngleRot( circularGaugeStyle.control.value,
+                rotation: rootItem.startPointAngleRotation + circularGaugeStyle.value2AngleRot( rootItem.val_,
                                                                          circularGaugeStyle.control.minValue,
                                                                          circularGaugeStyle.control.valuePattern[repeaterFiller.lenVal_],
                                                                          !circularGaugeStyle.control.usualDrirectionFill || !circularGaugeStyle.control.invert ?
